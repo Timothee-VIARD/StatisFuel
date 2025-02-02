@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../global/banner/banner.dart';
 
-class ConnexionsPage extends StatelessWidget {
-  const ConnexionsPage({super.key});
+class HistoryPage extends StatelessWidget {
+  const HistoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +18,7 @@ class ConnexionsPage extends StatelessWidget {
           Center(
             child: Text(
               'Historique',
-              style: TextStyle(
-                  fontSize: 24,
-                  fontFamily: 'MPLUSRounded1c'),
+              style: TextStyle(fontSize: 24, fontFamily: 'MPLUSRounded1c'),
             ),
           ),
         ],

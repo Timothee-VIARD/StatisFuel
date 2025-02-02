@@ -4,7 +4,7 @@ import '../global/bottom_navigation_bar/bottom_navigation_bar.dart';
 import '../global/header/header.dart';
 import '../style/app_colors.dart';
 import 'history/history_page.dart';
-import 'new/new_page.dart';
+import 'newEntry/new_entry_page.dart';
 import 'statistics/statistics_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -17,6 +17,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final PageController _pageController = PageController();
   int _selectedIndex = 0;
+  bool _isKeyboardVisible = false;
 
   @override
   void initState() {
@@ -25,7 +26,9 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _onPageChanged() {
-    if (!_pageController.hasClients) return;
+    if (!_pageController.hasClients || _isKeyboardVisible) return;
+
+    FocusScope.of(context).unfocus();
 
     final int newIndex = _pageController.page!.round();
     if (_selectedIndex != newIndex) {
@@ -36,7 +39,9 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _onIndexChanged(int index) {
-    if (_selectedIndex == index) return;
+    if (_selectedIndex == index || _isKeyboardVisible) return;
+
+    FocusScope.of(context).unfocus();
 
     setState(() {
       _selectedIndex = index;
@@ -45,13 +50,25 @@ class _MainPageState extends State<MainPage> {
     _pageController.jumpToPage(index);
   }
 
+  void _keyboardVisibilityListener() {
+    final isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+    if (isKeyboardVisible != _isKeyboardVisible) {
+      setState(() {
+        _isKeyboardVisible = isKeyboardVisible;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    _keyboardVisibilityListener();
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.surface,
       body: Container(
-        padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 24),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 24),
+        height: MediaQuery.of(context).size.height - MediaQuery.of(context).viewInsets.bottom - 24,
         child: Column(
           children: [
             const HeaderSection(),
@@ -59,11 +76,13 @@ class _MainPageState extends State<MainPage> {
             Expanded(
               child: PageView(
                 controller: _pageController,
-                physics: const ClampingScrollPhysics(),
+                physics: _isKeyboardVisible
+                    ? const NeverScrollableScrollPhysics()
+                    : const ClampingScrollPhysics(),
                 children: const [
-                  SchedulePage(),
-                  ConnexionsPage(),
-                  SettingsPage(),
+                  NewEntryPage(),
+                  HistoryPage(),
+                  StatisticsPage(),
                 ],
               ),
             ),

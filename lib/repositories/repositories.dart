@@ -1,0 +1,1 @@
+export 'package:statisfuel/repositories/consumption/implementation.dart';

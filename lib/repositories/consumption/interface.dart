@@ -21,4 +21,10 @@ abstract class IConsumptionRepository {
   });
 
   Future<void> deleteConsumption(int id);
+
+  Future<void> deleteAllConsumptions();
+
+  Future<void> exportToCsv();
+
+  Future<void> importFromCsv();
 }

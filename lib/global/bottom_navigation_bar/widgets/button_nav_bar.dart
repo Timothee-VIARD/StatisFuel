@@ -8,7 +8,7 @@ class ButtonNavBar extends StatelessWidget {
         required this.isSelected,
         required this.title,
         required this.buttonIndex,
-        required this.onIndexChanged});
+        required this.onIndexChanged,});
 
   final bool isSelected;
 
@@ -27,12 +27,12 @@ class ButtonNavBar extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(11)),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withOpacity(0.1),
+                color: AppColors.primary.withValues(alpha: 0.1),
                 spreadRadius: 1,
                 blurRadius: 2,
                 offset: const Offset(0, 2),
               ),
-            ])
+            ],)
             : null,
         child: TextButton(
           onPressed: () => onIndexChanged(buttonIndex),

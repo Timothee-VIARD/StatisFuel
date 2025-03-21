@@ -1,5 +1,8 @@
+
 import 'package:isar/isar.dart';
+import 'package:logger/logger.dart';
 import 'package:statisfuel/collections/collections.dart';
+import 'package:statisfuel/utils/csv.dart';
 
 import '../repository_base.dart';
 import 'interface.dart';
@@ -15,7 +18,7 @@ class ConsumptionRepository extends RepositoryBase implements IConsumptionReposi
 
   @override
   Future<List<Consumption>> getConsumptions() async {
-    return isar.collection<Consumption>().where().findAll();
+    return isar.collection<Consumption>().where().sortByDateDesc().findAll();
   }
 
   @override
@@ -53,7 +56,6 @@ class ConsumptionRepository extends RepositoryBase implements IConsumptionReposi
       if (distance != null) consumption.distance = distance;
       if (mileage != null) consumption.mileage = mileage;
       if (place != null) consumption.place = place;
-      if (litersPer100km != null) consumption.litersPer100km = litersPer100km;
 
       await isar.collection<Consumption>().put(consumption);
     });
@@ -64,5 +66,75 @@ class ConsumptionRepository extends RepositoryBase implements IConsumptionReposi
     await isar.writeTxn(() async {
       await isar.collection<Consumption>().delete(id);
     });
+  }
+
+  @override
+  Future<void> deleteAllConsumptions() async {
+    await isar.writeTxn(() async {
+      await isar.collection<Consumption>().clear();
+    });
+  }
+
+  @override
+  Future<void> exportToCsv() async {
+    final consumptions = await getConsumptions();
+
+    List<List<dynamic>> data = [
+      [
+        'Date',
+        'Total Price',
+        'Price Per Liter',
+        'Liters',
+        'Distance',
+        'Mileage',
+        'Place',
+      ]
+    ];
+
+    for (var consumption in consumptions) {
+      data.add([
+        consumption.date?.toIso8601String() ?? '',
+        consumption.totalPrice ?? '',
+        consumption.pricePerLiter ?? '',
+        consumption.liters ?? '',
+        consumption.distance ?? '',
+        consumption.mileage ?? '',
+        consumption.place ?? '',
+      ]);
+    }
+    try {
+      await CsvUtils.exportToCsv(data);
+      Logger().i('Exported consumptions to CSV');
+    } catch (e) {
+      Logger().e('Error during CSV export', error: e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> importFromCsv() async {
+    try {
+      final fields = await CsvUtils.importFromCsv();
+
+      for (var i = 1; i < fields.length; i++) {
+        final row = fields[i];
+        final consumption = Consumption()
+          ..date = DateTime.parse(row[0])
+          ..totalPrice = row[1]
+          ..pricePerLiter = row[2]
+          ..liters = row[3]
+          ..distance = row[4]
+          ..mileage = row[5]
+          ..place = row[6];
+
+        await isar.writeTxn(() async {
+          await isar.collection<Consumption>().put(consumption);
+        });
+      }
+      Logger().i('Imported consumptions from CSV');
+    } catch (e) {
+      Logger().e('Error during CSV import', error: e);
+      rethrow;
+    }
   }
 }

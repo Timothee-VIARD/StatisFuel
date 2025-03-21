@@ -119,7 +119,6 @@ Consumption _consumptionDeserialize(
     totalPrice: reader.readDoubleOrNull(offsets[7]),
   );
   object.id = id;
-  object.litersPer100km = reader.readDoubleOrNull(offsets[3]);
   return object;
 }
 

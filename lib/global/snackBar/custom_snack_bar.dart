@@ -30,7 +30,7 @@ class CustomSnackBar {
           bottom:
               MediaQuery.of(context).size.height - 200,
           right: 20,
-          left: 20),
+          left: 20,),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),

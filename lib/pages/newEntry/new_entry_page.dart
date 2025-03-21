@@ -18,7 +18,7 @@ class NewEntryPage extends StatelessWidget {
           const SizedBox(height: 31),
           Center(
             child: Text(
-              t.newEntryPage.title,
+              t.consumption.newConsumption,
               style:
                   const TextStyle(fontSize: 24, fontFamily: 'MPLUSRounded1c'),
             ),
@@ -32,9 +32,9 @@ class NewEntryPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppColors.border, width: 1),
+                  border: Border.all(color: AppColors.border),
                 ),
-                child: const SingleChildScrollView(child: EntryForm())),
+                child: const SingleChildScrollView(child: EntryForm()),),
           ),
         ],
       ),

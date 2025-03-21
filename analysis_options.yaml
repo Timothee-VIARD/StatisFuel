@@ -21,8 +21,30 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    avoid_print: true # Enable the `avoid_print` rule
+    prefer_single_quotes: true # Enable the `prefer_single_quotes` rule
+    always_declare_return_types: true # Require return types on functions
+    avoid_empty_else: true # Avoid empty else statements
+    avoid_init_to_null: true # Avoid initializing variables to null
+    avoid_redundant_argument_values: true # Avoid redundant argument values
+    avoid_returning_null_for_future: true # Avoid returning null for Future
+    avoid_unnecessary_containers: true # Avoid unnecessary containers
+    avoid_unused_constructor_parameters: true # Avoid unused constructor parameters
+    camel_case_types: true # Use camel case for types
+    constant_identifier_names: true # Use uppercase for constant identifiers
+    empty_catches: true # Avoid empty catch blocks
+    empty_statements: true # Avoid empty statements
+    prefer_const_constructors: true # Prefer const constructors
+    prefer_final_fields: true # Prefer final fields
+    prefer_is_not_empty: true # Prefer `isNotEmpty` over `!isEmpty`
+    prefer_typing_uninitialized_variables: true # Prefer typing uninitialized variables
+    unnecessary_const: true # Avoid unnecessary const
+    unnecessary_new: true # Avoid unnecessary new
+    use_key_in_widget_constructors: true # Use key in widget constructors
+    camel_case_extensions: true
+    library_prefixes: true
+    directives_ordering: true
+    require_trailing_commas: true
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

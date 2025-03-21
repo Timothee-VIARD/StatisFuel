@@ -8,17 +8,40 @@
       "save": "Sauvegarder",
       "cancel": "Annuler",
       "success": "Enregistrement réussi",
-      "error": "Une erreur est survenue"
-    }
+      "error": "Une erreur est survenue",
+      "notSpecified": "Non spécifié"
+    },
+    "date": {
+      "noDate": "Date inconnue",
+      "format": "dd/MM/yyyy"
+    },
+    "confirm": "Confirmer",
+    "delete": "Supprimer",
+    "deleteAll": "Tout supprimer",
+    "yes": "Oui",
+    "no": "Non",
+    "exportToCSV": "Exporter en CSV",
+    "importFromCSV": "Importer depuis CSV"
   },
-  "newEntryPage": {
-    "title": "Nouvelle consommation",
-    "date": "Date",
+  "unit": {
+    "distance": "km",
+    "volume": "L",
+    "price": "€",
+    "pricePerLiter": "€/L",
+    "litersPer100km": "L/100km"
+  },
+  "consumption": {
+    "warningDeleteAll": "Êtes-vous sûr de vouloir supprimer toutes les consommations ?",
+    "noData": "Aucune consommation trouvée",
     "totalPrice": "Prix total",
-    "pricePerLiter": "Prix par litre",
+    "volume": "Volume",
     "liters": "Litres",
     "distance": "Distance",
     "mileage": "Kilométrage",
-    "place": "Lieu"
+    "pricePerLiter": "Prix/Litre",
+    "modify": "Modifier",
+    "place": "Lieu",
+    "date": "Date",
+    "newConsumption": "Nouvelle consommation"
   }
 }

@@ -39,7 +39,8 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	// Translations
 	String get app_title => 'StatisFuel';
 	late final TranslationsGlobalEn global = TranslationsGlobalEn._(_root);
-	late final TranslationsNewEntryPageEn newEntryPage = TranslationsNewEntryPageEn._(_root);
+	late final TranslationsUnitEn unit = TranslationsUnitEn._(_root);
+	late final TranslationsConsumptionEn consumption = TranslationsConsumptionEn._(_root);
 }
 
 // Path: global
@@ -51,23 +52,49 @@ class TranslationsGlobalEn {
 	// Translations
 	String get loading => 'Chargement...';
 	late final TranslationsGlobalFormsEn forms = TranslationsGlobalFormsEn._(_root);
+	late final TranslationsGlobalDateEn date = TranslationsGlobalDateEn._(_root);
+	String get confirm => 'Confirmer';
+	String get delete => 'Supprimer';
+	String get deleteAll => 'Tout supprimer';
+	String get yes => 'Oui';
+	String get no => 'Non';
+	String get exportToCSV => 'Exporter en CSV';
+	String get importFromCSV => 'Importer depuis CSV';
 }
 
-// Path: newEntryPage
-class TranslationsNewEntryPageEn {
-	TranslationsNewEntryPageEn._(this._root);
+// Path: unit
+class TranslationsUnitEn {
+	TranslationsUnitEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'Nouvelle consommation';
-	String get date => 'Date';
+	String get distance => 'km';
+	String get volume => 'L';
+	String get price => '€';
+	String get pricePerLiter => '€/L';
+	String get litersPer100km => 'L/100km';
+}
+
+// Path: consumption
+class TranslationsConsumptionEn {
+	TranslationsConsumptionEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get warningDeleteAll => 'Êtes-vous sûr de vouloir supprimer toutes les consommations ?';
+	String get noData => 'Aucune consommation trouvée';
 	String get totalPrice => 'Prix total';
-	String get pricePerLiter => 'Prix par litre';
+	String get volume => 'Volume';
 	String get liters => 'Litres';
 	String get distance => 'Distance';
 	String get mileage => 'Kilométrage';
+	String get pricePerLiter => 'Prix/Litre';
+	String get modify => 'Modifier';
 	String get place => 'Lieu';
+	String get date => 'Date';
+	String get newConsumption => 'Nouvelle consommation';
 }
 
 // Path: global.forms
@@ -83,6 +110,18 @@ class TranslationsGlobalFormsEn {
 	String get cancel => 'Annuler';
 	String get success => 'Enregistrement réussi';
 	String get error => 'Une erreur est survenue';
+	String get notSpecified => 'Non spécifié';
+}
+
+// Path: global.date
+class TranslationsGlobalDateEn {
+	TranslationsGlobalDateEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get noDate => 'Date inconnue';
+	String get format => 'dd/MM/yyyy';
 }
 
 /// Flat map(s) containing all translations.
@@ -98,14 +137,33 @@ extension on Translations {
 			case 'global.forms.cancel': return 'Annuler';
 			case 'global.forms.success': return 'Enregistrement réussi';
 			case 'global.forms.error': return 'Une erreur est survenue';
-			case 'newEntryPage.title': return 'Nouvelle consommation';
-			case 'newEntryPage.date': return 'Date';
-			case 'newEntryPage.totalPrice': return 'Prix total';
-			case 'newEntryPage.pricePerLiter': return 'Prix par litre';
-			case 'newEntryPage.liters': return 'Litres';
-			case 'newEntryPage.distance': return 'Distance';
-			case 'newEntryPage.mileage': return 'Kilométrage';
-			case 'newEntryPage.place': return 'Lieu';
+			case 'global.forms.notSpecified': return 'Non spécifié';
+			case 'global.date.noDate': return 'Date inconnue';
+			case 'global.date.format': return 'dd/MM/yyyy';
+			case 'global.confirm': return 'Confirmer';
+			case 'global.delete': return 'Supprimer';
+			case 'global.deleteAll': return 'Tout supprimer';
+			case 'global.yes': return 'Oui';
+			case 'global.no': return 'Non';
+			case 'global.exportToCSV': return 'Exporter en CSV';
+			case 'global.importFromCSV': return 'Importer depuis CSV';
+			case 'unit.distance': return 'km';
+			case 'unit.volume': return 'L';
+			case 'unit.price': return '€';
+			case 'unit.pricePerLiter': return '€/L';
+			case 'unit.litersPer100km': return 'L/100km';
+			case 'consumption.warningDeleteAll': return 'Êtes-vous sûr de vouloir supprimer toutes les consommations ?';
+			case 'consumption.noData': return 'Aucune consommation trouvée';
+			case 'consumption.totalPrice': return 'Prix total';
+			case 'consumption.volume': return 'Volume';
+			case 'consumption.liters': return 'Litres';
+			case 'consumption.distance': return 'Distance';
+			case 'consumption.mileage': return 'Kilométrage';
+			case 'consumption.pricePerLiter': return 'Prix/Litre';
+			case 'consumption.modify': return 'Modifier';
+			case 'consumption.place': return 'Lieu';
+			case 'consumption.date': return 'Date';
+			case 'consumption.newConsumption': return 'Nouvelle consommation';
 			default: return null;
 		}
 	}

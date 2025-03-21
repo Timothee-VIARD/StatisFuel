@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:logger/logger.dart';
+import 'package:statisfuel/collections/consumption/consumption.dart';
 import 'package:statisfuel/global/snackBar/controllers/cubit.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/newEntry/state/cubit.dart';
 import 'package:statisfuel/pages/newEntry/state/state.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
-import 'package:get_it/get_it.dart';
 import 'package:vph_web_date_picker/vph_web_date_picker.dart';
 
 class EntryForm extends StatelessWidget {
-  const EntryForm({super.key});
+  final Consumption? consumption;
+  final void Function()? onSave;
+  final void Function()? onDelete;
+
+  const EntryForm({super.key, this.consumption, this.onSave, this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +24,17 @@ class EntryForm extends StatelessWidget {
       create: (context) => EntryFormCubit(
         consumptionRepository: GetIt.I<ConsumptionRepository>(),
       ),
-      child: const EntryFormView(),
+      child: EntryFormView(consumption: consumption, onSave: onSave, onDelete: onDelete),
     );
   }
 }
 
 class EntryFormView extends StatefulWidget {
-  const EntryFormView({super.key});
+  final Consumption? consumption;
+  final void Function()? onSave;
+  final void Function()? onDelete;
+
+  const EntryFormView({super.key, this.consumption, this.onSave, this.onDelete});
 
   @override
   State<EntryFormView> createState() => _EntryFormViewState();
@@ -35,8 +43,13 @@ class EntryFormView extends StatefulWidget {
 class _EntryFormViewState extends State<EntryFormView> {
   final _formKey = GlobalKey<FormState>();
   final _dateController = TextEditingController();
+  final _totalPriceController = TextEditingController();
+  final _pricePerLiterController = TextEditingController();
+  final _litersController = TextEditingController();
+  final _distanceController = TextEditingController();
+  final _mileageController = TextEditingController();
+  final _placeController = TextEditingController();
 
-  // Définition des FocusNode pour chaque champ
   final _dateFocus = FocusNode();
   final _totalPriceFocus = FocusNode();
   final _pricePerLiterFocus = FocusNode();
@@ -47,8 +60,29 @@ class _EntryFormViewState extends State<EntryFormView> {
   final _submitFocus = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    if (widget.consumption != null) {
+      _dateController.text = widget.consumption!.date != null
+          ? DateFormat('dd/MM/yyyy').format(widget.consumption!.date!)
+          : '';
+      _totalPriceController.text =
+          widget.consumption!.totalPrice != null ? widget.consumption!.totalPrice!.toString() : '';
+      _pricePerLiterController.text = widget.consumption!.pricePerLiter != null
+          ? widget.consumption!.pricePerLiter!.toString()
+          : '';
+      _litersController.text =
+          widget.consumption!.liters != null ? widget.consumption!.liters!.toString() : '';
+      _distanceController.text =
+          widget.consumption!.distance != null ? widget.consumption!.distance!.toString() : '';
+      _mileageController.text =
+          widget.consumption!.mileage != null ? widget.consumption!.mileage!.toString() : '';
+      _placeController.text = widget.consumption!.place ?? '';
+    }
+  }
+
+  @override
   void dispose() {
-    // Libération des ressources
     _dateController.dispose();
     _dateFocus.dispose();
     _totalPriceFocus.dispose();
@@ -62,7 +96,7 @@ class _EntryFormViewState extends State<EntryFormView> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext buildContext) {
     return BlocConsumer<EntryFormCubit, EntryFormState>(
       listener: (context, state) {
         if (state.isSuccess) {
@@ -74,12 +108,15 @@ class _EntryFormViewState extends State<EntryFormView> {
           context.read<NotificationCubit>().showError(state.errorMessage!);
         }
 
-        _dateController.text = state.consumption.date != null ? DateFormat('dd-MM-yyyy').format(state.consumption.date!) : '';
+        _dateController.text = state.consumption.date != null
+            ? DateFormat('dd/MM/yyyy').format(state.consumption.date!)
+            : '';
       },
       builder: (context, state) {
         return Form(
           key: _formKey,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 24),
               TextFormField(
@@ -102,13 +139,14 @@ class _EntryFormViewState extends State<EntryFormView> {
                 },
                 decoration: InputDecoration(
                   isDense: true,
-                  labelText: t.newEntryPage.date,
+                  labelText: t.consumption.date,
                   border: const OutlineInputBorder(),
                   suffixIcon: const Icon(Icons.calendar_today),
                 ),
               ),
               const SizedBox(height: 8),
               TextFormField(
+                controller: _totalPriceController,
                 focusNode: _totalPriceFocus,
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
@@ -116,7 +154,7 @@ class _EntryFormViewState extends State<EntryFormView> {
                 },
                 decoration: InputDecoration(
                   isDense: true,
-                  labelText: t.newEntryPage.totalPrice,
+                  labelText: t.consumption.totalPrice,
                   border: const OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
@@ -129,6 +167,7 @@ class _EntryFormViewState extends State<EntryFormView> {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                controller: _pricePerLiterController,
                 focusNode: _pricePerLiterFocus,
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
@@ -139,7 +178,7 @@ class _EntryFormViewState extends State<EntryFormView> {
                 },
                 decoration: InputDecoration(
                   isDense: true,
-                  labelText: t.newEntryPage.pricePerLiter,
+                  labelText: t.consumption.pricePerLiter,
                   border: const OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
@@ -149,6 +188,7 @@ class _EntryFormViewState extends State<EntryFormView> {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                controller: _litersController,
                 focusNode: _litersFocus,
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
@@ -159,7 +199,7 @@ class _EntryFormViewState extends State<EntryFormView> {
                 },
                 decoration: InputDecoration(
                   isDense: true,
-                  labelText: t.newEntryPage.liters,
+                  labelText: t.consumption.liters,
                   border: const OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
@@ -169,6 +209,7 @@ class _EntryFormViewState extends State<EntryFormView> {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                controller: _distanceController,
                 focusNode: _distanceFocus,
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
@@ -179,7 +220,7 @@ class _EntryFormViewState extends State<EntryFormView> {
                 },
                 decoration: InputDecoration(
                   isDense: true,
-                  labelText: t.newEntryPage.distance,
+                  labelText: t.consumption.distance,
                   border: const OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
@@ -189,6 +230,7 @@ class _EntryFormViewState extends State<EntryFormView> {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                controller: _mileageController,
                 focusNode: _mileageFocus,
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
@@ -199,7 +241,7 @@ class _EntryFormViewState extends State<EntryFormView> {
                 },
                 decoration: InputDecoration(
                   isDense: true,
-                  labelText: t.newEntryPage.mileage,
+                  labelText: t.consumption.mileage,
                   border: const OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
@@ -209,6 +251,7 @@ class _EntryFormViewState extends State<EntryFormView> {
               ),
               const SizedBox(height: 8),
               TextFormField(
+                controller: _placeController,
                 focusNode: _placeFocus,
                 textInputAction: TextInputAction.done,
                 onTapOutside: (PointerEvent event) {
@@ -216,7 +259,7 @@ class _EntryFormViewState extends State<EntryFormView> {
                 },
                 decoration: InputDecoration(
                   isDense: true,
-                  labelText: t.newEntryPage.place,
+                  labelText: t.consumption.place,
                   border: const OutlineInputBorder(),
                 ),
                 onChanged: (value) => context.read<EntryFormCubit>().setPlace(value),
@@ -225,18 +268,37 @@ class _EntryFormViewState extends State<EntryFormView> {
               BlocBuilder<EntryFormCubit, EntryFormState>(
                 buildWhen: (previous, current) => previous.isSubmitting != current.isSubmitting,
                 builder: (context, state) {
-                  return ElevatedButton(
-                    focusNode: _submitFocus,
-                    onPressed: state.isSubmitting
-                        ? null
-                        : () {
-                            if (_formKey.currentState!.validate()) {
-                              context.read<EntryFormCubit>().submitForm();
-                            }
-                          },
-                    child: state.isSubmitting
-                        ? const CircularProgressIndicator()
-                        : Text(t.global.forms.save),
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (widget.consumption != null)
+                        ElevatedButton(
+                          onPressed: state.isSubmitting
+                              ? null
+                              : () {
+                                  widget.onDelete?.call();
+                                },
+                          child: state.isSubmitting
+                              ? const CircularProgressIndicator()
+                              : Text(t.global.forms.save),
+                        ),
+                      ElevatedButton(
+                        focusNode: _submitFocus,
+                        onPressed: state.isSubmitting
+                            ? null
+                            : () {
+                                if (_formKey.currentState!.validate()) {
+                                  context
+                                      .read<EntryFormCubit>()
+                                      .submitForm(id: widget.consumption?.id);
+                                  widget.onSave?.call();
+                                }
+                              },
+                        child: state.isSubmitting
+                            ? const CircularProgressIndicator()
+                            : Text(t.global.forms.save),
+                      ),
+                    ],
                   );
                 },
               ),

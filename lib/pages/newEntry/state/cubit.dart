@@ -8,8 +8,8 @@ class EntryFormCubit extends Cubit<EntryFormState> {
 
   EntryFormCubit({
     required ConsumptionRepository consumptionRepository,
-  }) : _consumptionRepository = consumptionRepository,
-       super(EntryFormState(consumption: Consumption()));
+  })  : _consumptionRepository = consumptionRepository,
+        super(EntryFormState(consumption: Consumption()));
 
   void setDate(DateTime date) {
     final updatedConsumption = state.consumption.copyWith(date: date);
@@ -46,21 +46,32 @@ class EntryFormCubit extends Cubit<EntryFormState> {
     emit(state.copyWith(consumption: updatedConsumption));
   }
 
-  Future<void> submitForm() async {
-    emit(state.copyWith(isSubmitting: true, errorMessage: null));
-    
+  Future<void> submitForm({int? id}) async {
+    emit(state.copyWith(isSubmitting: true));
     try {
-      await _consumptionRepository.createConsumption(state.consumption);
-      emit(state.copyWith(isSubmitting: false, isSuccess: true));
+      if (id == null) {
+        await _consumptionRepository.createConsumption(state.consumption);
+        emit(state.copyWith(isSubmitting: false, isSuccess: true));
+      } else {
+        await _consumptionRepository.updateConsumption(id,
+            date: state.consumption.date,
+            totalPrice: state.consumption.totalPrice,
+            pricePerLiter: state.consumption.pricePerLiter,
+            liters: state.consumption.liters,
+            distance: state.consumption.distance,
+            mileage: state.consumption.mileage,
+            place: state.consumption.place,);
+        emit(state.copyWith(isSubmitting: false, isSuccess: true));
+      }
     } catch (e) {
       emit(state.copyWith(
         isSubmitting: false,
         errorMessage: e.toString(),
-      ));
+      ),);
     }
   }
 
   void resetForm() {
-    emit(EntryFormState(consumption: Consumption(), isSuccess: false));
+    emit(EntryFormState(consumption: Consumption()));
   }
 }

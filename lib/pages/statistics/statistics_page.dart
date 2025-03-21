@@ -21,7 +21,7 @@ class StatisticsPage extends StatelessWidget {
               style: TextStyle(
                   fontSize: 24,
                   // fontWeight: FontWeight.w100,
-                  fontFamily: 'MPLUSRounded1c'),
+                  fontFamily: 'MPLUSRounded1c',),
             ),
           ),
         ],

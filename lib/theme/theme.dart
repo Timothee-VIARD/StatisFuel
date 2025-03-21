@@ -5,15 +5,12 @@ final ThemeData appTheme = ThemeData(
     primary: Color(0xFF000000),
     secondary: Color(0xFF000000),
     surface: Color(0xFFF9F9F9),
-    error: Color(0xFFB00020),
-    onPrimary: Color(0xFFFFFFFF),
     onSecondary: Color(0xFFFFFFFF),
-    onSurface: Color(0xFF000000),
     onError: Color(0xFF000000),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      side: const BorderSide(color: Colors.black),
+      side: const BorderSide(),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),

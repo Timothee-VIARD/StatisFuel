@@ -1,0 +1,2 @@
+C:/Workspace/StatisFuel/android/app/.cxx/Debug/3w2c6x6n/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Workspace/StatisFuel/android/app/.cxx/Debug/3w2c6x6n/arm64-v8a/CMakeFiles/rebuild_cache.dir

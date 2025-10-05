@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../global/bottom_navigation_bar/bottom_navigation_bar.dart';
 import '../global/header/header.dart';
 import '../style/app_colors.dart';
-import 'history/history_page.dart';
+import 'consumptions/history_page.dart';
 import 'newEntry/new_entry_page.dart';
 import 'statistics/statistics_page.dart';
 

@@ -16,12 +16,12 @@ final ThemeData appTheme = ThemeData(
       ),
     ),
   ),
-  dialogTheme: const DialogTheme(
+  dialogTheme: const DialogThemeData(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(20)),
     ),
   ),
-  cardTheme: const CardTheme(
+  cardTheme: const CardThemeData(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(10)),
     ),

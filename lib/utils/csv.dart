@@ -1,22 +1,28 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:csv/csv.dart';
-import 'package:external_path/external_path.dart';
 import 'package:file_picker/file_picker.dart';
 
 class CsvUtils {
   static Future<void> exportToCsv(List<List<dynamic>> data) async {
     try {
-      final downloadPath =
-          await ExternalPath.getExternalStoragePublicDirectory(ExternalPath.DIRECTORY_DOWNLOAD);
-
-      final filePath = '$downloadPath/exported_consumption.csv';
-
       String csv = const ListToCsvConverter().convert(data);
 
-      final File file = File(filePath);
-      await file.writeAsString(csv);
+      Uint8List bytes = Uint8List.fromList(utf8.encode(csv));
+
+      String? outputFile = await FilePicker.platform.saveFile(
+        dialogTitle: 'Enregistrer le fichier CSV',
+        fileName: 'exported_consumption.csv',
+        type: FileType.custom,
+        allowedExtensions: ['csv'],
+        bytes: bytes,
+      );
+
+      if (outputFile == null) {
+        throw Exception('Export annulé par l\'utilisateur');
+      }
     } catch (e) {
       rethrow;
     }
@@ -32,8 +38,10 @@ class CsvUtils {
       if (result != null) {
         File file = File(result.files.single.path!);
         final input = file.openRead();
-        final fields =
-            await input.transform(utf8.decoder).transform(const CsvToListConverter()).toList();
+        final fields = await input
+            .transform(utf8.decoder)
+            .transform(const CsvToListConverter())
+            .toList();
         return fields;
       } else {
         throw Exception('Invalid selection');

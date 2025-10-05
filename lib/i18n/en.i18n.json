@@ -42,6 +42,7 @@
     "modify": "Modifier",
     "place": "Lieu",
     "date": "Date",
-    "newConsumption": "Nouvelle consommation"
+    "newConsumption": "Nouvelle consommation",
+    "incomplete": "Consommation incomplète"
   }
 }

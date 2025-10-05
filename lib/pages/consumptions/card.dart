@@ -3,15 +3,19 @@ import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:statisfuel/collections/collections.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
-import 'package:statisfuel/pages/history/consumption_form.dart';
-
+import 'package:statisfuel/pages/consumptions/form.dart';
 
 class ConsumptionCard extends StatelessWidget {
   final Consumption consumption;
   final void Function(Consumption consumtpion, int? id) onSave;
   final void Function(int id) onDelete;
 
-  const ConsumptionCard({super.key, required this.consumption, required this.onSave, required this.onDelete});
+  const ConsumptionCard({
+    super.key,
+    required this.consumption,
+    required this.onSave,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +29,7 @@ class ConsumptionCard extends StatelessWidget {
       child: Card(
         margin: const EdgeInsets.all(0),
         elevation: 2,
+        color: consumption.isComplete() ? null : Colors.orange[100],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -33,6 +38,25 @@ class ConsumptionCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (!consumption.isComplete())
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.warning, color: Colors.orange),
+                        const SizedBox(width: 8),
+                        Text(
+                          t.consumption.incomplete,
+                          style: const TextStyle(
+                            color: Colors.orange,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                ),
               // Entête avec date et lieu
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,7 +81,9 @@ class ConsumptionCard extends StatelessWidget {
                       Icon(Icons.location_on, size: 16, color: primaryColor),
                       const SizedBox(width: 4),
                       Text(
-                        consumption.place != null && consumption.place!.isNotEmpty ? consumption.place! : t.global.forms.notSpecified,
+                        consumption.place != null && consumption.place!.isNotEmpty
+                            ? consumption.place!
+                            : t.global.forms.notSpecified,
                         style: TextStyle(
                           color: Colors.grey[700],
                           fontSize: 14,

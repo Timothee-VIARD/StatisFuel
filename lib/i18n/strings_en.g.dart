@@ -95,6 +95,7 @@ class TranslationsConsumptionEn {
 	String get place => 'Lieu';
 	String get date => 'Date';
 	String get newConsumption => 'Nouvelle consommation';
+	String get incomplete => 'Consommation incomplète';
 }
 
 // Path: global.forms
@@ -164,6 +165,7 @@ extension on Translations {
 			case 'consumption.place': return 'Lieu';
 			case 'consumption.date': return 'Date';
 			case 'consumption.newConsumption': return 'Nouvelle consommation';
+			case 'consumption.incomplete': return 'Consommation incomplète';
 			default: return null;
 		}
 	}

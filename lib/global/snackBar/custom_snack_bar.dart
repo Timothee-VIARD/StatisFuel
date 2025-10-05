@@ -4,7 +4,18 @@ enum SnackBarLevel {
   error,
   warning,
   success,
-  info,
+  info;
+
+  int get duration {
+    switch (this) {
+      case SnackBarLevel.error:
+      case SnackBarLevel.info:
+      case SnackBarLevel.warning:
+        return 5;
+      case SnackBarLevel.success:
+        return 2;
+    }
+  }
 }
 
 class CustomSnackBar {
@@ -15,7 +26,7 @@ class CustomSnackBar {
 
   SnackBar build(BuildContext context) {
     return SnackBar(
-      duration: const Duration(seconds: 2),
+      duration: Duration(seconds: level.duration),
       content: Text(title),
       showCloseIcon: true,
       backgroundColor: level == SnackBarLevel.error

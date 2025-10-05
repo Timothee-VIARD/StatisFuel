@@ -49,13 +49,13 @@ class ConsumptionRepository extends RepositoryBase implements IConsumptionReposi
       final consumption = await isar.collection<Consumption>().get(id);
       if (consumption == null) return;
 
-      if (date != null) consumption.date = date;
-      if (totalPrice != null) consumption.totalPrice = totalPrice;
-      if (pricePerLiter != null) consumption.pricePerLiter = pricePerLiter;
-      if (liters != null) consumption.liters = liters;
-      if (distance != null) consumption.distance = distance;
-      if (mileage != null) consumption.mileage = mileage;
-      if (place != null) consumption.place = place;
+      consumption.date = date;
+      consumption.totalPrice = totalPrice;
+      consumption.pricePerLiter = pricePerLiter;
+      consumption.liters = liters;
+      consumption.distance = distance;
+      consumption.mileage = mileage;
+      consumption.place = place;
 
       await isar.collection<Consumption>().put(consumption);
     });

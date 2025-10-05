@@ -3,11 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:statisfuel/global/snackBar/controllers/cubit.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
-import 'package:statisfuel/pages/history/consumption_card.dart';
-import 'package:statisfuel/pages/history/consumption_form.dart';
+import 'package:statisfuel/pages/consumptions/card.dart';
+import 'package:statisfuel/pages/consumptions/form.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
 
-import '../../global/banner/banner.dart';
 import 'state/cubit.dart';
 import 'state/state.dart';
 
@@ -39,11 +38,11 @@ class HistoryView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: BannerSection(imageUrl: 'assets/images/historique.png'),
-          ),
-          const SizedBox(height: 31),
+          // const Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: 8),
+          //   child: BannerSection(imageUrl: 'assets/images/historique.png'),
+          // ),
+          // const SizedBox(height: 31),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
@@ -122,7 +121,7 @@ class HistoryView extends StatelessWidget {
             child: BlocConsumer<HistoryCubit, HistoryState>(
               listener: (context, state) {
                 if (state.errorMessage != null) {
-                  context.read<NotificationCubit>().showSuccess(state.errorMessage!);
+                  context.read<NotificationCubit>().showError(state.errorMessage!);
                 } else if (state.successMessage != null) {
                   context.read<NotificationCubit>().showSuccess(state.successMessage!);
                 }

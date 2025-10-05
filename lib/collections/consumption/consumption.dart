@@ -52,6 +52,16 @@ class Consumption {
     );
   }
 
+  bool isComplete() {
+    return date != null &&
+        totalPrice != null &&
+        pricePerLiter != null &&
+        liters != null &&
+        distance != null &&
+        mileage != null &&
+        place != null;
+  }
+
   @override
   String toString() {
     return 'Consumption{id: $id, date: $date, totalPrice: $totalPrice, pricePerLiter: $pricePerLiter, liters: $liters, distance: $distance, mileage: $mileage, place: $place}';

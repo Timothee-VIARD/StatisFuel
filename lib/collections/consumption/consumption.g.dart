@@ -37,15 +37,16 @@ const ConsumptionSchema = CollectionSchema(
       name: r'litersPer100km',
       type: IsarType.double,
     ),
-    r'mileage': PropertySchema(
+    r'location': PropertySchema(
       id: 4,
+      name: r'location',
+      type: IsarType.object,
+      target: r'Location',
+    ),
+    r'mileage': PropertySchema(
+      id: 5,
       name: r'mileage',
       type: IsarType.double,
-    ),
-    r'place': PropertySchema(
-      id: 5,
-      name: r'place',
-      type: IsarType.string,
     ),
     r'pricePerLiter': PropertySchema(
       id: 6,
@@ -65,7 +66,7 @@ const ConsumptionSchema = CollectionSchema(
   idName: r'id',
   indexes: {},
   links: {},
-  embeddedSchemas: {},
+  embeddedSchemas: {r'Location': LocationSchema},
   getId: _consumptionGetId,
   getLinks: _consumptionGetLinks,
   attach: _consumptionAttach,
@@ -79,9 +80,10 @@ int _consumptionEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
-    final value = object.place;
+    final value = object.location;
     if (value != null) {
-      bytesCount += 3 + value.length * 3;
+      bytesCount += 3 +
+          LocationSchema.estimateSize(value, allOffsets[Location]!, allOffsets);
     }
   }
   return bytesCount;
@@ -97,8 +99,13 @@ void _consumptionSerialize(
   writer.writeDouble(offsets[1], object.distance);
   writer.writeDouble(offsets[2], object.liters);
   writer.writeDouble(offsets[3], object.litersPer100km);
-  writer.writeDouble(offsets[4], object.mileage);
-  writer.writeString(offsets[5], object.place);
+  writer.writeObject<Location>(
+    offsets[4],
+    allOffsets,
+    LocationSchema.serialize,
+    object.location,
+  );
+  writer.writeDouble(offsets[5], object.mileage);
   writer.writeDouble(offsets[6], object.pricePerLiter);
   writer.writeDouble(offsets[7], object.totalPrice);
 }
@@ -112,13 +119,17 @@ Consumption _consumptionDeserialize(
   final object = Consumption(
     date: reader.readDateTimeOrNull(offsets[0]),
     distance: reader.readDoubleOrNull(offsets[1]),
+    id: id,
     liters: reader.readDoubleOrNull(offsets[2]),
-    mileage: reader.readDoubleOrNull(offsets[4]),
-    place: reader.readStringOrNull(offsets[5]),
+    location: reader.readObjectOrNull<Location>(
+      offsets[4],
+      LocationSchema.deserialize,
+      allOffsets,
+    ),
+    mileage: reader.readDoubleOrNull(offsets[5]),
     pricePerLiter: reader.readDoubleOrNull(offsets[6]),
     totalPrice: reader.readDoubleOrNull(offsets[7]),
   );
-  object.id = id;
   return object;
 }
 
@@ -138,9 +149,13 @@ P _consumptionDeserializeProp<P>(
     case 3:
       return (reader.readDoubleOrNull(offset)) as P;
     case 4:
-      return (reader.readDoubleOrNull(offset)) as P;
+      return (reader.readObjectOrNull<Location>(
+        offset,
+        LocationSchema.deserialize,
+        allOffsets,
+      )) as P;
     case 5:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     case 6:
       return (reader.readDoubleOrNull(offset)) as P;
     case 7:
@@ -613,6 +628,24 @@ extension ConsumptionQueryFilter
   }
 
   QueryBuilder<Consumption, Consumption, QAfterFilterCondition>
+      locationIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'location',
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterFilterCondition>
+      locationIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'location',
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterFilterCondition>
       mileageIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -689,155 +722,6 @@ extension ConsumptionQueryFilter
         upper: upper,
         includeUpper: includeUpper,
         epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition> placeIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'place',
-      ));
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition>
-      placeIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'place',
-      ));
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition> placeEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'place',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition>
-      placeGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'place',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition> placeLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'place',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition> placeBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'place',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition> placeStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'place',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition> placeEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'place',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition> placeContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'place',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition> placeMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'place',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition> placeIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'place',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition>
-      placeIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'place',
-        value: '',
       ));
     });
   }
@@ -1012,7 +896,14 @@ extension ConsumptionQueryFilter
 }
 
 extension ConsumptionQueryObject
-    on QueryBuilder<Consumption, Consumption, QFilterCondition> {}
+    on QueryBuilder<Consumption, Consumption, QFilterCondition> {
+  QueryBuilder<Consumption, Consumption, QAfterFilterCondition> location(
+      FilterQuery<Location> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'location');
+    });
+  }
+}
 
 extension ConsumptionQueryLinks
     on QueryBuilder<Consumption, Consumption, QFilterCondition> {}
@@ -1077,18 +968,6 @@ extension ConsumptionQuerySortBy
   QueryBuilder<Consumption, Consumption, QAfterSortBy> sortByMileageDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'mileage', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterSortBy> sortByPlace() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'place', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterSortBy> sortByPlaceDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'place', Sort.desc);
     });
   }
 
@@ -1193,18 +1072,6 @@ extension ConsumptionQuerySortThenBy
     });
   }
 
-  QueryBuilder<Consumption, Consumption, QAfterSortBy> thenByPlace() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'place', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterSortBy> thenByPlaceDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'place', Sort.desc);
-    });
-  }
-
   QueryBuilder<Consumption, Consumption, QAfterSortBy> thenByPricePerLiter() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'pricePerLiter', Sort.asc);
@@ -1263,13 +1130,6 @@ extension ConsumptionQueryWhereDistinct
     });
   }
 
-  QueryBuilder<Consumption, Consumption, QDistinct> distinctByPlace(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'place', caseSensitive: caseSensitive);
-    });
-  }
-
   QueryBuilder<Consumption, Consumption, QDistinct> distinctByPricePerLiter() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'pricePerLiter');
@@ -1316,15 +1176,15 @@ extension ConsumptionQueryProperty
     });
   }
 
-  QueryBuilder<Consumption, double?, QQueryOperations> mileageProperty() {
+  QueryBuilder<Consumption, Location?, QQueryOperations> locationProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'mileage');
+      return query.addPropertyName(r'location');
     });
   }
 
-  QueryBuilder<Consumption, String?, QQueryOperations> placeProperty() {
+  QueryBuilder<Consumption, double?, QQueryOperations> mileageProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'place');
+      return query.addPropertyName(r'mileage');
     });
   }
 

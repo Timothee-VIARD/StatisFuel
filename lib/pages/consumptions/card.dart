@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:statisfuel/collections/collections.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
-import 'package:statisfuel/pages/consumptions/form.dart';
+import 'package:statisfuel/pages/consumptions/new_consumption/form.dart';
 
 class ConsumptionCard extends StatelessWidget {
   final Consumption consumption;
@@ -80,15 +80,15 @@ class ConsumptionCard extends StatelessWidget {
                     children: [
                       Icon(Icons.location_on, size: 16, color: primaryColor),
                       const SizedBox(width: 4),
-                      Text(
-                        consumption.place != null && consumption.place!.isNotEmpty
-                            ? consumption.place!
-                            : t.global.forms.notSpecified,
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                          fontSize: 14,
-                        ),
-                      ),
+                      // Text(
+                      //   consumption.place != null && consumption.place!.isNotEmpty
+                      //       ? consumption.place!
+                      //       : t.global.forms.notSpecified,
+                      //   style: TextStyle(
+                      //     color: Colors.grey[700],
+                      //     fontSize: 14,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],

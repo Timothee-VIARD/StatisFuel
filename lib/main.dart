@@ -17,7 +17,7 @@ void main() {
 }
 
 void setupRegisteries() {
-  GetIt.I.registerLazySingleton<ConsumptionRepository>(() => ConsumptionRepository());
+  GetIt.I.registerSingleton<ConsumptionRepository>(ConsumptionRepository());
 }
 
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =

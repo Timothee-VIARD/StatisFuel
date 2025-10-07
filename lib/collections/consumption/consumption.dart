@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:statisfuel/collections/location/location.dart';
 
 part 'consumption.g.dart';
 
@@ -11,7 +12,7 @@ class Consumption {
   double? liters;
   double? distance;
   double? mileage;
-  String? place;
+  Location? location;
 
   Consumption({
     this.id = Isar.autoIncrement,
@@ -21,7 +22,7 @@ class Consumption {
     this.liters,
     this.distance,
     this.mileage,
-    this.place,
+    this.location,
   });
 
   double? get litersPer100km {
@@ -38,7 +39,7 @@ class Consumption {
     double? liters,
     double? distance,
     double? mileage,
-    String? place,
+    Location? location,
   }) {
     return Consumption(
       id: id,
@@ -48,7 +49,7 @@ class Consumption {
       liters: liters ?? this.liters,
       distance: distance ?? this.distance,
       mileage: mileage ?? this.mileage,
-      place: place ?? this.place,
+      location: location ?? this.location,
     );
   }
 
@@ -59,11 +60,11 @@ class Consumption {
         liters != null &&
         distance != null &&
         mileage != null &&
-        place != null;
+        location != null;
   }
 
   @override
   String toString() {
-    return 'Consumption{id: $id, date: $date, totalPrice: $totalPrice, pricePerLiter: $pricePerLiter, liters: $liters, distance: $distance, mileage: $mileage, place: $place}';
+    return 'Consumption{id: $id, date: $date, totalPrice: $totalPrice, pricePerLiter: $pricePerLiter, liters: $liters, distance: $distance, mileage: $mileage, place: $location}';
   }
 }

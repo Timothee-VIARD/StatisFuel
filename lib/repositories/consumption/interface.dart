@@ -16,8 +16,7 @@ abstract class IConsumptionRepository {
     double? liters,
     double? distance,
     double? mileage,
-    String? place,
-    double? litersPer100km,
+    required Location location,
   });
 
   Future<void> deleteConsumption(int id);

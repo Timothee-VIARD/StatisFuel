@@ -7,7 +7,8 @@ import 'state.dart';
 class HistoryCubit extends Cubit<HistoryState> {
   final ConsumptionRepository consumptionRepository;
 
-  HistoryCubit({required this.consumptionRepository}) : super(const HistoryState());
+  HistoryCubit({required this.consumptionRepository})
+      : super(const HistoryState());
 
   Future<void> loadConsumptions() async {
     emit(state.copyWith(isLoading: true, consumptions: []));
@@ -26,7 +27,9 @@ class HistoryCubit extends Cubit<HistoryState> {
         final List<Consumption> newConsumptions = [];
         newConsumptions.addAll(state.consumptions);
         newConsumptions.add(consumption);
-        newConsumptions.sort((a, b) => (b.date ?? DateTime(0)).compareTo(a.date ?? DateTime(0)));
+        newConsumptions.sort(
+          (a, b) => (b.date ?? DateTime(0)).compareTo(a.date ?? DateTime(0)),
+        );
         emit(
           state.copyWith(
             isLoading: false,
@@ -43,14 +46,18 @@ class HistoryCubit extends Cubit<HistoryState> {
           liters: consumption.liters,
           distance: consumption.distance,
           mileage: consumption.mileage,
-          place: consumption.place,
+          location: consumption.location,
         );
         emit(
           state.copyWith(
             isLoading: false,
-            consumptions:
-                state.consumptions.map((c) => c.id == id ? consumption : c).toList(growable: false)
-                  ..sort((a, b) => (b.date ?? DateTime(0)).compareTo(a.date ?? DateTime(0))),
+            consumptions: state.consumptions
+                .map((c) => c.id == id ? consumption : c)
+                .toList(growable: false)
+              ..sort(
+                (a, b) =>
+                    (b.date ?? DateTime(0)).compareTo(a.date ?? DateTime(0)),
+              ),
             successMessage: 'Updated consumption',
           ),
         );
@@ -69,7 +76,13 @@ class HistoryCubit extends Cubit<HistoryState> {
     try {
       await consumptionRepository.deleteConsumption(id);
       final consumptions = await consumptionRepository.getConsumptions();
-      emit(state.copyWith(isLoading: false, consumptions: consumptions, successMessage: 'Deleted consumption'));
+      emit(
+        state.copyWith(
+          isLoading: false,
+          consumptions: consumptions,
+          successMessage: 'Deleted consumption',
+        ),
+      );
     } catch (e) {
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
     }
@@ -80,7 +93,13 @@ class HistoryCubit extends Cubit<HistoryState> {
     try {
       await consumptionRepository.deleteAllConsumptions();
       final consumptions = await consumptionRepository.getConsumptions();
-      emit(state.copyWith(isLoading: false, consumptions: consumptions, successMessage: 'Deleted all consumptions'));
+      emit(
+        state.copyWith(
+          isLoading: false,
+          consumptions: consumptions,
+          successMessage: 'Deleted all consumptions',
+        ),
+      );
     } catch (e) {
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
     }

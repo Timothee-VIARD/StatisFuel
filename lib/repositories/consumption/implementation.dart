@@ -1,4 +1,3 @@
-
 import 'package:isar/isar.dart';
 import 'package:logger/logger.dart';
 import 'package:statisfuel/collections/collections.dart';
@@ -7,7 +6,8 @@ import 'package:statisfuel/utils/csv.dart';
 import '../repository_base.dart';
 import 'interface.dart';
 
-class ConsumptionRepository extends RepositoryBase implements IConsumptionRepository {
+class ConsumptionRepository extends RepositoryBase
+    implements IConsumptionRepository {
   ConsumptionRepository() {
     _init();
   }
@@ -42,8 +42,7 @@ class ConsumptionRepository extends RepositoryBase implements IConsumptionReposi
     double? liters,
     double? distance,
     double? mileage,
-    String? place,
-    double? litersPer100km,
+    Location? location,
   }) async {
     await isar.writeTxn(() async {
       final consumption = await isar.collection<Consumption>().get(id);
@@ -55,7 +54,7 @@ class ConsumptionRepository extends RepositoryBase implements IConsumptionReposi
       consumption.liters = liters;
       consumption.distance = distance;
       consumption.mileage = mileage;
-      consumption.place = place;
+      consumption.location = location;
 
       await isar.collection<Consumption>().put(consumption);
     });
@@ -99,7 +98,7 @@ class ConsumptionRepository extends RepositoryBase implements IConsumptionReposi
         consumption.liters ?? '',
         consumption.distance ?? '',
         consumption.mileage ?? '',
-        consumption.place ?? '',
+        consumption.location,
       ]);
     }
     try {
@@ -118,14 +117,15 @@ class ConsumptionRepository extends RepositoryBase implements IConsumptionReposi
 
       for (var i = 1; i < fields.length; i++) {
         final row = fields[i];
-        final consumption = Consumption()
-          ..date = DateTime.parse(row[0])
-          ..totalPrice = row[1]
-          ..pricePerLiter = row[2]
-          ..liters = row[3]
-          ..distance = row[4]
-          ..mileage = row[5]
-          ..place = row[6];
+        final consumption = Consumption(
+          date: DateTime.parse(row[0]),
+          totalPrice: row[1],
+          pricePerLiter: row[2],
+          liters: row[3],
+          distance: row[4],
+          mileage: row[5],
+          location: row[6],
+        );
 
         await isar.writeTxn(() async {
           await isar.collection<Consumption>().put(consumption);

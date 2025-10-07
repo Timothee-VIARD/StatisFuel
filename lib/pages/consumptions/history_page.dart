@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:statisfuel/global/snackBar/controllers/cubit.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/consumptions/card.dart';
-import 'package:statisfuel/pages/consumptions/form.dart';
+import 'package:statisfuel/pages/consumptions/new_consumption/form.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
 
 import 'state/cubit.dart';

@@ -48,13 +48,13 @@ class ConsumptionRepository extends RepositoryBase
       final consumption = await isar.collection<Consumption>().get(id);
       if (consumption == null) return;
 
-      consumption.date = date;
-      consumption.totalPrice = totalPrice;
-      consumption.pricePerLiter = pricePerLiter;
-      consumption.liters = liters;
-      consumption.distance = distance;
-      consumption.mileage = mileage;
-      consumption.location = location;
+      consumption.date = date ?? consumption.date;
+      consumption.totalPrice = totalPrice ?? consumption.totalPrice;
+      consumption.pricePerLiter = pricePerLiter ?? consumption.pricePerLiter;
+      consumption.liters = liters ?? consumption.liters;
+      consumption.distance = distance ?? consumption.distance;
+      consumption.mileage = mileage ?? consumption.mileage;
+      consumption.location = location ?? consumption.location;
 
       await isar.collection<Consumption>().put(consumption);
     });
@@ -92,7 +92,7 @@ class ConsumptionRepository extends RepositoryBase
 
     for (var consumption in consumptions) {
       data.add([
-        consumption.date?.toIso8601String() ?? '',
+        consumption.date.toIso8601String(),
         consumption.totalPrice ?? '',
         consumption.pricePerLiter ?? '',
         consumption.liters ?? '',

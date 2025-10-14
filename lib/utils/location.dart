@@ -24,10 +24,19 @@ class LocationService {
     final placemarks =
         await placemarkFromCoordinates(pos.latitude, pos.longitude);
     final place = placemarks.first;
-    final address = "${place.name ?? ''}, ${place.locality ?? ''}";
 
     return Location(
-      title: address,
+      name: place.name,
+      street: place.street,
+      isoCountryCode: place.isoCountryCode,
+      country: place.country,
+      postalCode: place.postalCode,
+      administrativeArea: place.administrativeArea,
+      subAdministrativeArea: place.subAdministrativeArea,
+      locality: place.locality,
+      subLocality: place.subLocality,
+      thoroughfare: place.thoroughfare,
+      subThoroughfare: place.subThoroughfare,
       latitude: pos.latitude,
       longitude: pos.longitude,
     );
@@ -43,8 +52,17 @@ class LocationService {
     final place = placemarks.first;
 
     return Location(
-      title: '${place.name}, ${place.locality}',
-      address: place.thoroughfare,
+      name: place.name,
+      street: place.street,
+      isoCountryCode: place.isoCountryCode,
+      country: place.country,
+      postalCode: place.postalCode,
+      administrativeArea: place.administrativeArea,
+      subAdministrativeArea: place.subAdministrativeArea,
+      locality: place.locality,
+      subLocality: place.subLocality,
+      thoroughfare: place.thoroughfare,
+      subThoroughfare: place.subThoroughfare,
       latitude: location.latitude,
       longitude: location.longitude,
     );

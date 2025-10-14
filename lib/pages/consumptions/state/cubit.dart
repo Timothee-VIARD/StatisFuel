@@ -28,7 +28,7 @@ class HistoryCubit extends Cubit<HistoryState> {
         newConsumptions.addAll(state.consumptions);
         newConsumptions.add(consumption);
         newConsumptions.sort(
-          (a, b) => (b.date ?? DateTime(0)).compareTo(a.date ?? DateTime(0)),
+          (a, b) => (b.date).compareTo(a.date),
         );
         emit(
           state.copyWith(
@@ -56,7 +56,7 @@ class HistoryCubit extends Cubit<HistoryState> {
                 .toList(growable: false)
               ..sort(
                 (a, b) =>
-                    (b.date ?? DateTime(0)).compareTo(a.date ?? DateTime(0)),
+                    (b.date).compareTo(a.date),
               ),
             successMessage: 'Updated consumption',
           ),

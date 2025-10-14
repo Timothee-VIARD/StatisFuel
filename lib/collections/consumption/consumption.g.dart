@@ -117,7 +117,7 @@ Consumption _consumptionDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Consumption(
-    date: reader.readDateTimeOrNull(offsets[0]),
+    date: reader.readDateTime(offsets[0]),
     distance: reader.readDoubleOrNull(offsets[1]),
     id: id,
     liters: reader.readDoubleOrNull(offsets[2]),
@@ -141,7 +141,7 @@ P _consumptionDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 1:
       return (reader.readDoubleOrNull(offset)) as P;
     case 2:
@@ -258,25 +258,8 @@ extension ConsumptionQueryWhere
 
 extension ConsumptionQueryFilter
     on QueryBuilder<Consumption, Consumption, QFilterCondition> {
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition> dateIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'date',
-      ));
-    });
-  }
-
-  QueryBuilder<Consumption, Consumption, QAfterFilterCondition>
-      dateIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'date',
-      ));
-    });
-  }
-
   QueryBuilder<Consumption, Consumption, QAfterFilterCondition> dateEqualTo(
-      DateTime? value) {
+      DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'date',
@@ -286,7 +269,7 @@ extension ConsumptionQueryFilter
   }
 
   QueryBuilder<Consumption, Consumption, QAfterFilterCondition> dateGreaterThan(
-    DateTime? value, {
+    DateTime value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -299,7 +282,7 @@ extension ConsumptionQueryFilter
   }
 
   QueryBuilder<Consumption, Consumption, QAfterFilterCondition> dateLessThan(
-    DateTime? value, {
+    DateTime value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -312,8 +295,8 @@ extension ConsumptionQueryFilter
   }
 
   QueryBuilder<Consumption, Consumption, QAfterFilterCondition> dateBetween(
-    DateTime? lower,
-    DateTime? upper, {
+    DateTime lower,
+    DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -1151,7 +1134,7 @@ extension ConsumptionQueryProperty
     });
   }
 
-  QueryBuilder<Consumption, DateTime?, QQueryOperations> dateProperty() {
+  QueryBuilder<Consumption, DateTime, QQueryOperations> dateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'date');
     });

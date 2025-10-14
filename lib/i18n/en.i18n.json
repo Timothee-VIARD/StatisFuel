@@ -40,7 +40,10 @@
     "mileage": "Kilométrage",
     "pricePerLiter": "Prix/Litre",
     "modify": "Modifier",
-    "place": "Lieu",
+    "place": {
+      "label": "Lieu",
+      "utiliserMaPositionActuelle": "Utiliser ma position actuelle"
+    },
     "date": "Date",
     "newConsumption": "Nouvelle consommation",
     "incomplete": "Consommation incomplète"

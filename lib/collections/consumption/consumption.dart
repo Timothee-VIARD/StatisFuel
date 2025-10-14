@@ -6,7 +6,7 @@ part 'consumption.g.dart';
 @collection
 class Consumption {
   Id id = Isar.autoIncrement;
-  DateTime? date;
+  DateTime date;
   double? totalPrice;
   double? pricePerLiter;
   double? liters;
@@ -16,7 +16,7 @@ class Consumption {
 
   Consumption({
     this.id = Isar.autoIncrement,
-    this.date,
+    required this.date,
     this.totalPrice,
     this.pricePerLiter,
     this.liters,
@@ -54,8 +54,7 @@ class Consumption {
   }
 
   bool isComplete() {
-    return date != null &&
-        totalPrice != null &&
+    return totalPrice != null &&
         pricePerLiter != null &&
         liters != null &&
         distance != null &&

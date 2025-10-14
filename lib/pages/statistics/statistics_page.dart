@@ -53,7 +53,7 @@ class StatisticsPage extends StatelessWidget {
                     data: state.consumptions
                         .map(
                           (consumption) {
-                          if (consumption.date == null || consumption.litersPer100km == null) {
+                          if (consumption.litersPer100km == null) {
                             return null;
                           }
                           return {

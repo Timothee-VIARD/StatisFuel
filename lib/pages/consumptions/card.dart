@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:statisfuel/collections/collections.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
-import 'package:statisfuel/pages/consumptions/new_consumption/form.dart';
+import 'package:statisfuel/pages/consumptions/consumption_form/consumption_form.dart';
 
 class ConsumptionCard extends StatelessWidget {
   final Consumption consumption;
@@ -66,9 +66,8 @@ class ConsumptionCard extends StatelessWidget {
                       Icon(Icons.calendar_today, size: 16, color: primaryColor),
                       const SizedBox(width: 8),
                       Text(
-                        consumption.date != null
-                            ? DateFormat(t.global.date.format).format(consumption.date!)
-                            : t.global.date.noDate,
+                        DateFormat(t.global.date.format)
+                            .format(consumption.date),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -80,15 +79,15 @@ class ConsumptionCard extends StatelessWidget {
                     children: [
                       Icon(Icons.location_on, size: 16, color: primaryColor),
                       const SizedBox(width: 4),
-                      // Text(
-                      //   consumption.place != null && consumption.place!.isNotEmpty
-                      //       ? consumption.place!
-                      //       : t.global.forms.notSpecified,
-                      //   style: TextStyle(
-                      //     color: Colors.grey[700],
-                      //     fontSize: 14,
-                      //   ),
-                      // ),
+                      Text(
+                        consumption.location != null
+                            ? consumption.location!.shortTitle
+                            : t.global.forms.notSpecified,
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                          fontSize: 14,
+                        ),
+                      ),
                     ],
                   ),
                 ],

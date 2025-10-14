@@ -10,7 +10,8 @@ class NewConsumptionCubit extends Cubit<NewConsumptionState> {
   NewConsumptionCubit({
     required ConsumptionRepository consumptionRepository,
   })  : _consumptionRepository = consumptionRepository,
-        super(NewConsumptionState(consumption: Consumption()));
+        super(NewConsumptionState(
+            consumption: Consumption(date: DateTime.now()),),);
 
   void initializeWithConsumption(Consumption consumption) {
     emit(state.copyWith(consumption: consumption));
@@ -81,6 +82,6 @@ class NewConsumptionCubit extends Cubit<NewConsumptionState> {
   }
 
   void resetForm() {
-    emit(NewConsumptionState(consumption: Consumption()));
+    emit(NewConsumptionState(consumption: Consumption(date: DateTime.now())));
   }
 }

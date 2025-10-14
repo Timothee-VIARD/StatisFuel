@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:statisfuel/collections/location/location.dart';
 import 'package:statisfuel/global/snackBar/controllers/cubit.dart';
-import 'package:statisfuel/i18n/strings.g.dart';
-import 'package:statisfuel/style/app_config.dart';
 import 'package:statisfuel/utils/location.dart';
 
 class LocationField extends StatefulWidget {
@@ -43,7 +41,9 @@ class _LocationFieldState extends State<LocationField> {
     super.initState();
     _controller = TextEditingController(text: widget.initialValue?.title);
     _state = ValueNotifier(const _LocationUiState());
-    _fetchCurrentLocation();
+    if (widget.initialValue == null) {
+      _fetchCurrentLocation();
+    }
   }
 
   @override

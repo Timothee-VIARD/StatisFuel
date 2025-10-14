@@ -92,7 +92,26 @@ class Location {
 
   @override
   String toString() {
-    return 'Location{name: $name, street: $street, isoCountryCode: $isoCountryCode, country: $country, postalCode: $postalCode, administrativeArea: $administrativeArea, subAdministrativeArea: $subAdministrativeArea, locality: $locality, subLocality: $subLocality, thoroughfare: $thoroughfare, subThoroughfare: $subThoroughfare, latitude: $latitude, longitude: $longitude}';
+    return '$name,$street,$isoCountryCode,$country,$postalCode,$administrativeArea,$subAdministrativeArea,$locality,$subLocality,$thoroughfare,$subThoroughfare,$latitude,$longitude';
+  }
+
+  Location fromString(String str) {
+    final parts = str.split(',');
+    return Location(
+      name: parts[0] != 'null' ? parts[0] : null,
+      street: parts[1] != 'null' ? parts[1] : null,
+      isoCountryCode: parts[2] != 'null' ? parts[2] : null,
+      country: parts[3] != 'null' ? parts[3] : null,
+      postalCode: parts[4] != 'null' ? parts[4] : null,
+      administrativeArea: parts[5] != 'null' ? parts[5] : null,
+      subAdministrativeArea: parts[6] != 'null' ? parts[6] : null,
+      locality: parts[7] != 'null' ? parts[7] : null,
+      subLocality: parts[8] != 'null' ? parts[8] : null,
+      thoroughfare: parts[9] != 'null' ? parts[9] : null,
+      subThoroughfare: parts[10] != 'null' ? parts[10] : null,
+      latitude: parts[11] != 'null' ? double.tryParse(parts[11]) : null,
+      longitude: parts[12] != 'null' ? double.tryParse(parts[12]) : null,
+    );
   }
 
   String get title {

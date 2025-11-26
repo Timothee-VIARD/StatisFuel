@@ -41,7 +41,19 @@ class CsvUtils {
         final fields = await input
             .transform(utf8.decoder)
             .transform(const CsvToListConverter())
-            .toList();
+            .toList()
+            .then(
+              (rows) => rows
+                  .map(
+                    (row) => row.map((cell) {
+                      if (cell is String && cell.isEmpty) {
+                        return null;
+                      }
+                      return cell;
+                    }).toList(),
+                  )
+                  .toList(),
+            );
         return fields;
       } else {
         throw Exception('Invalid selection');

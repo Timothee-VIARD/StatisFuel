@@ -5,12 +5,13 @@ class HeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: const Row(
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 24),
+      child: Row(
         children: [
           CircleAvatar(
             radius: 33.5,
+            backgroundColor: Colors.transparent,
             backgroundImage: AssetImage('assets/images/logo.png'),
           ),
           SizedBox(width: 16),

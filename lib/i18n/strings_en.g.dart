@@ -3,12 +3,13 @@
 ///
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
+// dart format off
 
 part of 'strings.g.dart';
 
 // Path: <root>
 typedef TranslationsEn = Translations; // ignore: unused_element
-class Translations implements BaseTranslations<AppLocale, Translations> {
+class Translations with BaseTranslations<AppLocale, Translations> {
 	/// Returns the current translations of the given [context].
 	///
 	/// Usage:
@@ -46,6 +47,9 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsGlobalEn global = TranslationsGlobalEn._(_root);
 	late final TranslationsUnitEn unit = TranslationsUnitEn._(_root);
 	late final TranslationsConsumptionEn consumption = TranslationsConsumptionEn._(_root);
+	late final TranslationsDashboardEn dashboard = TranslationsDashboardEn._(_root);
+	late final TranslationsHistoryEn history = TranslationsHistoryEn._(_root);
+	late final TranslationsStatisticsEn statistics = TranslationsStatisticsEn._(_root);
 }
 
 // Path: global
@@ -155,6 +159,42 @@ class TranslationsConsumptionEn {
 	String get incomplete => 'Consommation incomplète';
 }
 
+// Path: dashboard
+class TranslationsDashboardEn {
+	TranslationsDashboardEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Dashboard'
+	String get title => 'Dashboard';
+}
+
+// Path: history
+class TranslationsHistoryEn {
+	TranslationsHistoryEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Historique'
+	String get title => 'Historique';
+}
+
+// Path: statistics
+class TranslationsStatisticsEn {
+	TranslationsStatisticsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Statistiques'
+	String get title => 'Statistiques';
+}
+
 // Path: global.forms
 class TranslationsGlobalFormsEn {
 	TranslationsGlobalFormsEn._(this._root);
@@ -215,50 +255,55 @@ class TranslationsConsumptionPlaceEn {
 	String get utiliserMaPositionActuelle => 'Utiliser ma position actuelle';
 }
 
-/// Flat map(s) containing all translations.
+/// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
+///
+/// The Dart AOT compiler has issues with very large switch statements,
+/// so the map is split into smaller functions (512 entries each).
 extension on Translations {
 	dynamic _flatMapFunction(String path) {
-		switch (path) {
-			case 'app_title': return 'StatisFuel';
-			case 'global.loading': return 'Chargement...';
-			case 'global.forms.required': return 'Ce champ est obligatoire';
-			case 'global.forms.invalid': return 'Ce champ est invalide';
-			case 'global.forms.save': return 'Sauvegarder';
-			case 'global.forms.cancel': return 'Annuler';
-			case 'global.forms.success': return 'Enregistrement réussi';
-			case 'global.forms.error': return 'Une erreur est survenue';
-			case 'global.forms.notSpecified': return 'Non spécifié';
-			case 'global.date.noDate': return 'Date inconnue';
-			case 'global.date.format': return 'dd/MM/yyyy';
-			case 'global.confirm': return 'Confirmer';
-			case 'global.delete': return 'Supprimer';
-			case 'global.deleteAll': return 'Tout supprimer';
-			case 'global.yes': return 'Oui';
-			case 'global.no': return 'Non';
-			case 'global.exportToCSV': return 'Exporter en CSV';
-			case 'global.importFromCSV': return 'Importer depuis CSV';
-			case 'unit.distance': return 'km';
-			case 'unit.volume': return 'L';
-			case 'unit.price': return '€';
-			case 'unit.pricePerLiter': return '€/L';
-			case 'unit.litersPer100km': return 'L/100km';
-			case 'consumption.warningDeleteAll': return 'Êtes-vous sûr de vouloir supprimer toutes les consommations ?';
-			case 'consumption.noData': return 'Aucune consommation trouvée';
-			case 'consumption.totalPrice': return 'Prix total';
-			case 'consumption.volume': return 'Volume';
-			case 'consumption.liters': return 'Litres';
-			case 'consumption.distance': return 'Distance';
-			case 'consumption.mileage': return 'Kilométrage';
-			case 'consumption.pricePerLiter': return 'Prix/Litre';
-			case 'consumption.modify': return 'Modifier';
-			case 'consumption.place.label': return 'Lieu';
-			case 'consumption.place.utiliserMaPositionActuelle': return 'Utiliser ma position actuelle';
-			case 'consumption.date': return 'Date';
-			case 'consumption.newConsumption': return 'Nouvelle consommation';
-			case 'consumption.incomplete': return 'Consommation incomplète';
-			default: return null;
-		}
+		return switch (path) {
+			'app_title' => 'StatisFuel',
+			'global.loading' => 'Chargement...',
+			'global.forms.required' => 'Ce champ est obligatoire',
+			'global.forms.invalid' => 'Ce champ est invalide',
+			'global.forms.save' => 'Sauvegarder',
+			'global.forms.cancel' => 'Annuler',
+			'global.forms.success' => 'Enregistrement réussi',
+			'global.forms.error' => 'Une erreur est survenue',
+			'global.forms.notSpecified' => 'Non spécifié',
+			'global.date.noDate' => 'Date inconnue',
+			'global.date.format' => 'dd/MM/yyyy',
+			'global.confirm' => 'Confirmer',
+			'global.delete' => 'Supprimer',
+			'global.deleteAll' => 'Tout supprimer',
+			'global.yes' => 'Oui',
+			'global.no' => 'Non',
+			'global.exportToCSV' => 'Exporter en CSV',
+			'global.importFromCSV' => 'Importer depuis CSV',
+			'unit.distance' => 'km',
+			'unit.volume' => 'L',
+			'unit.price' => '€',
+			'unit.pricePerLiter' => '€/L',
+			'unit.litersPer100km' => 'L/100km',
+			'consumption.warningDeleteAll' => 'Êtes-vous sûr de vouloir supprimer toutes les consommations ?',
+			'consumption.noData' => 'Aucune consommation trouvée',
+			'consumption.totalPrice' => 'Prix total',
+			'consumption.volume' => 'Volume',
+			'consumption.liters' => 'Litres',
+			'consumption.distance' => 'Distance',
+			'consumption.mileage' => 'Kilométrage',
+			'consumption.pricePerLiter' => 'Prix/Litre',
+			'consumption.modify' => 'Modifier',
+			'consumption.place.label' => 'Lieu',
+			'consumption.place.utiliserMaPositionActuelle' => 'Utiliser ma position actuelle',
+			'consumption.date' => 'Date',
+			'consumption.newConsumption' => 'Nouvelle consommation',
+			'consumption.incomplete' => 'Consommation incomplète',
+			'dashboard.title' => 'Dashboard',
+			'history.title' => 'Historique',
+			'statistics.title' => 'Statistiques',
+			_ => null,
+		};
 	}
 }
-

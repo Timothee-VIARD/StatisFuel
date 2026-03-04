@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:statisfuel/pages/history/history_page.dart';
 
 import '../global/bottom_navigation_bar/bottom_navigation_bar.dart';
 import '../global/header/header.dart';
 import '../style/app_colors.dart';
-import 'consumptions/history_page.dart';
-import 'newEntry/new_entry_page.dart';
+import 'dashboard/dashboard_page.dart';
 import 'statistics/statistics_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -68,7 +68,9 @@ class _MainPageState extends State<MainPage> {
       backgroundColor: AppColors.surface,
       body: Container(
         padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 24),
-        height: MediaQuery.of(context).size.height - MediaQuery.of(context).viewInsets.bottom - 24,
+        height: MediaQuery.of(context).size.height -
+            MediaQuery.of(context).viewInsets.bottom -
+            24,
         child: Column(
           children: [
             const HeaderSection(),
@@ -80,9 +82,9 @@ class _MainPageState extends State<MainPage> {
                     ? const NeverScrollableScrollPhysics()
                     : const ClampingScrollPhysics(),
                 children: const [
-                  NewEntryPage(),
-                  HistoryPage(),
+                  DashboardPage(),
                   StatisticsPage(),
+                  HistoryPage(),
                 ],
               ),
             ),

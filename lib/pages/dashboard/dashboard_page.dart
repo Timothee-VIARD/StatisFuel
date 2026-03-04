@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
+import 'package:statisfuel/pages/dashboard/dialogs/new_consumption_dialog.dart';
 
 import '../../global/banner/banner.dart';
 
-class NewEntryPage extends StatelessWidget {
-  const NewEntryPage({super.key});
+class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class NewEntryPage extends StatelessWidget {
           const SizedBox(height: 31),
           Center(
             child: Text(
-              t.consumption.newConsumption,
+              t.dashboard.title,
               style:
                   const TextStyle(fontSize: 24, fontFamily: 'MPLUSRounded1c'),
             ),
@@ -24,16 +25,12 @@ class NewEntryPage extends StatelessWidget {
           const SizedBox(
             height: 8,
           ),
-          // Expanded(
-          //   child: Container(
-          //       width: double.infinity,
-          //       padding: const EdgeInsets.symmetric(horizontal: 24),
-          //       decoration: BoxDecoration(
-          //         borderRadius: BorderRadius.circular(20),
-          //         border: Border.all(color: AppColors.border),
-          //       ),
-          //       child: const SingleChildScrollView(child: EntryForm()),),
-          // ),
+          const Spacer(),
+
+          ElevatedButton(
+            onPressed: () => buildItemCreation(context),
+            child: const Text('Ajouter une consommation'),
+          ),
         ],
       ),
     );

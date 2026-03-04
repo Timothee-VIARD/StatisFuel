@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:statisfuel/i18n/strings.g.dart';
 
 import '../../style/app_colors.dart';
 import 'widgets/button_nav_bar.dart';
@@ -7,16 +8,16 @@ class CustomNavigationBar extends StatelessWidget {
   final ValueChanged<int> onIndexChanged;
   final int selectedIndex;
 
-  const CustomNavigationBar({
+  CustomNavigationBar({
     super.key,
     required this.onIndexChanged,
     required this.selectedIndex,
   });
 
-  final List<Map<String, String>> navigationButtons = const [
-    {'title': 'Nouveau'},
-    {'title': 'Historique'},
-    {'title': 'Statistiques'},
+  final List<Map<String, String>> navigationButtons = [
+    {'title': t.dashboard.title},
+    {'title': t.statistics.title},
+    {'title': t.history.title},
   ];
 
   @override

@@ -106,68 +106,71 @@ class _DailyConsumptionChartState extends State<DailyConsumptionChart> {
                 fontFamily: 'MPLUSRounded1c',
               ),
             ),
-            MenuAnchor(
-              builder: (
-                BuildContext context,
-                MenuController controller,
-                Widget? child,
-              ) {
-                return IconButton(
-                  icon: const Icon(Icons.more_vert),
-                  onPressed: () {
-                    controller.open();
-                  },
-                );
-              },
-              menuChildren: [
-                MenuItemButton(
-                  onPressed: () {
-                    // context.read<HistoryCubit>().exportToCsv();
-                  },
-                  child: Text(t.global.exportToCSV),
-                ),
-                MenuItemButton(
-                  onPressed: () {
-                    // context.read<HistoryCubit>().importFromCsv();
-                  },
-                  child: Text(t.global.importFromCSV),
-                ),
-                MenuItemButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext contextDialog) {
-                        return AlertDialog(
-                          title: Text(t.global.confirm),
-                          content: Text(t.consumption.warningDeleteAll),
-                          actions: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(contextDialog).pop();
-                              },
-                              child: Text(t.global.forms.cancel),
-                            ),
-                            ElevatedButton(
-                              style: TextButton.styleFrom(
-                                backgroundColor: Colors.red,
+            Directionality(
+              textDirection: TextDirection.rtl,
+              child: MenuAnchor(
+                builder: (
+                  BuildContext context,
+                  MenuController controller,
+                  Widget? child,
+                ) {
+                  return IconButton(
+                    icon: const Icon(Icons.more_vert),
+                    onPressed: () {
+                      controller.open();
+                    },
+                  );
+                },
+                menuChildren: [
+                  MenuItemButton(
+                    onPressed: () {
+                      // context.read<HistoryCubit>().exportToCsv();
+                    },
+                    child: Text(t.global.exportToCSV),
+                  ),
+                  MenuItemButton(
+                    onPressed: () {
+                      // context.read<HistoryCubit>().importFromCsv();
+                    },
+                    child: Text(t.global.importFromCSV),
+                  ),
+                  MenuItemButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext contextDialog) {
+                          return AlertDialog(
+                            title: Text(t.global.confirm),
+                            content: Text(t.consumption.warningDeleteAll),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(contextDialog).pop();
+                                },
+                                child: Text(t.global.forms.cancel),
                               ),
-                              onPressed: () {
-                                // context.read<HistoryCubit>().deleteAllConsumptions();
-                                Navigator.of(contextDialog).pop();
-                              },
-                              child: Text(
-                                t.global.delete,
-                                style: const TextStyle(color: Colors.white),
+                              ElevatedButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                ),
+                                onPressed: () {
+                                  // context.read<HistoryCubit>().deleteAllConsumptions();
+                                  Navigator.of(contextDialog).pop();
+                                },
+                                child: Text(
+                                  t.global.delete,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
                               ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  child: Text(t.global.deleteAll),
-                ),
-              ],
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Text(t.global.deleteAll),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

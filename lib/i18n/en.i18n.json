@@ -47,5 +47,14 @@
     "date": "Date",
     "newConsumption": "Nouvelle consommation",
     "incomplete": "Consommation incomplète"
+  },
+  "dashboard": {
+    "title": "Dashboard"
+  },
+  "history": {
+    "title": "Historique"
+  },
+  "statistics": {
+    "title": "Statistiques"
   }
 }

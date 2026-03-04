@@ -53,29 +53,39 @@ const LocationSchema = Schema(
       name: r'postalCode',
       type: IsarType.string,
     ),
-    r'street': PropertySchema(
+    r'shortTitle': PropertySchema(
       id: 8,
+      name: r'shortTitle',
+      type: IsarType.string,
+    ),
+    r'street': PropertySchema(
+      id: 9,
       name: r'street',
       type: IsarType.string,
     ),
     r'subAdministrativeArea': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'subAdministrativeArea',
       type: IsarType.string,
     ),
     r'subLocality': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'subLocality',
       type: IsarType.string,
     ),
     r'subThoroughfare': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'subThoroughfare',
       type: IsarType.string,
     ),
     r'thoroughfare': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'thoroughfare',
+      type: IsarType.string,
+    ),
+    r'title': PropertySchema(
+      id: 14,
+      name: r'title',
       type: IsarType.string,
     )
   },
@@ -127,6 +137,7 @@ int _locationEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  bytesCount += 3 + object.shortTitle.length * 3;
   {
     final value = object.street;
     if (value != null) {
@@ -157,6 +168,7 @@ int _locationEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  bytesCount += 3 + object.title.length * 3;
   return bytesCount;
 }
 
@@ -174,11 +186,13 @@ void _locationSerialize(
   writer.writeDouble(offsets[5], object.longitude);
   writer.writeString(offsets[6], object.name);
   writer.writeString(offsets[7], object.postalCode);
-  writer.writeString(offsets[8], object.street);
-  writer.writeString(offsets[9], object.subAdministrativeArea);
-  writer.writeString(offsets[10], object.subLocality);
-  writer.writeString(offsets[11], object.subThoroughfare);
-  writer.writeString(offsets[12], object.thoroughfare);
+  writer.writeString(offsets[8], object.shortTitle);
+  writer.writeString(offsets[9], object.street);
+  writer.writeString(offsets[10], object.subAdministrativeArea);
+  writer.writeString(offsets[11], object.subLocality);
+  writer.writeString(offsets[12], object.subThoroughfare);
+  writer.writeString(offsets[13], object.thoroughfare);
+  writer.writeString(offsets[14], object.title);
 }
 
 Location _locationDeserialize(
@@ -196,11 +210,11 @@ Location _locationDeserialize(
     longitude: reader.readDoubleOrNull(offsets[5]),
     name: reader.readStringOrNull(offsets[6]),
     postalCode: reader.readStringOrNull(offsets[7]),
-    street: reader.readStringOrNull(offsets[8]),
-    subAdministrativeArea: reader.readStringOrNull(offsets[9]),
-    subLocality: reader.readStringOrNull(offsets[10]),
-    subThoroughfare: reader.readStringOrNull(offsets[11]),
-    thoroughfare: reader.readStringOrNull(offsets[12]),
+    street: reader.readStringOrNull(offsets[9]),
+    subAdministrativeArea: reader.readStringOrNull(offsets[10]),
+    subLocality: reader.readStringOrNull(offsets[11]),
+    subThoroughfare: reader.readStringOrNull(offsets[12]),
+    thoroughfare: reader.readStringOrNull(offsets[13]),
   );
   return object;
 }
@@ -229,7 +243,7 @@ P _locationDeserializeProp<P>(
     case 7:
       return (reader.readStringOrNull(offset)) as P;
     case 8:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 9:
       return (reader.readStringOrNull(offset)) as P;
     case 10:
@@ -238,6 +252,10 @@ P _locationDeserializeProp<P>(
       return (reader.readStringOrNull(offset)) as P;
     case 12:
       return (reader.readStringOrNull(offset)) as P;
+    case 13:
+      return (reader.readStringOrNull(offset)) as P;
+    case 14:
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -1294,6 +1312,137 @@ extension LocationQueryFilter
     });
   }
 
+  QueryBuilder<Location, Location, QAfterFilterCondition> shortTitleEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'shortTitle',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> shortTitleGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'shortTitle',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> shortTitleLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'shortTitle',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> shortTitleBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'shortTitle',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> shortTitleStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'shortTitle',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> shortTitleEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'shortTitle',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> shortTitleContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'shortTitle',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> shortTitleMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'shortTitle',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> shortTitleIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'shortTitle',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition>
+      shortTitleIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'shortTitle',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<Location, Location, QAfterFilterCondition> streetIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -2044,6 +2193,136 @@ extension LocationQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'thoroughfare',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> titleEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> titleGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> titleLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> titleBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'title',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> titleStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> titleEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> titleContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> titleMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'title',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> titleIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Location, Location, QAfterFilterCondition> titleIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'title',
         value: '',
       ));
     });

@@ -1,4 +1,4 @@
-import 'package:isar/isar.dart';
+import 'package:isar_community/isar.dart';
 import 'package:statisfuel/collections/location/location.dart';
 
 part 'consumption.g.dart';

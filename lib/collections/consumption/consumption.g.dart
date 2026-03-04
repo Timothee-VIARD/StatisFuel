@@ -70,7 +70,7 @@ const ConsumptionSchema = CollectionSchema(
   getId: _consumptionGetId,
   getLinks: _consumptionGetLinks,
   attach: _consumptionAttach,
-  version: '3.1.8',
+  version: '3.3.0',
 );
 
 int _consumptionEstimateSize(

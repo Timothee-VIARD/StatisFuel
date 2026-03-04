@@ -8,7 +8,11 @@ class DailyConsumptionChart extends StatefulWidget {
   final String title;
   final List<Map<String, dynamic>> data;
 
-  const DailyConsumptionChart({super.key, required this.data, required this.title});
+  const DailyConsumptionChart({
+    super.key,
+    required this.data,
+    required this.title,
+  });
 
   @override
   State<DailyConsumptionChart> createState() => _DailyConsumptionChartState();
@@ -30,31 +34,57 @@ class _DailyConsumptionChartState extends State<DailyConsumptionChart> {
     maxY = double.negativeInfinity;
     minY = double.infinity;
 
-    return data.map((entry) {
-      final date = entry['date'] as DateTime;
-      final value = entry['value'] as double;
+    final spots = data
+        .map((entry) {
+          final date = entry['date'] as DateTime;
+          final value = entry['value'] as double;
 
-      final roundedValue = value.roundToDouble();
-      if (value > maxY) {
-        if (roundedValue > value) {
-          maxY = roundedValue;
-        } else {
-          maxY = roundedValue + 0.5;
-        }
-      }
-      if (value < minY) {
-        if (roundedValue < value) {
-          minY = roundedValue;
-        } else {
-          minY = value;
-        }
-      }
+          if (!value.isFinite) {
+            return null;
+          }
 
-      return FlSpot(date.millisecondsSinceEpoch.toDouble(), double.parse(value.toStringAsFixed(2)));
-    }).toList();
+          final roundedValue = value.roundToDouble();
+          if (value > maxY) {
+            if (roundedValue > value) {
+              maxY = roundedValue;
+            } else {
+              maxY = roundedValue + 0.5;
+            }
+          }
+          if (value < minY) {
+            if (roundedValue < value) {
+              minY = roundedValue;
+            } else {
+              minY = value;
+            }
+          }
+
+          return FlSpot(
+            date.millisecondsSinceEpoch.toDouble(),
+            double.parse(value.toStringAsFixed(2)),
+          );
+        })
+        .whereType<FlSpot>()
+        .toList();
+
+    if (spots.isEmpty || !minY.isFinite || !maxY.isFinite) {
+      minY = 0;
+      maxY = 1;
+      return spots;
+    }
+
+    if (minY == maxY) {
+      minY = minY - 1;
+      maxY = maxY + 1;
+    }
+
+    return spots;
   }
 
   String _formatDate(double value) {
+    if (!value.isFinite) {
+      return '';
+    }
     final date = DateTime.fromMillisecondsSinceEpoch(value.toInt());
     return '${date.day}/${date.month}';
   }
@@ -77,7 +107,11 @@ class _DailyConsumptionChartState extends State<DailyConsumptionChart> {
               ),
             ),
             MenuAnchor(
-              builder: (BuildContext context, MenuController controller, Widget? child) {
+              builder: (
+                BuildContext context,
+                MenuController controller,
+                Widget? child,
+              ) {
                 return IconButton(
                   icon: const Icon(Icons.more_vert),
                   onPressed: () {
@@ -114,7 +148,9 @@ class _DailyConsumptionChartState extends State<DailyConsumptionChart> {
                               child: Text(t.global.forms.cancel),
                             ),
                             ElevatedButton(
-                              style: TextButton.styleFrom(backgroundColor: Colors.red),
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.red,
+                              ),
                               onPressed: () {
                                 // context.read<HistoryCubit>().deleteAllConsumptions();
                                 Navigator.of(contextDialog).pop();
@@ -196,13 +232,24 @@ class _DailyConsumptionChartState extends State<DailyConsumptionChart> {
               lineTouchData: LineTouchData(
                 touchTooltipData: LineTouchTooltipData(
                   getTooltipItems: (touchedSpots) {
-                    return touchedSpots.map((spot) {
-                      final date = DateTime.fromMillisecondsSinceEpoch(spot.x.toInt());
-                      return LineTooltipItem(
-                        'Date: ${date.day}/${date.month}/${date.year}\nValue: ${spot.y.toStringAsFixed(2)}',
-                        const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                      );
-                    }).toList();
+                    return touchedSpots
+                        .map((spot) {
+                          if (!spot.x.isFinite || !spot.y.isFinite) {
+                            return null;
+                          }
+                          final date = DateTime.fromMillisecondsSinceEpoch(
+                            spot.x.toInt(),
+                          );
+                          return LineTooltipItem(
+                            'Date: ${date.day}/${date.month}/${date.year}\nValue: ${spot.y.toStringAsFixed(2)}',
+                            const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        })
+                        .whereType<LineTooltipItem>()
+                        .toList();
                   },
                   getTooltipColor: (LineBarSpot barSpot) => Colors.blue,
                 ),

@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:statisfuel/global/snackBar/controllers/cubit.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/history/card.dart';
-import 'package:statisfuel/pages/dashboard/dialogs/consumption_form/consumption_form.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
 
 import 'state/cubit.dart';
@@ -17,7 +16,8 @@ class HistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          HistoryCubit(consumptionRepository: GetIt.I<ConsumptionRepository>())..loadConsumptions(),
+          HistoryCubit(consumptionRepository: GetIt.I<ConsumptionRepository>())
+            ..loadConsumptions(),
       child: Builder(
         builder: (context) {
           return const HistoryView();
@@ -55,7 +55,11 @@ class HistoryView extends StatelessWidget {
                 Directionality(
                   textDirection: TextDirection.rtl,
                   child: MenuAnchor(
-                    builder: (BuildContext context, MenuController controller, Widget? child) {
+                    builder: (
+                      BuildContext context,
+                      MenuController controller,
+                      Widget? child,
+                    ) {
                       return IconButton(
                         icon: const Icon(Icons.more_vert),
                         onPressed: () {
@@ -92,14 +96,19 @@ class HistoryView extends StatelessWidget {
                                     child: Text(t.global.forms.cancel),
                                   ),
                                   ElevatedButton(
-                                    style: TextButton.styleFrom(backgroundColor: Colors.red),
+                                    style: TextButton.styleFrom(
+                                      backgroundColor: Colors.red,
+                                    ),
                                     onPressed: () {
-                                      context.read<HistoryCubit>().deleteAllConsumptions();
+                                      context
+                                          .read<HistoryCubit>()
+                                          .deleteAllConsumptions();
                                       Navigator.of(contextDialog).pop();
                                     },
                                     child: Text(
                                       t.global.delete,
-                                      style: const TextStyle(color: Colors.white),
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ],
@@ -119,9 +128,13 @@ class HistoryView extends StatelessWidget {
             child: BlocConsumer<HistoryCubit, HistoryState>(
               listener: (context, state) {
                 if (state.errorMessage != null) {
-                  context.read<NotificationCubit>().showError(state.errorMessage!);
+                  context
+                      .read<NotificationCubit>()
+                      .showError(state.errorMessage!);
                 } else if (state.successMessage != null) {
-                  context.read<NotificationCubit>().showSuccess(state.successMessage!);
+                  context
+                      .read<NotificationCubit>()
+                      .showSuccess(state.successMessage!);
                 }
               },
               buildWhen: (previous, current) {
@@ -135,11 +148,16 @@ class HistoryView extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.local_gas_station, size: 64, color: Colors.grey[400]),
+                        Icon(
+                          Icons.local_gas_station,
+                          size: 64,
+                          color: Colors.grey[400],
+                        ),
                         const SizedBox(height: 16),
                         Text(
                           t.consumption.noData,
-                          style: const TextStyle(fontSize: 18, color: Colors.grey),
+                          style:
+                              const TextStyle(fontSize: 18, color: Colors.grey),
                         ),
                       ],
                     ),
@@ -161,21 +179,28 @@ class HistoryView extends StatelessWidget {
                         child: ListView.separated(
                           physics: const AlwaysScrollableScrollPhysics(),
                           controller: scrollController,
-                          separatorBuilder: (context, index) => const SizedBox(height: 16),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 16),
                           itemCount: state.consumptions.length,
                           itemBuilder: (context, index) {
                             final consumption = state.consumptions[index];
                             return Padding(
-                              padding: const EdgeInsets.only(right: 8, left: 8, bottom: 4),
+                              padding: const EdgeInsets.only(
+                                right: 8,
+                                left: 8,
+                                bottom: 4,
+                              ),
                               child: ConsumptionCard(
                                 consumption: consumption,
                                 onSave: (consumption, id) {
                                   context
                                       .read<HistoryCubit>()
-                                      .submitConsumption(consumption, id: id);
+                                      .updateConsumption(consumption, id!);
                                 },
                                 onDelete: (id) {
-                                  context.read<HistoryCubit>().deleteConsumption(id);
+                                  context
+                                      .read<HistoryCubit>()
+                                      .deleteConsumption(id);
                                 },
                               ),
                             );
@@ -192,6 +217,4 @@ class HistoryView extends StatelessWidget {
       ),
     );
   }
-
-
 }

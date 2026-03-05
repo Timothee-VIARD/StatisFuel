@@ -1,26 +1,26 @@
 import 'package:equatable/equatable.dart';
 import 'package:statisfuel/collections/collections.dart';
 
-class EntryFormState extends Equatable {
+class DashboardState extends Equatable {
   final Consumption consumption;
   final bool isSubmitting;
   final bool isSuccess;
   final String? errorMessage;
 
-  const EntryFormState({
+  const DashboardState({
     required this.consumption,
     this.isSubmitting = false,
     this.isSuccess = false,
     this.errorMessage,
   });
 
-  EntryFormState copyWith({
+  DashboardState copyWith({
     Consumption? consumption,
     bool? isSubmitting,
     bool? isSuccess,
     String? errorMessage,
   }) {
-    return EntryFormState(
+    return DashboardState(
       consumption: consumption ?? this.consumption,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
@@ -29,5 +29,6 @@ class EntryFormState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [consumption, isSubmitting, isSuccess, errorMessage];
+  List<Object?> get props =>
+      [consumption, isSubmitting, isSuccess, errorMessage];
 }

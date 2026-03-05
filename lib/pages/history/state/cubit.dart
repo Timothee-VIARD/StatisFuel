@@ -20,48 +20,30 @@ class HistoryCubit extends Cubit<HistoryState> {
     }
   }
 
-  Future<void> submitConsumption(Consumption consumption, {int? id}) async {
+  Future<void> updateConsumption(Consumption consumption, int id) async {
     try {
-      if (id == null) {
-        await consumptionRepository.createConsumption(consumption);
-        final List<Consumption> newConsumptions = [];
-        newConsumptions.addAll(state.consumptions);
-        newConsumptions.add(consumption);
-        newConsumptions.sort(
-          (a, b) => (b.date).compareTo(a.date),
-        );
-        emit(
-          state.copyWith(
-            isLoading: false,
-            consumptions: newConsumptions,
-            successMessage: 'Added consumption',
-          ),
-        );
-      } else {
-        await consumptionRepository.updateConsumption(
-          id,
-          date: consumption.date,
-          totalPrice: consumption.totalPrice,
-          pricePerLiter: consumption.pricePerLiter,
-          liters: consumption.liters,
-          distance: consumption.distance,
-          mileage: consumption.mileage,
-          location: consumption.location,
-        );
-        emit(
-          state.copyWith(
-            isLoading: false,
-            consumptions: state.consumptions
-                .map((c) => c.id == id ? consumption : c)
-                .toList(growable: false)
-              ..sort(
-                (a, b) =>
-                    (b.date).compareTo(a.date),
-              ),
-            successMessage: 'Updated consumption',
-          ),
-        );
-      }
+      await consumptionRepository.updateConsumption(
+        id,
+        date: consumption.date,
+        totalPrice: consumption.totalPrice,
+        pricePerLiter: consumption.pricePerLiter,
+        liters: consumption.liters,
+        distance: consumption.distance,
+        mileage: consumption.mileage,
+        location: consumption.location,
+      );
+      emit(
+        state.copyWith(
+          isLoading: false,
+          consumptions: state.consumptions
+              .map((c) => c.id == id ? consumption : c)
+              .toList(growable: false)
+            ..sort(
+              (a, b) => (b.date).compareTo(a.date),
+            ),
+          successMessage: 'Updated consumption',
+        ),
+      );
     } catch (e) {
       emit(
         state.copyWith(

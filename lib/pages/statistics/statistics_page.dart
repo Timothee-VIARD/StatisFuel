@@ -5,8 +5,7 @@ import 'package:statisfuel/pages/statistics/charts/daily_consumption.dart';
 import 'package:statisfuel/pages/statistics/state/cubit.dart';
 import 'package:statisfuel/pages/statistics/state/state.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
-
-import '../../global/banner/banner.dart';
+import 'package:statisfuel/style/app_config.dart';
 
 class StatisticsPage extends StatelessWidget {
   const StatisticsPage({super.key});
@@ -16,13 +15,10 @@ class StatisticsPage extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => StatisticsCubit(consumptionRepository: GetIt.I<ConsumptionRepository>())..loadConsumptions(),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: AppConfig.padding * 3),
         child: Column(
+          spacing: AppConfig.spacing,
           children: [
-            const BannerSection(imageUrl: 'assets/images/statistiques.png'),
-            const SizedBox(
-              height: 31,
-            ),
             const Center(
               child: Text(
                 'Statistiques',
@@ -32,9 +28,6 @@ class StatisticsPage extends StatelessWidget {
                   fontFamily: 'MPLUSRounded1c',
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 31,
             ),
             BlocBuilder<StatisticsCubit, StatisticsState>(
               builder: (BuildContext context, StatisticsState state) {

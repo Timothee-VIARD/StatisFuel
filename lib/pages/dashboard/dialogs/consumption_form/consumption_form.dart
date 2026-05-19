@@ -77,7 +77,6 @@ class _ConsumptionFormState extends State<ConsumptionForm> {
             mainAxisSize: MainAxisSize.min,
             spacing: AppConfig.padding,
             children: [
-              const SizedBox(height: 8),
               Selector<DateTime?>(
                 selector: (state) => state.consumption.date,
                 builder: (context, date) => TextFormField(

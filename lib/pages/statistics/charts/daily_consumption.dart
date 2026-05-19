@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
+import 'package:statisfuel/style/app_config.dart';
 
 class DailyConsumptionChart extends StatefulWidget {
   final String title;
@@ -95,6 +96,7 @@ class _DailyConsumptionChartState extends State<DailyConsumptionChart> {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: AppConfig.spacing,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -173,9 +175,6 @@ class _DailyConsumptionChartState extends State<DailyConsumptionChart> {
               ),
             ),
           ],
-        ),
-        const SizedBox(
-          height: 8,
         ),
         AspectRatio(
           aspectRatio: 2,

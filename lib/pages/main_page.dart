@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:statisfuel/pages/history/history_page.dart';
+import 'package:statisfuel/style/app_config.dart';
 
 import '../global/bottom_navigation_bar/bottom_navigation_bar.dart';
 import '../global/header/header.dart';
@@ -65,16 +66,18 @@ class _MainPageState extends State<MainPage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColors.surface,
-      body: Container(
-        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 24),
-        height: MediaQuery.of(context).size.height -
-            MediaQuery.of(context).viewInsets.bottom -
-            24,
+      body: Padding(
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).padding.top + AppConfig.padding * 3,
+          bottom: AppConfig.padding * 3,
+        ),
         child: Column(
+          spacing: AppConfig.spacing,
           children: [
-            const HeaderSection(),
-            const SizedBox(height: 31),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppConfig.padding * 3),
+              child: HeaderSection(),
+            ),
             Expanded(
               child: PageView(
                 controller: _pageController,
@@ -88,12 +91,16 @@ class _MainPageState extends State<MainPage> {
                 ],
               ),
             ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: AppConfig.padding * 3),
+              child: CustomNavigationBar(
+                onIndexChanged: _onIndexChanged,
+                selectedIndex: _selectedIndex,
+              ),
+            ),
           ],
         ),
-      ),
-      bottomNavigationBar: CustomNavigationBar(
-        onIndexChanged: _onIndexChanged,
-        selectedIndex: _selectedIndex,
       ),
     );
   }

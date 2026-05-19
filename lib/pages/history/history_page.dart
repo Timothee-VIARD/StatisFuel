@@ -5,6 +5,7 @@ import 'package:statisfuel/global/snackBar/controllers/cubit.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/history/card.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
+import 'package:statisfuel/style/app_config.dart';
 
 import 'state/cubit.dart';
 import 'state/state.dart';
@@ -35,94 +36,90 @@ class HistoryView extends StatelessWidget {
     final ScrollController scrollController = ScrollController();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: AppConfig.padding * 3),
       child: Column(
-        spacing: 16,
+        spacing: AppConfig.spacing,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Historique',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: 'MPLUSRounded1c',
-                    fontWeight: FontWeight.bold,
-                  ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Historique',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontFamily: 'MPLUSRounded1c',
+                  fontWeight: FontWeight.bold,
                 ),
-                Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: MenuAnchor(
-                    builder: (
-                      BuildContext context,
-                      MenuController controller,
-                      Widget? child,
-                    ) {
-                      return IconButton(
-                        icon: const Icon(Icons.more_vert),
-                        onPressed: () {
-                          controller.open();
-                        },
-                      );
-                    },
-                    menuChildren: [
-                      MenuItemButton(
-                        onPressed: () {
-                          context.read<HistoryCubit>().exportToCsv();
-                        },
-                        child: Text(t.global.exportToCSV),
-                      ),
-                      MenuItemButton(
-                        onPressed: () {
-                          context.read<HistoryCubit>().importFromCsv();
-                        },
-                        child: Text(t.global.importFromCSV),
-                      ),
-                      MenuItemButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext contextDialog) {
-                              return AlertDialog(
-                                title: Text(t.global.confirm),
-                                content: Text(t.consumption.warningDeleteAll),
-                                actions: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(contextDialog).pop();
-                                    },
-                                    child: Text(t.global.forms.cancel),
+              ),
+              Directionality(
+                textDirection: TextDirection.rtl,
+                child: MenuAnchor(
+                  builder: (
+                    BuildContext context,
+                    MenuController controller,
+                    Widget? child,
+                  ) {
+                    return IconButton(
+                      icon: const Icon(Icons.more_vert),
+                      onPressed: () {
+                        controller.open();
+                      },
+                    );
+                  },
+                  menuChildren: [
+                    MenuItemButton(
+                      onPressed: () {
+                        context.read<HistoryCubit>().exportToCsv();
+                      },
+                      child: Text(t.global.exportToCSV),
+                    ),
+                    MenuItemButton(
+                      onPressed: () {
+                        context.read<HistoryCubit>().importFromCsv();
+                      },
+                      child: Text(t.global.importFromCSV),
+                    ),
+                    MenuItemButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext contextDialog) {
+                            return AlertDialog(
+                              title: Text(t.global.confirm),
+                              content: Text(t.consumption.warningDeleteAll),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(contextDialog).pop();
+                                  },
+                                  child: Text(t.global.forms.cancel),
+                                ),
+                                ElevatedButton(
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: Colors.red,
                                   ),
-                                  ElevatedButton(
-                                    style: TextButton.styleFrom(
-                                      backgroundColor: Colors.red,
-                                    ),
-                                    onPressed: () {
-                                      context
-                                          .read<HistoryCubit>()
-                                          .deleteAllConsumptions();
-                                      Navigator.of(contextDialog).pop();
-                                    },
-                                    child: Text(
-                                      t.global.delete,
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                    ),
+                                  onPressed: () {
+                                    context
+                                        .read<HistoryCubit>()
+                                        .deleteAllConsumptions();
+                                    Navigator.of(contextDialog).pop();
+                                  },
+                                  child: Text(
+                                    t.global.delete,
+                                    style: const TextStyle(color: Colors.white),
                                   ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: Text(t.global.deleteAll),
-                      ),
-                    ],
-                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: Text(t.global.deleteAll),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Expanded(
             child: BlocConsumer<HistoryCubit, HistoryState>(
@@ -147,13 +144,13 @@ class HistoryView extends StatelessWidget {
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: AppConfig.spacing * 2,
                       children: [
                         Icon(
                           Icons.local_gas_station,
                           size: 64,
                           color: Colors.grey[400],
                         ),
-                        const SizedBox(height: 16),
                         Text(
                           t.consumption.noData,
                           style:
@@ -180,15 +177,13 @@ class HistoryView extends StatelessWidget {
                           physics: const AlwaysScrollableScrollPhysics(),
                           controller: scrollController,
                           separatorBuilder: (context, index) =>
-                              const SizedBox(height: 16),
+                              const SizedBox(height: AppConfig.spacing * 2),
                           itemCount: state.consumptions.length,
                           itemBuilder: (context, index) {
                             final consumption = state.consumptions[index];
                             return Padding(
-                              padding: const EdgeInsets.only(
-                                right: 8,
-                                left: 8,
-                                bottom: 4,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppConfig.padding,
                               ),
                               child: ConsumptionCard(
                                 consumption: consumption,

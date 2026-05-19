@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/dashboard/dialogs/consumption_form/consumption_form.dart';
 import 'package:statisfuel/pages/dashboard/state/cubit.dart';
+import 'package:statisfuel/style/app_config.dart';
 
 void buildItemCreation(BuildContext context) {
   showDialog(
@@ -12,7 +13,7 @@ void buildItemCreation(BuildContext context) {
         child: SizedBox(
           width: double.infinity,
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(AppConfig.padding * 3),
             child: Dialog(
               insetPadding: EdgeInsets.zero,
               surfaceTintColor: Colors.transparent,
@@ -21,7 +22,7 @@ void buildItemCreation(BuildContext context) {
                 borderRadius: BorderRadius.circular(24.0),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(AppConfig.padding * 3),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

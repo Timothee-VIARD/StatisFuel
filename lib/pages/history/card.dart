@@ -4,6 +4,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:statisfuel/collections/collections.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/dashboard/dialogs/consumption_form/consumption_form.dart';
+import 'package:statisfuel/style/app_config.dart';
 
 class ConsumptionCard extends StatelessWidget {
   final Consumption consumption;
@@ -34,37 +35,36 @@ class ConsumptionCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppConfig.padding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: AppConfig.spacing * 2,
             children: [
               if (!consumption.isComplete())
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.warning, color: Colors.orange),
-                        const SizedBox(width: 8),
-                        Text(
-                          t.consumption.incomplete,
-                          style: const TextStyle(
-                            color: Colors.orange,
-                            fontWeight: FontWeight.bold,
-                          ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: AppConfig.spacing),
+                  child: Row(
+                    spacing: AppConfig.spacing,
+                    children: [
+                      const Icon(Icons.warning, color: Colors.orange),
+                      Text(
+                        t.consumption.incomplete,
+                        style: const TextStyle(
+                          color: Colors.orange,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               // Entête avec date et lieu
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
+                    spacing: AppConfig.spacing,
                     children: [
                       Icon(Icons.calendar_today, size: 16, color: primaryColor),
-                      const SizedBox(width: 8),
                       Text(
                         DateFormat(t.global.date.format)
                             .format(consumption.date),
@@ -76,9 +76,9 @@ class ConsumptionCard extends StatelessWidget {
                     ],
                   ),
                   Row(
+                    spacing: AppConfig.spacing / 2,
                     children: [
                       Icon(Icons.location_on, size: 16, color: primaryColor),
-                      const SizedBox(width: 4),
                       Text(
                         consumption.location != null
                             ? consumption.location!.shortTitle
@@ -93,7 +93,7 @@ class ConsumptionCard extends StatelessWidget {
                 ],
               ),
 
-              const Divider(height: 24),
+              const Divider(),
 
               // Informations principales
               Row(
@@ -129,8 +129,6 @@ class ConsumptionCard extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 16),
-
               Flex(
                 direction: Axis.horizontal,
                 children: [
@@ -140,8 +138,6 @@ class ConsumptionCard extends StatelessWidget {
                   ),
                 ],
               ),
-
-              const SizedBox(height: 16),
 
               // Informations détaillées
               Row(
@@ -177,9 +173,9 @@ class ConsumptionCard extends StatelessWidget {
       message: label,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        spacing: AppConfig.spacing / 2,
         children: [
           Icon(icon, color: color, size: 28, weight: 700),
-          const SizedBox(height: 8),
           Text(
             value,
             style: const TextStyle(
@@ -197,9 +193,9 @@ class ConsumptionCard extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
+        spacing: AppConfig.spacing / 2,
         children: [
           Icon(icon, size: 24),
-          const SizedBox(width: 4),
           Text(
             value,
             style: const TextStyle(
@@ -215,9 +211,9 @@ class ConsumptionCard extends StatelessWidget {
   Widget _buildDetailItem(IconData icon, String label, String value) {
     return Row(
       mainAxisSize: MainAxisSize.min,
+      spacing: AppConfig.spacing / 2,
       children: [
         Icon(icon, size: 16, color: Colors.grey[700], weight: 700),
-        const SizedBox(width: 4),
         Text(
           label,
           style: TextStyle(
@@ -225,7 +221,6 @@ class ConsumptionCard extends StatelessWidget {
             color: Colors.grey[700],
           ),
         ),
-        const SizedBox(width: 4),
         Flexible(
           child: Text(
             value,
@@ -248,7 +243,7 @@ class ConsumptionCard extends StatelessWidget {
           child: SizedBox(
             width: double.infinity,
             child: Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(AppConfig.padding * 2),
               child: Dialog(
                 insetPadding: EdgeInsets.zero,
                 surfaceTintColor: Colors.transparent,
@@ -257,7 +252,7 @@ class ConsumptionCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24.0),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(AppConfig.padding * 3),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,

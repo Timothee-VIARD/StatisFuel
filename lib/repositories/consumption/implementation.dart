@@ -137,4 +137,58 @@ class ConsumptionRepository extends RepositoryBase
       rethrow;
     }
   }
+  
+  @override
+  Future<double> getAverageConsumption() {
+    // return isar.collection<Consumption>().average((c) => c.liters! / c.distance!);
+    return Future.error('Not implemented');
+  }
+  
+  @override
+  Future<double> getAverageDistance() {
+    // TODO: implement getAverageDistance
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<double> getAveragePricePerLiter() {
+    // TODO: implement getAveragePricePerLiter
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<double> getMaxConsumption() {
+    // TODO: implement getMaxConsumption
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<double> getMaxPricePerLiter() {
+    // TODO: implement getMaxPricePerLiter
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<double> getMinConsumption() {
+    // TODO: implement getMinConsumption
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<double> getMinPricePerLiter() {
+    // TODO: implement getMinPricePerLiter
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<double> getTotalLiters() {
+    // TODO: implement getTotalLiters
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<double> getTotalSpent() {
+    // TODO: implement getTotalSpent
+    throw UnimplementedError();
+  }
 }

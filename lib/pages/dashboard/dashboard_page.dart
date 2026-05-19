@@ -5,8 +5,7 @@ import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/dashboard/dialogs/new_consumption_dialog.dart';
 import 'package:statisfuel/pages/dashboard/state/cubit.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
-
-import '../../global/banner/banner.dart';
+import 'package:statisfuel/style/app_config.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -31,21 +30,17 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppConfig.padding * 3),
       child: Column(
+        spacing: AppConfig.spacing,
         children: [
-          const BannerSection(imageUrl: 'assets/images/plein.png'),
-          const SizedBox(height: 31),
           Center(
             child: Text(
               t.dashboard.title,
               style:
                   const TextStyle(fontSize: 24, fontFamily: 'MPLUSRounded1c'),
             ),
-          ),
-          const SizedBox(
-            height: 8,
           ),
           const Spacer(),
           ElevatedButton(

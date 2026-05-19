@@ -26,4 +26,22 @@ abstract class IConsumptionRepository {
   Future<void> exportToCsv();
 
   Future<void> importFromCsv();
+
+  Future<double> getTotalSpent();
+
+  Future<double> getTotalLiters();
+
+  Future<double> getAveragePricePerLiter();
+
+  Future<double> getAverageDistance();
+
+  Future<double> getAverageConsumption();
+   
+  Future<double> getMinConsumption();
+
+  Future<double> getMaxConsumption();
+
+  Future<double> getMinPricePerLiter();
+
+  Future<double> getMaxPricePerLiter();
 }

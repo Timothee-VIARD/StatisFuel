@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/dashboard/dialogs/consumption_form/consumption_form.dart';
 import 'package:statisfuel/pages/dashboard/state/cubit.dart';
-import 'package:statisfuel/style/app_config.dart';
+import 'package:statisfuel/theme/app_config.dart';
 
 void buildItemCreation(BuildContext context) {
   showDialog(

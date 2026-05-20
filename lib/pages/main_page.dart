@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:statisfuel/pages/history/history_page.dart';
-import 'package:statisfuel/style/app_config.dart';
+import 'package:statisfuel/theme/app_config.dart';
 
 import '../global/bottom_navigation_bar/bottom_navigation_bar.dart';
-import '../global/header/header.dart';
-import '../style/app_colors.dart';
+import '../global/header.dart';
 import 'dashboard/dashboard_page.dart';
 import 'statistics/statistics_page.dart';
 
@@ -80,6 +79,7 @@ class _MainPageState extends State<MainPage> {
             ),
             Expanded(
               child: PageView(
+                clipBehavior: Clip.none,
                 controller: _pageController,
                 physics: _isKeyboardVisible
                     ? const NeverScrollableScrollPhysics()

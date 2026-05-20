@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:statisfuel/global/widget.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/dashboard/dialogs/new_consumption_dialog.dart';
 import 'package:statisfuel/pages/dashboard/state/cubit.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
-import 'package:statisfuel/style/app_config.dart';
+import 'package:statisfuel/theme/app_config.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -43,7 +44,7 @@ class DashboardView extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          ElevatedButton(
+          TVButton(
             onPressed: () => buildItemCreation(context),
             child: const Text('Ajouter une consommation'),
           ),

@@ -4,7 +4,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:statisfuel/collections/collections.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/dashboard/dialogs/consumption_form/consumption_form.dart';
-import 'package:statisfuel/style/app_config.dart';
+import 'package:statisfuel/theme/app_config.dart';
 
 class ConsumptionCard extends StatelessWidget {
   final Consumption consumption;

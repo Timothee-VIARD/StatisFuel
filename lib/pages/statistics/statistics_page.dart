@@ -5,7 +5,7 @@ import 'package:statisfuel/pages/statistics/charts/daily_consumption.dart';
 import 'package:statisfuel/pages/statistics/state/cubit.dart';
 import 'package:statisfuel/pages/statistics/state/state.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
-import 'package:statisfuel/style/app_config.dart';
+import 'package:statisfuel/theme/app_config.dart';
 
 class StatisticsPage extends StatelessWidget {
   const StatisticsPage({super.key});

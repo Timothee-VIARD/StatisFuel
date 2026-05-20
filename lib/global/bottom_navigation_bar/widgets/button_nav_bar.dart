@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../../style/app_colors.dart';
+import '../../widget.dart';
 
 class ButtonNavBar extends StatelessWidget {
-  const ButtonNavBar(
-      {super.key,
-        required this.isSelected,
-        required this.title,
-        required this.buttonIndex,
-        required this.onIndexChanged,});
+  const ButtonNavBar({
+    super.key,
+    required this.isSelected,
+    required this.title,
+    required this.buttonIndex,
+    required this.onIndexChanged,
+  });
 
   final bool isSelected;
 
@@ -18,35 +19,41 @@ class ButtonNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Expanded(
       child: Container(
         height: 38,
         decoration: isSelected
             ? BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: const BorderRadius.all(Radius.circular(11)),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.1),
-                spreadRadius: 1,
-                blurRadius: 2,
-                offset: const Offset(0, 2),
-              ),
-            ],)
+                color: colorScheme.surface,
+                borderRadius: const BorderRadius.all(Radius.circular(11)),
+                boxShadow: [
+                  BoxShadow(
+                    color: colorScheme.primary.withValues(alpha: 0.12),
+                    spreadRadius: 1,
+                    blurRadius: 2,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              )
             : null,
-        child: TextButton(
+        child: TVButton(
           onPressed: () => onIndexChanged(buttonIndex),
-          style: ButtonStyle(
-            padding: WidgetStateProperty.all(EdgeInsets.zero),
-            overlayColor: WidgetStateProperty.all(Colors.transparent),
-          ),
+          backgroundColor: isSelected ? null : Colors.transparent,
+          overlayColor: Colors.transparent,
+          shadowBlurRadius: 2,
+          shadowSpreadRadius: 1,
+          shadowColor: isSelected
+              ? colorScheme.primary.withValues(alpha: 0.12)
+              : Colors.transparent,
           child: Text(
             title,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: isSelected
-                  ? AppColors.onSecondary
-                  : AppColors.onSecondaryLight,
+                  ? colorScheme.primary
+                  : colorScheme.onSurface.withValues(alpha: 0.65),
               fontSize: 14,
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
               fontFamily: 'Roboto',

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 
-import '../../style/app_colors.dart';
 import 'widgets/button_nav_bar.dart';
 
 class CustomNavigationBar extends StatelessWidget {
@@ -22,10 +21,11 @@ class CustomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.secondary,
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+      decoration:  BoxDecoration(
+        color: colorScheme.secondary,
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
       padding: const EdgeInsets.all(2),
       child: Row(
@@ -41,10 +41,10 @@ class CustomNavigationBar extends StatelessWidget {
                 onIndexChanged: onIndexChanged,
               );
             } else {
-              return const SizedBox(
+              return  SizedBox(
                 height: 12,
                 child: VerticalDivider(
-                  color: AppColors.onSecondaryLight,
+                  color: colorScheme.primary.withValues(alpha: 0.2),
                   thickness: 1,
                 ),
               );

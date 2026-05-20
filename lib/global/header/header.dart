@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:statisfuel/style/app_config.dart';
+import 'package:statisfuel/theme/app_config.dart';
 
 class HeaderSection extends StatelessWidget {
   const HeaderSection({super.key});

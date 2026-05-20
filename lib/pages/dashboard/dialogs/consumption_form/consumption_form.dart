@@ -5,10 +5,10 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:statisfuel/collections/consumption/consumption.dart';
 import 'package:statisfuel/collections/location/location.dart';
-import 'package:statisfuel/global/location/location_field.dart';
+import 'package:statisfuel/global/location_field.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
-import 'package:statisfuel/style/app_config.dart';
+import 'package:statisfuel/theme/app_config.dart';
 import 'package:vph_web_date_picker/vph_web_date_picker.dart';
 
 import 'controller/cubit.dart';

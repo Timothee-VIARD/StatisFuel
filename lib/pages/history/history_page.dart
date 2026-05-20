@@ -5,7 +5,7 @@ import 'package:statisfuel/global/snackBar/controllers/cubit.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/history/card.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
-import 'package:statisfuel/style/app_config.dart';
+import 'package:statisfuel/theme/app_config.dart';
 
 import 'state/cubit.dart';
 import 'state/state.dart';

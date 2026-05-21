@@ -43,6 +43,25 @@ class DashboardView extends StatelessWidget {
                   const TextStyle(fontSize: 24, fontFamily: 'MPLUSRounded1c'),
             ),
           ),
+          TVCard(
+            title: (context) => t.dashboard.title,
+            content: const Text('Aucune consommation pour le moment.'),
+          ),
+          TVCard(
+            title: (context) => t.dashboard.title,
+            content: const Text('Aucune consommation pour le moment.'),
+          ),
+          TVCard(
+            title: (context) => t.dashboard.title,
+            content: const Text('Aucune consommation pour le moment.'),
+          ),
+          TVCard(
+            title: (context) => t.dashboard.title,
+            content: const Text('Aucune consommation pour le moment.'),
+          ),
+          const TVCard(
+            content: Text('Aucune consommation pour le moment.'),
+          ),
           const Spacer(),
           TVButton(
             onPressed: () => buildItemCreation(context),

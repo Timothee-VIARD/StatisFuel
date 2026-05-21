@@ -28,7 +28,7 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppConfig.spacing * 2),
-              const ThemeSwitcher()
+              const ThemeSwitcher(),
             ],
           ),
         ),

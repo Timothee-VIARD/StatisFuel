@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:statisfuel/global/theme/extensions/tv_button_theme.dart';
+import 'package:statisfuel/theme/app_config.dart';
 import 'package:statisfuel/theme/app_theme_config.dart';
+
+import '../global/theme/extensions/tv_card_theme.dart';
 
 ThemeData getAppTheme(
   AppColorScheme colors, {
@@ -75,7 +78,20 @@ ThemeData getAppTheme(
         shadowSpreadRadius: 2,
         shadowOffset: const Offset(0, 2),
         borderRadius: BorderRadius.circular(10),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppConfig.padding * 2,
+          vertical: AppConfig.padding,
+        ),
+      ),
+      TVCardThemeData(
+        backgroundColor: colors.surface,
+        foregroundColor: colors.onSurface,
+        shadowColor: Colors.transparent,
+        shadowBlurRadius: 2,
+        shadowSpreadRadius: 2,
+        shadowOffset: const Offset(0, 2),
+        borderRadius: BorderRadius.circular(10),
+        padding: const EdgeInsets.all(AppConfig.padding),
       ),
     ],
   );

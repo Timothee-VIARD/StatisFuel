@@ -75,6 +75,9 @@ class TranslationsGlobalEn {
 	/// en: 'Tout supprimer'
 	String get deleteAll => 'Tout supprimer';
 
+	/// en: 'Tout mettre à jour'
+	String get updateAll => 'Tout mettre à jour';
+
 	/// en: 'Oui'
 	String get yes => 'Oui';
 
@@ -181,6 +184,33 @@ class TranslationsDashboardEn {
 
 	/// en: 'Depuis 1 ans'
 	String get forThePastYear => 'Depuis 1 ans';
+
+	/// en: 'Ajouter un plein'
+	String get addConsumption => 'Ajouter un plein';
+
+	/// en: 'Infos sur le dernier plein'
+	String get lastConsumptionInfo => 'Infos sur le dernier plein';
+
+	/// en: 'Date'
+	String get date => 'Date';
+
+	/// en: 'Prix du litre'
+	String get literPrice => 'Prix du litre';
+
+	/// en: 'Volume'
+	String get volume => 'Volume';
+
+	/// en: 'Coût'
+	String get cost => 'Coût';
+
+	/// en: 'Distance'
+	String get distance => 'Distance';
+
+	/// en: 'Consommation'
+	String get consumption => 'Consommation';
+
+	/// en: 'Action rapide'
+	String get quickAction => 'Action rapide';
 }
 
 // Path: history
@@ -289,6 +319,7 @@ extension on Translations {
 			'global.confirm' => 'Confirmer',
 			'global.delete' => 'Supprimer',
 			'global.deleteAll' => 'Tout supprimer',
+			'global.updateAll' => 'Tout mettre à jour',
 			'global.yes' => 'Oui',
 			'global.no' => 'Non',
 			'global.exportToCSV' => 'Exporter en CSV',
@@ -317,6 +348,15 @@ extension on Translations {
 			'dashboard.averageConsumption' => 'Consommation moyenne',
 			'dashboard.averageCostPerKm' => 'Coût moyen par km',
 			'dashboard.forThePastYear' => 'Depuis 1 ans',
+			'dashboard.addConsumption' => 'Ajouter un plein',
+			'dashboard.lastConsumptionInfo' => 'Infos sur le dernier plein',
+			'dashboard.date' => 'Date',
+			'dashboard.literPrice' => 'Prix du litre',
+			'dashboard.volume' => 'Volume',
+			'dashboard.cost' => 'Coût',
+			'dashboard.distance' => 'Distance',
+			'dashboard.consumption' => 'Consommation',
+			'dashboard.quickAction' => 'Action rapide',
 			'history.title' => 'Historique',
 			'statistics.title' => 'Statistiques',
 			_ => null,

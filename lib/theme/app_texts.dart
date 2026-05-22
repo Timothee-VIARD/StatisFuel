@@ -9,8 +9,8 @@ TextTheme getTextTheme(
         displaySmall:
             ThemeData(brightness: brightness).textTheme.displaySmall?.copyWith(
                   fontFamily: 'Roboto Medium',
-                  fontSize: 13,
-                  fontWeight: FontWeight.normal,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
                   color: colors.onSurface,
                 ),
         displayMedium:

@@ -33,6 +33,12 @@ class ConsumptionRepository extends RepositoryBase
   }
 
   @override
+  Future<Consumption?> getLastConsumption() async {
+    await _ensureReady();
+    return isar.collection<Consumption>().where().sortByDateDesc().findFirst();
+  }
+
+  @override
   Future<void> createConsumption(Consumption consumption) async {
     await _ensureReady();
     await isar.writeTxn(() async {
@@ -69,6 +75,18 @@ class ConsumptionRepository extends RepositoryBase
       consumption.setCostPerKm();
       await isar.collection<Consumption>().put(consumption);
     });
+  }
+
+  @override
+  Future<void> updateAllConsumptions() async {
+    await _ensureReady();
+    final consumptions = await getConsumptions();
+
+    for (final consumption in consumptions) {
+      await updateConsumption(
+        consumption.id,
+      );
+    }
   }
 
   @override
@@ -172,7 +190,8 @@ class ConsumptionRepository extends RepositoryBase
   }
 
   @override
-  Future<double> getAverageCostPerKm({required DateTime startDate, DateTime? endDate}) async {
+  Future<double> getAverageCostPerKm(
+      {required DateTime startDate, DateTime? endDate}) async {
     await _ensureReady();
     final result = await isar
         .collection<Consumption>()

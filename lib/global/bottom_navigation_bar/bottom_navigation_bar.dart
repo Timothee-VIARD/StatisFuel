@@ -24,7 +24,7 @@ class CustomNavigationBar extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
       decoration:  BoxDecoration(
-        color: colorScheme.secondary,
+        color: colorScheme.surfaceContainer,
         borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
       padding: const EdgeInsets.all(2),

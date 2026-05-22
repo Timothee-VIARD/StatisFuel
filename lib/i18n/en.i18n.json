@@ -18,6 +18,7 @@
     "confirm": "Confirmer",
     "delete": "Supprimer",
     "deleteAll": "Tout supprimer",
+    "updateAll": "Tout mettre à jour",
     "yes": "Oui",
     "no": "Non",
     "exportToCSV": "Exporter en CSV",
@@ -53,7 +54,16 @@
     "title": "Dashboard",
     "averageConsumption": "Consommation moyenne",
     "averageCostPerKm": "Coût moyen par km",
-    "forThePastYear": "Depuis 1 ans"
+    "forThePastYear": "Depuis 1 ans",
+    "addConsumption": "Ajouter un plein",
+    "lastConsumptionInfo": "Infos sur le dernier plein",
+    "date": "Date",
+    "literPrice": "Prix du litre",
+    "volume": "Volume",
+    "cost": "Coût",
+    "distance": "Distance",
+    "consumption": "Consommation",
+    "quickAction": "Action rapide"
   },
   "history": {
     "title": "Historique"

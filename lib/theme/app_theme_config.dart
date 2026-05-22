@@ -23,6 +23,7 @@ class AppColorScheme {
   final Color error;
   final Color onError;
   final Color surface;
+  final Color surfaceContainer;
   final Color onSurface;
   final Color border;
 
@@ -41,6 +42,7 @@ class AppColorScheme {
     required this.error,
     required this.onError,
     required this.surface,
+    required this.surfaceContainer,
     required this.onSurface,
     required this.border,
   });
@@ -75,6 +77,7 @@ class AppColorScheme {
       error: AppColorsLight.error,
       onError: AppColorsLight.onError,
       surface: AppColorsLight.surface,
+      surfaceContainer: AppColorsLight.surfaceContainer,
       onSurface: AppColorsLight.onSurface,
       border: AppColorsLight.border,
     );
@@ -97,6 +100,7 @@ class AppColorScheme {
       error: AppColorsDark.error,
       onError: AppColorsDark.onError,
       surface: AppColorsDark.surface,
+      surfaceContainer: AppColorsDark.surfaceContainer,
       onSurface: AppColorsDark.onSurface,
       border: AppColorsDark.border,
     );

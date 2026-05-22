@@ -7,8 +7,10 @@ class AppColorsLight {
   static const Color primary = Color(0xFF207FD3);
   static const Color onPrimary = Color(0xFFFFFFFF);
 
-  static const Color secondary = Color(0xFFEFF1F5);
-  static const Color onSecondary = Color(0xFF16374A);
+  static const Color secondary = Color(0xFF5ACC86);
+  static const Color onSecondary = Color(0xFFFFFFFF);
+
+  static const Color surfaceContainer = Color(0xFFEFF1F5);
   static const Color onSecondaryLight = Color(0xFFA09CAB);
 
   static const Color good = Color(0xFF53A015);
@@ -36,6 +38,7 @@ class AppColorsDark {
   static const Color secondary = Color(0xFF1E3A47);
   static const Color onSecondary = Color(0xFFE8ECEF);
   static const Color onSecondaryLight = Color(0xFF8E99A6);
+  static const Color surfaceContainer = Color(0xFF2C3A47);
 
   static const Color good = Color(0xFF66CC00);
   static const Color onGood = Color(0xFF0D1B23);

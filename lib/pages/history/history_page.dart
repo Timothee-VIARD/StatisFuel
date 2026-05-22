@@ -81,6 +81,12 @@ class HistoryView extends StatelessWidget {
                     ),
                     MenuItemButton(
                       onPressed: () {
+                        context.read<HistoryCubit>().updateAllConsumptions();
+                      },
+                      child: Text(t.global.updateAll),
+                    ),
+                    MenuItemButton(
+                      onPressed: () {
                         showDialog(
                           context: context,
                           builder: (BuildContext contextDialog) {

@@ -87,6 +87,23 @@ class HistoryCubit extends Cubit<HistoryState> {
     }
   }
 
+  Future<void> updateAllConsumptions() async {
+    emit(state.copyWith(isLoading: true));
+    try {
+      await consumptionRepository.updateAllConsumptions();
+      final consumptions = await consumptionRepository.getConsumptions();
+      emit(
+        state.copyWith(
+          isLoading: false,
+          consumptions: consumptions,
+          successMessage: 'Updated all consumptions',
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
+    }
+  }
+
   Future<void> exportToCsv() async {
     try {
       await consumptionRepository.exportToCsv();

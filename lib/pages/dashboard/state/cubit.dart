@@ -10,11 +10,8 @@ class DashboardCubit extends Cubit<DashboardState> {
     required ConsumptionRepository consumptionRepository,
   })  : _consumptionRepository = consumptionRepository,
         super(
-          DashboardState(
+          const DashboardState(
             isLoading: true,
-            consumption: Consumption(
-              date: DateTime.now(),
-            ),
           ),
         ) {
     getStats();
@@ -45,11 +42,13 @@ class DashboardCubit extends Cubit<DashboardState> {
         startDate: DateTime.now()
             .subtract(const Duration(days: 365)), // Année glissante
       );
+      final lastConsumption = await _consumptionRepository.getLastConsumption();
       emit(
         state.copyWith(
           isLoading: false,
           averageConsumption: averageConsumption,
           averageCostPerKm: averageCostPerKm,
+          lastConsumption: lastConsumption,
         ),
       );
     } catch (e) {

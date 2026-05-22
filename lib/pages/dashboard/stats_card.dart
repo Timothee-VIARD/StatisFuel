@@ -46,11 +46,7 @@ class StatsCard<T> extends StatelessWidget {
                       formatter(data.value),
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
-                    if (details != null)
-                      Text(
-                        details!,
-                        style: Theme.of(context).textTheme.displaySmall,
-                      ),
+                    if (details != null) Text(details!),
                   ],
                 ),
                 Container(

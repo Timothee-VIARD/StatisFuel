@@ -6,6 +6,8 @@ abstract class IConsumptionRepository {
 
   Future<Consumption?> getConsumption(int id);
 
+  Future<Consumption?> getLastConsumption();
+
   Future<void> createConsumption(Consumption consumption);
 
   Future<void> updateConsumption(
@@ -19,6 +21,8 @@ abstract class IConsumptionRepository {
     required Location location,
   });
 
+  Future<void> updateAllConsumptions();
+
   Future<void> deleteConsumption(int id);
 
   Future<void> deleteAllConsumptions();
@@ -27,7 +31,9 @@ abstract class IConsumptionRepository {
 
   Future<void> importFromCsv();
 
-  Future<double> getAverageConsumption({required DateTime startDate, DateTime? endDate});
+  Future<double> getAverageConsumption(
+      {required DateTime startDate, DateTime? endDate});
 
-  Future<double> getAverageCostPerKm({required DateTime startDate, DateTime? endDate});
+  Future<double> getAverageCostPerKm(
+      {required DateTime startDate, DateTime? endDate});
 }

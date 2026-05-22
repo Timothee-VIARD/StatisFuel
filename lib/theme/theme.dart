@@ -20,6 +20,7 @@ ThemeData getAppTheme(
     onError: colors.onError,
     surface: colors.surface,
     onSurface: colors.onSurface,
+    surfaceContainer: colors.surfaceContainer,
   );
 
   return ThemeData(
@@ -59,16 +60,16 @@ ThemeData getAppTheme(
       ),
     ),
     cardTheme: CardThemeData(
-      color: colors.secondary,
+      color: colors.surfaceContainer,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       elevation: 5,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: colors.secondary,
-      selectedItemColor: colors.onSecondary,
-      unselectedItemColor: colors.onSecondaryLight,
+      backgroundColor: colors.surfaceContainer,
+      selectedItemColor: colors.onSurface,
+      unselectedItemColor: colors.onSurface.withValues(alpha: 0.6),
     ),
     extensions: <ThemeExtension<dynamic>>[
       TVButtonThemeData(

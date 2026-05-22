@@ -50,11 +50,15 @@ class DashboardCubit extends Cubit<DashboardState> {
         startDate: DateTime.now()
             .subtract(const Duration(days: 365)), // Année glissante
       );
-
       final totalCost = await _consumptionRepository.getTotalCost(
         startDate: DateTime.now()
             .subtract(const Duration(days: 365)), // Année glissante
       );
+      final totalFillUps = await _consumptionRepository.getTotalFillUps(
+        startDate: DateTime.now()
+            .subtract(const Duration(days: 365)), // Année glissante
+      );
+
       emit(
         state.copyWith(
           isLoading: false,
@@ -64,6 +68,7 @@ class DashboardCubit extends Cubit<DashboardState> {
           averageDistance: averageDistance,
           totalDistance: totalDistance,
           totalCost: totalCost,
+          totalFillUps: totalFillUps,
         ),
       );
     } catch (e) {

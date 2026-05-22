@@ -92,17 +92,18 @@ class DashboardView extends StatelessWidget {
                 children: [
                   Expanded(
                     child: StatsCard<double?>(
-                      title: t.dashboard.totalDistanceDriven,
+                      title: t.dashboard.distanceDriven,
                       selector: (state) => state.totalDistance,
-                      formatter: (value) =>
-                          value.toFormattedString(unit: t.unit.distance, format: NumberFormat('#,##0', 'fr_FR')),
+                      formatter: (value) => value.toFormattedString(
+                          unit: t.unit.distance,
+                          format: NumberFormat('#,##0', 'fr_FR')),
                       icon: Icons.directions_car,
                       details: t.dashboard.forThePastYear,
                     ),
                   ),
                   Expanded(
                     child: StatsCard<double?>(
-                      title: t.dashboard.totalCost,
+                      title: t.dashboard.expense,
                       selector: (state) => state.totalCost,
                       formatter: (value) => value.toFormattedString(
                         unit: t.unit.price,
@@ -113,6 +114,13 @@ class DashboardView extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            StatsCard<int?>(
+              title: t.dashboard.fillUps,
+              selector: (state) => state.totalFillUps,
+              formatter: (value) => value.toString(),
+              icon: Icons.local_gas_station,
+              details: t.dashboard.forThePastYear,
             ),
           ],
         ),

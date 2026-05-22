@@ -55,4 +55,9 @@ abstract class IConsumptionRepository {
     required DateTime startDate,
     DateTime? endDate,
   });
+
+  Future<int> getTotalFillUps({
+    required DateTime startDate,
+    DateTime? endDate,
+  });
 }

@@ -8,6 +8,7 @@ class DashboardState extends Equatable {
   final double? averageDistance;
   final double? totalDistance;
   final double? totalCost;
+  final int? totalFillUps;
   final bool isSubmitting;
   final bool isLoading;
   final bool isSuccess;
@@ -20,6 +21,7 @@ class DashboardState extends Equatable {
     this.averageDistance,
     this.totalDistance,
     this.totalCost,
+    this.totalFillUps,
     this.isSubmitting = false,
     this.isSuccess = false,
     this.isLoading = false,
@@ -33,6 +35,7 @@ class DashboardState extends Equatable {
     double? averageDistance,
     double? totalDistance,
     double? totalCost,
+    int? totalFillUps,
     bool? isSubmitting,
     bool? isSuccess,
     bool? isLoading,
@@ -45,6 +48,7 @@ class DashboardState extends Equatable {
       averageDistance: averageDistance ?? this.averageDistance,
       totalDistance: totalDistance ?? this.totalDistance,
       totalCost: totalCost ?? this.totalCost,
+      totalFillUps: totalFillUps ?? this.totalFillUps,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
       isLoading: isLoading ?? this.isLoading,
@@ -63,6 +67,7 @@ class DashboardState extends Equatable {
         isSubmitting,
         isLoading,
         isSuccess,
+        totalFillUps,
         errorMessage
       ];
 }

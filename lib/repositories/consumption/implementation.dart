@@ -250,4 +250,19 @@ class ConsumptionRepository extends RepositoryBase
 
     return total.isNaN ? 0 : total;
   }
+
+  @override
+  Future<int> getTotalFillUps({
+    required DateTime startDate,
+    DateTime? endDate,
+  }) async {
+    await _ensureReady();
+    final total = await isar
+        .collection<Consumption>()
+        .where()
+        .dateBetween(startDate, endDate ?? DateTime.now())
+        .count();
+
+    return total;
+  }
 }

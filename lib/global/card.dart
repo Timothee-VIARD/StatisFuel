@@ -54,7 +54,7 @@ class TVCard extends StatelessWidget {
                 title!(context),
                 style: Theme.of(context)
                     .textTheme
-                    .titleMedium
+                    .displayMedium
                     ?.copyWith(color: effectiveForegroundColor),
             ),
             content,

@@ -5,6 +5,7 @@ import 'package:statisfuel/collections/collections.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/dashboard/dialogs/consumption_form/consumption_form.dart';
 import 'package:statisfuel/theme/app_config.dart';
+import 'package:statisfuel/utils/num.dart';
 
 class ConsumptionCard extends StatelessWidget {
   final Consumption consumption;
@@ -20,9 +21,6 @@ class ConsumptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NumberFormat decimalFormat = NumberFormat('#,##0.00', 'fr_FR');
-    final NumberFormat decimal3Format = NumberFormat('#,##0.000', 'fr_FR');
-
     final Color primaryColor = Theme.of(context).primaryColor;
 
     return GestureDetector(
@@ -103,7 +101,7 @@ class ConsumptionCard extends StatelessWidget {
                     child: _buildInfoColumn(
                       context,
                       Icons.euro,
-                      "${consumption.totalPrice != null ? decimalFormat.format(consumption.totalPrice) : '-'} ${t.unit.price}",
+                      consumption.totalPrice.toFormattedString(unit: t.unit.price),
                       t.consumption.totalPrice,
                       primaryColor,
                     ),
@@ -112,7 +110,7 @@ class ConsumptionCard extends StatelessWidget {
                     child: _buildInfoColumn(
                       context,
                       Icons.local_gas_station,
-                      "${consumption.liters != null ? decimalFormat.format(consumption.liters) : '-'} ${t.unit.volume}",
+                      consumption.liters.toFormattedString(unit: t.unit.volume),
                       t.consumption.volume,
                       primaryColor,
                     ),
@@ -121,7 +119,7 @@ class ConsumptionCard extends StatelessWidget {
                     child: _buildInfoColumn(
                       context,
                       Symbols.distance_rounded,
-                      "${consumption.distance != null ? decimalFormat.format(consumption.distance) : '-'} ${t.unit.distance}",
+                      consumption.distance.toFormattedString(unit: t.unit.distance),
                       t.consumption.distance,
                       primaryColor,
                     ),
@@ -134,7 +132,7 @@ class ConsumptionCard extends StatelessWidget {
                 children: [
                   _buildCalculatedItem(
                     Icons.speed,
-                    "${consumption.litersPer100km != null ? decimalFormat.format(consumption.litersPer100km) : '-'} ${t.unit.litersPer100km}",
+                    consumption.litersPer100km.toFormattedString(unit: t.unit.litersPer100km),
                   ),
                 ],
               ),
@@ -146,12 +144,12 @@ class ConsumptionCard extends StatelessWidget {
                   _buildDetailItem(
                     Symbols.price_change_rounded,
                     '${t.consumption.pricePerLiter}:',
-                    "${consumption.pricePerLiter != null ? decimal3Format.format(consumption.pricePerLiter!) : '-'} ${t.unit.pricePerLiter}",
+                    consumption.pricePerLiter.toFormattedString(unit: t.unit.pricePerLiter),
                   ),
                   _buildDetailItem(
                     Icons.directions_car,
                     '${t.consumption.mileage}:',
-                    '${consumption.mileage ?? "-"} ${t.unit.distance}',
+                    consumption.mileage.toFormattedString(unit: t.unit.distance),
                   ),
                 ],
               ),

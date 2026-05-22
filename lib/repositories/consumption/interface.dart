@@ -27,6 +27,8 @@ abstract class IConsumptionRepository {
 
   Future<void> importFromCsv();
 
+  Future<double> getAverageConsumption({required DateTime startDate, DateTime? endDate});
+
   Future<double> getTotalSpent();
 
   Future<double> getTotalLiters();
@@ -35,8 +37,6 @@ abstract class IConsumptionRepository {
 
   Future<double> getAverageDistance();
 
-  Future<double> getAverageConsumption();
-   
   Future<double> getMinConsumption();
 
   Future<double> getMaxConsumption();

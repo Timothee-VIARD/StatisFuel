@@ -8,27 +8,35 @@ import 'interface.dart';
 
 class ConsumptionRepository extends RepositoryBase
     implements IConsumptionRepository {
+  late final Future<void> _initFuture;
+
   ConsumptionRepository() {
-    _init();
+    _initFuture = _init();
   }
 
   Future<void> _init() async {
     isar = await getIsar([ConsumptionSchema]);
   }
 
+  Future<void> _ensureReady() => _initFuture;
+
   @override
   Future<List<Consumption>> getConsumptions() async {
+    await _ensureReady();
     return isar.collection<Consumption>().where().sortByDateDesc().findAll();
   }
 
   @override
   Future<Consumption?> getConsumption(int id) async {
+    await _ensureReady();
     return isar.collection<Consumption>().get(id);
   }
 
   @override
   Future<void> createConsumption(Consumption consumption) async {
+    await _ensureReady();
     await isar.writeTxn(() async {
+      consumption.setLitersPer100km();
       await isar.collection<Consumption>().put(consumption);
     });
   }
@@ -44,6 +52,7 @@ class ConsumptionRepository extends RepositoryBase
     double? mileage,
     Location? location,
   }) async {
+    await _ensureReady();
     await isar.writeTxn(() async {
       final consumption = await isar.collection<Consumption>().get(id);
       if (consumption == null) return;
@@ -55,6 +64,7 @@ class ConsumptionRepository extends RepositoryBase
       consumption.distance = distance ?? consumption.distance;
       consumption.mileage = mileage ?? consumption.mileage;
       consumption.location = location ?? consumption.location;
+      consumption.setLitersPer100km();
 
       await isar.collection<Consumption>().put(consumption);
     });
@@ -62,6 +72,7 @@ class ConsumptionRepository extends RepositoryBase
 
   @override
   Future<void> deleteConsumption(int id) async {
+    await _ensureReady();
     await isar.writeTxn(() async {
       await isar.collection<Consumption>().delete(id);
     });
@@ -69,6 +80,7 @@ class ConsumptionRepository extends RepositoryBase
 
   @override
   Future<void> deleteAllConsumptions() async {
+    await _ensureReady();
     await isar.writeTxn(() async {
       await isar.collection<Consumption>().clear();
     });
@@ -76,6 +88,7 @@ class ConsumptionRepository extends RepositoryBase
 
   @override
   Future<void> exportToCsv() async {
+    await _ensureReady();
     final consumptions = await getConsumptions();
 
     List<List<dynamic>> data = [
@@ -112,6 +125,7 @@ class ConsumptionRepository extends RepositoryBase
 
   @override
   Future<void> importFromCsv() async {
+    await _ensureReady();
     try {
       final fields = await CsvUtils.importFromCsv();
 
@@ -128,6 +142,7 @@ class ConsumptionRepository extends RepositoryBase
         );
 
         await isar.writeTxn(() async {
+          consumption.setLitersPer100km();
           await isar.collection<Consumption>().put(consumption);
         });
       }
@@ -137,55 +152,65 @@ class ConsumptionRepository extends RepositoryBase
       rethrow;
     }
   }
-  
+
   @override
-  Future<double> getAverageConsumption() {
-    // return isar.collection<Consumption>().average((c) => c.liters! / c.distance!);
-    return Future.error('Not implemented');
+  Future<double> getAverageConsumption({
+    required DateTime startDate,
+    DateTime? endDate,
+  }) async {
+    await _ensureReady();
+    final average = await isar
+        .collection<Consumption>()
+        .where()
+        .dateBetween(startDate, endDate ?? DateTime.now())
+        .litersPer100kmProperty()
+        .average();
+
+    return average.isNaN ? 0 : average;
   }
-  
+
   @override
   Future<double> getAverageDistance() {
     // TODO: implement getAverageDistance
     throw UnimplementedError();
   }
-  
+
   @override
   Future<double> getAveragePricePerLiter() {
     // TODO: implement getAveragePricePerLiter
     throw UnimplementedError();
   }
-  
+
   @override
   Future<double> getMaxConsumption() {
     // TODO: implement getMaxConsumption
     throw UnimplementedError();
   }
-  
+
   @override
   Future<double> getMaxPricePerLiter() {
     // TODO: implement getMaxPricePerLiter
     throw UnimplementedError();
   }
-  
+
   @override
   Future<double> getMinConsumption() {
     // TODO: implement getMinConsumption
     throw UnimplementedError();
   }
-  
+
   @override
   Future<double> getMinPricePerLiter() {
     // TODO: implement getMinPricePerLiter
     throw UnimplementedError();
   }
-  
+
   @override
   Future<double> getTotalLiters() {
     // TODO: implement getTotalLiters
     throw UnimplementedError();
   }
-  
+
   @override
   Future<double> getTotalSpent() {
     // TODO: implement getTotalSpent

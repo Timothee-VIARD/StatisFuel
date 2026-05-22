@@ -5,8 +5,13 @@ import 'package:statisfuel/global/widget.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/dashboard/dialogs/new_consumption_dialog.dart';
 import 'package:statisfuel/pages/dashboard/state/cubit.dart';
+import 'package:statisfuel/pages/dashboard/state/state.dart';
+import 'package:statisfuel/pages/dashboard/stats_card.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
 import 'package:statisfuel/theme/app_config.dart';
+import 'package:statisfuel/utils/num.dart';
+
+typedef Selector<T> = BlocSelector<DashboardCubit, DashboardState, T>;
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -43,24 +48,12 @@ class DashboardView extends StatelessWidget {
                   const TextStyle(fontSize: 24, fontFamily: 'MPLUSRounded1c'),
             ),
           ),
-          TVCard(
-            title: (context) => t.dashboard.title,
-            content: const Text('Aucune consommation pour le moment.'),
-          ),
-          TVCard(
-            title: (context) => t.dashboard.title,
-            content: const Text('Aucune consommation pour le moment.'),
-          ),
-          TVCard(
-            title: (context) => t.dashboard.title,
-            content: const Text('Aucune consommation pour le moment.'),
-          ),
-          TVCard(
-            title: (context) => t.dashboard.title,
-            content: const Text('Aucune consommation pour le moment.'),
-          ),
-          const TVCard(
-            content: Text('Aucune consommation pour le moment.'),
+          StatsCard<double>(
+            title: t.dashboard.averageConsumption,
+            selector: (state) => state.averageConsumption,
+            formatter: (value) => value.toFormattedString(unit: t.unit.litersPer100km),
+            icon: Icons.speed,
+            details: t.dashboard.forThePastYear,
           ),
           const Spacer(),
           TVButton(

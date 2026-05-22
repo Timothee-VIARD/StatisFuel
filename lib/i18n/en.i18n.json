@@ -49,7 +49,9 @@
     "incomplete": "Consommation incomplète"
   },
   "dashboard": {
-    "title": "Dashboard"
+    "title": "Dashboard",
+    "averageConsumption": "Consommation moyenne",
+    "forThePastYear": "Depuis 1 ans"
   },
   "history": {
     "title": "Historique"

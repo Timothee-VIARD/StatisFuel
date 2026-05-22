@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:statisfuel/global/theme/extensions/tv_button_theme.dart';
 import 'package:statisfuel/theme/app_config.dart';
+import 'package:statisfuel/theme/app_texts.dart';
 import 'package:statisfuel/theme/app_theme_config.dart';
 
 import '../global/theme/extensions/tv_card_theme.dart';
@@ -27,6 +28,7 @@ ThemeData getAppTheme(
     colorScheme: colorScheme,
     scaffoldBackgroundColor: colors.surface,
     canvasColor: colors.surface,
+    textTheme: getTextTheme(colors, brightness: brightness),
     appBarTheme: AppBarTheme(
       backgroundColor: colors.surface,
       foregroundColor: colors.onSurface,

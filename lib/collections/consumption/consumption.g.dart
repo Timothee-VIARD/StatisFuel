@@ -64,7 +64,99 @@ const ConsumptionSchema = CollectionSchema(
   deserialize: _consumptionDeserialize,
   deserializeProp: _consumptionDeserializeProp,
   idName: r'id',
-  indexes: {},
+  indexes: {
+    r'date': IndexSchema(
+      id: -7552997827385218417,
+      name: r'date',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'date',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
+    r'totalPrice': IndexSchema(
+      id: 889174485785105731,
+      name: r'totalPrice',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'totalPrice',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
+    r'pricePerLiter': IndexSchema(
+      id: 8937923363033208399,
+      name: r'pricePerLiter',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'pricePerLiter',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
+    r'liters': IndexSchema(
+      id: -4826211576000169681,
+      name: r'liters',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'liters',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
+    r'distance': IndexSchema(
+      id: -830811181569289072,
+      name: r'distance',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'distance',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
+    r'mileage': IndexSchema(
+      id: 6196993076918590094,
+      name: r'mileage',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'mileage',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
+    r'litersPer100km': IndexSchema(
+      id: -4360252151548193466,
+      name: r'litersPer100km',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'litersPer100km',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {r'Location': LocationSchema},
   getId: _consumptionGetId,
@@ -130,6 +222,7 @@ Consumption _consumptionDeserialize(
     pricePerLiter: reader.readDoubleOrNull(offsets[6]),
     totalPrice: reader.readDoubleOrNull(offsets[7]),
   );
+  object.litersPer100km = reader.readDoubleOrNull(offsets[3]);
   return object;
 }
 
@@ -183,6 +276,62 @@ extension ConsumptionQueryWhereSort
   QueryBuilder<Consumption, Consumption, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhere> anyDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'date'),
+      );
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhere> anyTotalPrice() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'totalPrice'),
+      );
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhere> anyPricePerLiter() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'pricePerLiter'),
+      );
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhere> anyLiters() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'liters'),
+      );
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhere> anyDistance() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'distance'),
+      );
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhere> anyMileage() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'mileage'),
+      );
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhere> anyLitersPer100km() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'litersPer100km'),
+      );
     });
   }
 }
@@ -250,6 +399,769 @@ extension ConsumptionQueryWhere
         lower: lowerId,
         includeLower: includeLower,
         upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> dateEqualTo(
+      DateTime date) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'date',
+        value: [date],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> dateNotEqualTo(
+      DateTime date) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'date',
+              lower: [],
+              upper: [date],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'date',
+              lower: [date],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'date',
+              lower: [date],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'date',
+              lower: [],
+              upper: [date],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> dateGreaterThan(
+    DateTime date, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'date',
+        lower: [date],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> dateLessThan(
+    DateTime date, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'date',
+        lower: [],
+        upper: [date],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> dateBetween(
+    DateTime lowerDate,
+    DateTime upperDate, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'date',
+        lower: [lowerDate],
+        includeLower: includeLower,
+        upper: [upperDate],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> totalPriceIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'totalPrice',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      totalPriceIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'totalPrice',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> totalPriceEqualTo(
+      double? totalPrice) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'totalPrice',
+        value: [totalPrice],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      totalPriceNotEqualTo(double? totalPrice) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'totalPrice',
+              lower: [],
+              upper: [totalPrice],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'totalPrice',
+              lower: [totalPrice],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'totalPrice',
+              lower: [totalPrice],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'totalPrice',
+              lower: [],
+              upper: [totalPrice],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      totalPriceGreaterThan(
+    double? totalPrice, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'totalPrice',
+        lower: [totalPrice],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> totalPriceLessThan(
+    double? totalPrice, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'totalPrice',
+        lower: [],
+        upper: [totalPrice],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> totalPriceBetween(
+    double? lowerTotalPrice,
+    double? upperTotalPrice, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'totalPrice',
+        lower: [lowerTotalPrice],
+        includeLower: includeLower,
+        upper: [upperTotalPrice],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      pricePerLiterIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'pricePerLiter',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      pricePerLiterIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'pricePerLiter',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      pricePerLiterEqualTo(double? pricePerLiter) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'pricePerLiter',
+        value: [pricePerLiter],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      pricePerLiterNotEqualTo(double? pricePerLiter) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'pricePerLiter',
+              lower: [],
+              upper: [pricePerLiter],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'pricePerLiter',
+              lower: [pricePerLiter],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'pricePerLiter',
+              lower: [pricePerLiter],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'pricePerLiter',
+              lower: [],
+              upper: [pricePerLiter],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      pricePerLiterGreaterThan(
+    double? pricePerLiter, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'pricePerLiter',
+        lower: [pricePerLiter],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      pricePerLiterLessThan(
+    double? pricePerLiter, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'pricePerLiter',
+        lower: [],
+        upper: [pricePerLiter],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      pricePerLiterBetween(
+    double? lowerPricePerLiter,
+    double? upperPricePerLiter, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'pricePerLiter',
+        lower: [lowerPricePerLiter],
+        includeLower: includeLower,
+        upper: [upperPricePerLiter],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> litersIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'liters',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> litersIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'liters',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> litersEqualTo(
+      double? liters) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'liters',
+        value: [liters],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> litersNotEqualTo(
+      double? liters) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'liters',
+              lower: [],
+              upper: [liters],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'liters',
+              lower: [liters],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'liters',
+              lower: [liters],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'liters',
+              lower: [],
+              upper: [liters],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> litersGreaterThan(
+    double? liters, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'liters',
+        lower: [liters],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> litersLessThan(
+    double? liters, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'liters',
+        lower: [],
+        upper: [liters],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> litersBetween(
+    double? lowerLiters,
+    double? upperLiters, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'liters',
+        lower: [lowerLiters],
+        includeLower: includeLower,
+        upper: [upperLiters],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> distanceIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'distance',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      distanceIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'distance',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> distanceEqualTo(
+      double? distance) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'distance',
+        value: [distance],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> distanceNotEqualTo(
+      double? distance) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'distance',
+              lower: [],
+              upper: [distance],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'distance',
+              lower: [distance],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'distance',
+              lower: [distance],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'distance',
+              lower: [],
+              upper: [distance],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> distanceGreaterThan(
+    double? distance, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'distance',
+        lower: [distance],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> distanceLessThan(
+    double? distance, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'distance',
+        lower: [],
+        upper: [distance],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> distanceBetween(
+    double? lowerDistance,
+    double? upperDistance, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'distance',
+        lower: [lowerDistance],
+        includeLower: includeLower,
+        upper: [upperDistance],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> mileageIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'mileage',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> mileageIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'mileage',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> mileageEqualTo(
+      double? mileage) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'mileage',
+        value: [mileage],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> mileageNotEqualTo(
+      double? mileage) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'mileage',
+              lower: [],
+              upper: [mileage],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'mileage',
+              lower: [mileage],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'mileage',
+              lower: [mileage],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'mileage',
+              lower: [],
+              upper: [mileage],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> mileageGreaterThan(
+    double? mileage, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'mileage',
+        lower: [mileage],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> mileageLessThan(
+    double? mileage, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'mileage',
+        lower: [],
+        upper: [mileage],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> mileageBetween(
+    double? lowerMileage,
+    double? upperMileage, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'mileage',
+        lower: [lowerMileage],
+        includeLower: includeLower,
+        upper: [upperMileage],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      litersPer100kmIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'litersPer100km',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      litersPer100kmIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'litersPer100km',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      litersPer100kmEqualTo(double? litersPer100km) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'litersPer100km',
+        value: [litersPer100km],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      litersPer100kmNotEqualTo(double? litersPer100km) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'litersPer100km',
+              lower: [],
+              upper: [litersPer100km],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'litersPer100km',
+              lower: [litersPer100km],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'litersPer100km',
+              lower: [litersPer100km],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'litersPer100km',
+              lower: [],
+              upper: [litersPer100km],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      litersPer100kmGreaterThan(
+    double? litersPer100km, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'litersPer100km',
+        lower: [litersPer100km],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      litersPer100kmLessThan(
+    double? litersPer100km, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'litersPer100km',
+        lower: [],
+        upper: [litersPer100km],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      litersPer100kmBetween(
+    double? lowerLitersPer100km,
+    double? upperLitersPer100km, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'litersPer100km',
+        lower: [lowerLitersPer100km],
+        includeLower: includeLower,
+        upper: [upperLitersPer100km],
         includeUpper: includeUpper,
       ));
     });

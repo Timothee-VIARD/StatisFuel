@@ -6,12 +6,20 @@ part 'consumption.g.dart';
 @collection
 class Consumption {
   Id id = Isar.autoIncrement;
+  @Index()
   DateTime date;
+  @Index()
   double? totalPrice;
+  @Index()
   double? pricePerLiter;
+  @Index()
   double? liters;
+  @Index()
   double? distance;
+  @Index()
   double? mileage;
+  @Index()
+  double? litersPer100km;
   Location? location;
 
   Consumption({
@@ -23,13 +31,14 @@ class Consumption {
     this.distance,
     this.mileage,
     this.location,
-  });
+  }) {
+    setLitersPer100km();
+  }
 
-  double? get litersPer100km {
-    if (liters != null && distance != null && distance! > 0) {
-      return (liters! / distance!) * 100;
-    }
-    return null;
+  void setLitersPer100km() {
+    litersPer100km = (liters != null && distance != null && distance! > 0)
+        ? (liters! / distance!) * 100
+        : null;
   }
 
   Consumption copyWith({

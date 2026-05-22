@@ -169,6 +169,12 @@ class TranslationsDashboardEn {
 
 	/// en: 'Dashboard'
 	String get title => 'Dashboard';
+
+	/// en: 'Consommation moyenne'
+	String get averageConsumption => 'Consommation moyenne';
+
+	/// en: 'Depuis 1 ans'
+	String get forThePastYear => 'Depuis 1 ans';
 }
 
 // Path: history
@@ -301,6 +307,8 @@ extension on Translations {
 			'consumption.newConsumption' => 'Nouvelle consommation',
 			'consumption.incomplete' => 'Consommation incomplète',
 			'dashboard.title' => 'Dashboard',
+			'dashboard.averageConsumption' => 'Consommation moyenne',
+			'dashboard.forThePastYear' => 'Depuis 1 ans',
 			'history.title' => 'Historique',
 			'statistics.title' => 'Statistiques',
 			_ => null,

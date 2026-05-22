@@ -37,6 +37,7 @@ class ConsumptionRepository extends RepositoryBase
     await _ensureReady();
     await isar.writeTxn(() async {
       consumption.setLitersPer100km();
+      consumption.setCostPerKm();
       await isar.collection<Consumption>().put(consumption);
     });
   }
@@ -65,7 +66,7 @@ class ConsumptionRepository extends RepositoryBase
       consumption.mileage = mileage ?? consumption.mileage;
       consumption.location = location ?? consumption.location;
       consumption.setLitersPer100km();
-
+      consumption.setCostPerKm();
       await isar.collection<Consumption>().put(consumption);
     });
   }
@@ -143,6 +144,7 @@ class ConsumptionRepository extends RepositoryBase
 
         await isar.writeTxn(() async {
           consumption.setLitersPer100km();
+          consumption.setCostPerKm();
           await isar.collection<Consumption>().put(consumption);
         });
       }
@@ -170,50 +172,15 @@ class ConsumptionRepository extends RepositoryBase
   }
 
   @override
-  Future<double> getAverageDistance() {
-    // TODO: implement getAverageDistance
-    throw UnimplementedError();
-  }
+  Future<double> getAverageCostPerKm({required DateTime startDate, DateTime? endDate}) async {
+    await _ensureReady();
+    final result = await isar
+        .collection<Consumption>()
+        .where()
+        .dateBetween(startDate, endDate ?? DateTime.now())
+        .costPerKmProperty()
+        .average();
 
-  @override
-  Future<double> getAveragePricePerLiter() {
-    // TODO: implement getAveragePricePerLiter
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<double> getMaxConsumption() {
-    // TODO: implement getMaxConsumption
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<double> getMaxPricePerLiter() {
-    // TODO: implement getMaxPricePerLiter
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<double> getMinConsumption() {
-    // TODO: implement getMinConsumption
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<double> getMinPricePerLiter() {
-    // TODO: implement getMinPricePerLiter
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<double> getTotalLiters() {
-    // TODO: implement getTotalLiters
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<double> getTotalSpent() {
-    // TODO: implement getTotalSpent
-    throw UnimplementedError();
+    return result.isNaN ? 0 : result;
   }
 }

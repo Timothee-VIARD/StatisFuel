@@ -40,10 +40,16 @@ class DashboardCubit extends Cubit<DashboardState> {
         startDate: DateTime.now()
             .subtract(const Duration(days: 365)), // Année glissante
       );
+      final averageCostPerKm =
+          await _consumptionRepository.getAverageCostPerKm(
+        startDate: DateTime.now()
+            .subtract(const Duration(days: 365)), // Année glissante
+      );
       emit(
         state.copyWith(
           isLoading: false,
           averageConsumption: averageConsumption,
+          averageCostPerKm: averageCostPerKm,
         ),
       );
     } catch (e) {

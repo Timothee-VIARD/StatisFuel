@@ -110,6 +110,9 @@ class TranslationsUnitEn {
 
 	/// en: 'L/100km'
 	String get litersPer100km => 'L/100km';
+
+	/// en: '€/km'
+	String get costPerKm => '€/km';
 }
 
 // Path: consumption
@@ -172,6 +175,9 @@ class TranslationsDashboardEn {
 
 	/// en: 'Consommation moyenne'
 	String get averageConsumption => 'Consommation moyenne';
+
+	/// en: 'Coût moyen par km'
+	String get averageCostPerKm => 'Coût moyen par km';
 
 	/// en: 'Depuis 1 ans'
 	String get forThePastYear => 'Depuis 1 ans';
@@ -292,6 +298,7 @@ extension on Translations {
 			'unit.price' => '€',
 			'unit.pricePerLiter' => '€/L',
 			'unit.litersPer100km' => 'L/100km',
+			'unit.costPerKm' => '€/km',
 			'consumption.warningDeleteAll' => 'Êtes-vous sûr de vouloir supprimer toutes les consommations ?',
 			'consumption.noData' => 'Aucune consommation trouvée',
 			'consumption.totalPrice' => 'Prix total',
@@ -308,6 +315,7 @@ extension on Translations {
 			'consumption.incomplete' => 'Consommation incomplète',
 			'dashboard.title' => 'Dashboard',
 			'dashboard.averageConsumption' => 'Consommation moyenne',
+			'dashboard.averageCostPerKm' => 'Coût moyen par km',
 			'dashboard.forThePastYear' => 'Depuis 1 ans',
 			'history.title' => 'Historique',
 			'statistics.title' => 'Statistiques',

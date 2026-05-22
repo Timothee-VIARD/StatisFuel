@@ -6,7 +6,8 @@ import 'state.dart';
 class StatisticsCubit extends Cubit<StatisticsState> {
   final ConsumptionRepository consumptionRepository;
 
-  StatisticsCubit({required this.consumptionRepository}) : super(const StatisticsState());
+  StatisticsCubit({required this.consumptionRepository})
+      : super(const StatisticsState());
 
   Future<void> loadConsumptions() async {
     emit(state.copyWith(isLoading: true, consumptions: []));
@@ -14,7 +15,13 @@ class StatisticsCubit extends Cubit<StatisticsState> {
       final consumptions = await consumptionRepository.getConsumptions();
       emit(state.copyWith(isLoading: false, consumptions: consumptions));
     } catch (e) {
-      emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
+      emit(
+        state.copyWith(
+          isLoading: false,
+          consumptions: const [],
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 }

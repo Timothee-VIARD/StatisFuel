@@ -56,7 +56,7 @@ class TVCard extends StatelessWidget {
                     .textTheme
                     .displayMedium
                     ?.copyWith(color: effectiveForegroundColor),
-            ),
+              ),
             content,
           ],
         ),

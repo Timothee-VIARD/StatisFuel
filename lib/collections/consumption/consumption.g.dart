@@ -17,44 +17,49 @@ const ConsumptionSchema = CollectionSchema(
   name: r'Consumption',
   id: -1960512473907227800,
   properties: {
-    r'date': PropertySchema(
+    r'costPerKm': PropertySchema(
       id: 0,
+      name: r'costPerKm',
+      type: IsarType.double,
+    ),
+    r'date': PropertySchema(
+      id: 1,
       name: r'date',
       type: IsarType.dateTime,
     ),
     r'distance': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'distance',
       type: IsarType.double,
     ),
     r'liters': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'liters',
       type: IsarType.double,
     ),
     r'litersPer100km': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'litersPer100km',
       type: IsarType.double,
     ),
     r'location': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'location',
       type: IsarType.object,
       target: r'Location',
     ),
     r'mileage': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'mileage',
       type: IsarType.double,
     ),
     r'pricePerLiter': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'pricePerLiter',
       type: IsarType.double,
     ),
     r'totalPrice': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'totalPrice',
       type: IsarType.double,
     )
@@ -155,6 +160,19 @@ const ConsumptionSchema = CollectionSchema(
           caseSensitive: false,
         )
       ],
+    ),
+    r'costPerKm': IndexSchema(
+      id: -4299394729536314141,
+      name: r'costPerKm',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'costPerKm',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
     )
   },
   links: {},
@@ -187,19 +205,20 @@ void _consumptionSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDateTime(offsets[0], object.date);
-  writer.writeDouble(offsets[1], object.distance);
-  writer.writeDouble(offsets[2], object.liters);
-  writer.writeDouble(offsets[3], object.litersPer100km);
+  writer.writeDouble(offsets[0], object.costPerKm);
+  writer.writeDateTime(offsets[1], object.date);
+  writer.writeDouble(offsets[2], object.distance);
+  writer.writeDouble(offsets[3], object.liters);
+  writer.writeDouble(offsets[4], object.litersPer100km);
   writer.writeObject<Location>(
-    offsets[4],
+    offsets[5],
     allOffsets,
     LocationSchema.serialize,
     object.location,
   );
-  writer.writeDouble(offsets[5], object.mileage);
-  writer.writeDouble(offsets[6], object.pricePerLiter);
-  writer.writeDouble(offsets[7], object.totalPrice);
+  writer.writeDouble(offsets[6], object.mileage);
+  writer.writeDouble(offsets[7], object.pricePerLiter);
+  writer.writeDouble(offsets[8], object.totalPrice);
 }
 
 Consumption _consumptionDeserialize(
@@ -209,20 +228,21 @@ Consumption _consumptionDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Consumption(
-    date: reader.readDateTime(offsets[0]),
-    distance: reader.readDoubleOrNull(offsets[1]),
+    date: reader.readDateTime(offsets[1]),
+    distance: reader.readDoubleOrNull(offsets[2]),
     id: id,
-    liters: reader.readDoubleOrNull(offsets[2]),
+    liters: reader.readDoubleOrNull(offsets[3]),
     location: reader.readObjectOrNull<Location>(
-      offsets[4],
+      offsets[5],
       LocationSchema.deserialize,
       allOffsets,
     ),
-    mileage: reader.readDoubleOrNull(offsets[5]),
-    pricePerLiter: reader.readDoubleOrNull(offsets[6]),
-    totalPrice: reader.readDoubleOrNull(offsets[7]),
+    mileage: reader.readDoubleOrNull(offsets[6]),
+    pricePerLiter: reader.readDoubleOrNull(offsets[7]),
+    totalPrice: reader.readDoubleOrNull(offsets[8]),
   );
-  object.litersPer100km = reader.readDoubleOrNull(offsets[3]);
+  object.costPerKm = reader.readDoubleOrNull(offsets[0]);
+  object.litersPer100km = reader.readDoubleOrNull(offsets[4]);
   return object;
 }
 
@@ -234,24 +254,26 @@ P _consumptionDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDateTime(offset)) as P;
-    case 1:
       return (reader.readDoubleOrNull(offset)) as P;
+    case 1:
+      return (reader.readDateTime(offset)) as P;
     case 2:
       return (reader.readDoubleOrNull(offset)) as P;
     case 3:
       return (reader.readDoubleOrNull(offset)) as P;
     case 4:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 5:
       return (reader.readObjectOrNull<Location>(
         offset,
         LocationSchema.deserialize,
         allOffsets,
       )) as P;
-    case 5:
-      return (reader.readDoubleOrNull(offset)) as P;
     case 6:
       return (reader.readDoubleOrNull(offset)) as P;
     case 7:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 8:
       return (reader.readDoubleOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -331,6 +353,14 @@ extension ConsumptionQueryWhereSort
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'litersPer100km'),
+      );
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhere> anyCostPerKm() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'costPerKm'),
       );
     });
   }
@@ -1166,10 +1196,206 @@ extension ConsumptionQueryWhere
       ));
     });
   }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> costPerKmIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'costPerKm',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      costPerKmIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'costPerKm',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> costPerKmEqualTo(
+      double? costPerKm) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'costPerKm',
+        value: [costPerKm],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> costPerKmNotEqualTo(
+      double? costPerKm) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'costPerKm',
+              lower: [],
+              upper: [costPerKm],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'costPerKm',
+              lower: [costPerKm],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'costPerKm',
+              lower: [costPerKm],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'costPerKm',
+              lower: [],
+              upper: [costPerKm],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause>
+      costPerKmGreaterThan(
+    double? costPerKm, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'costPerKm',
+        lower: [costPerKm],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> costPerKmLessThan(
+    double? costPerKm, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'costPerKm',
+        lower: [],
+        upper: [costPerKm],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterWhereClause> costPerKmBetween(
+    double? lowerCostPerKm,
+    double? upperCostPerKm, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'costPerKm',
+        lower: [lowerCostPerKm],
+        includeLower: includeLower,
+        upper: [upperCostPerKm],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension ConsumptionQueryFilter
     on QueryBuilder<Consumption, Consumption, QFilterCondition> {
+  QueryBuilder<Consumption, Consumption, QAfterFilterCondition>
+      costPerKmIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'costPerKm',
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterFilterCondition>
+      costPerKmIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'costPerKm',
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterFilterCondition>
+      costPerKmEqualTo(
+    double? value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'costPerKm',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterFilterCondition>
+      costPerKmGreaterThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'costPerKm',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterFilterCondition>
+      costPerKmLessThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'costPerKm',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterFilterCondition>
+      costPerKmBetween(
+    double? lower,
+    double? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'costPerKm',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
   QueryBuilder<Consumption, Consumption, QAfterFilterCondition> dateEqualTo(
       DateTime value) {
     return QueryBuilder.apply(this, (query) {
@@ -1805,6 +2031,18 @@ extension ConsumptionQueryLinks
 
 extension ConsumptionQuerySortBy
     on QueryBuilder<Consumption, Consumption, QSortBy> {
+  QueryBuilder<Consumption, Consumption, QAfterSortBy> sortByCostPerKm() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'costPerKm', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterSortBy> sortByCostPerKmDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'costPerKm', Sort.desc);
+    });
+  }
+
   QueryBuilder<Consumption, Consumption, QAfterSortBy> sortByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
@@ -1894,6 +2132,18 @@ extension ConsumptionQuerySortBy
 
 extension ConsumptionQuerySortThenBy
     on QueryBuilder<Consumption, Consumption, QSortThenBy> {
+  QueryBuilder<Consumption, Consumption, QAfterSortBy> thenByCostPerKm() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'costPerKm', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Consumption, Consumption, QAfterSortBy> thenByCostPerKmDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'costPerKm', Sort.desc);
+    });
+  }
+
   QueryBuilder<Consumption, Consumption, QAfterSortBy> thenByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
@@ -1995,6 +2245,12 @@ extension ConsumptionQuerySortThenBy
 
 extension ConsumptionQueryWhereDistinct
     on QueryBuilder<Consumption, Consumption, QDistinct> {
+  QueryBuilder<Consumption, Consumption, QDistinct> distinctByCostPerKm() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'costPerKm');
+    });
+  }
+
   QueryBuilder<Consumption, Consumption, QDistinct> distinctByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'date');
@@ -2043,6 +2299,12 @@ extension ConsumptionQueryProperty
   QueryBuilder<Consumption, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<Consumption, double?, QQueryOperations> costPerKmProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'costPerKm');
     });
   }
 

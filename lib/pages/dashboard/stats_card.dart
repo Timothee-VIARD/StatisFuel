@@ -34,7 +34,7 @@ class StatsCard<T> extends StatelessWidget {
               (value: selector(state), isLoading: state.isLoading),
           builder: (context, data) {
             if (data.isLoading) {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
             return Column(
               spacing: AppConfig.spacing,

@@ -28,7 +28,8 @@
     "volume": "L",
     "price": "€",
     "pricePerLiter": "€/L",
-    "litersPer100km": "L/100km"
+    "litersPer100km": "L/100km",
+    "costPerKm": "€/km"
   },
   "consumption": {
     "warningDeleteAll": "Êtes-vous sûr de vouloir supprimer toutes les consommations ?",
@@ -51,6 +52,7 @@
   "dashboard": {
     "title": "Dashboard",
     "averageConsumption": "Consommation moyenne",
+    "averageCostPerKm": "Coût moyen par km",
     "forThePastYear": "Depuis 1 ans"
   },
   "history": {

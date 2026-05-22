@@ -4,6 +4,7 @@ import 'package:statisfuel/collections/collections.dart';
 class DashboardState extends Equatable {
   final Consumption consumption;
   final double? averageConsumption;
+  final double? averageCostPerKm;
   final bool isSubmitting;
   final bool isLoading;
   final bool isSuccess;
@@ -12,6 +13,7 @@ class DashboardState extends Equatable {
   const DashboardState({
     required this.consumption,
     this.averageConsumption,
+    this.averageCostPerKm,
     this.isSubmitting = false,
     this.isSuccess = false,
     this.isLoading = false,
@@ -21,6 +23,7 @@ class DashboardState extends Equatable {
   DashboardState copyWith({
     Consumption? consumption,
     double? averageConsumption,
+    double? averageCostPerKm,
     bool? isSubmitting,
     bool? isSuccess,
     bool? isLoading,
@@ -29,6 +32,7 @@ class DashboardState extends Equatable {
     return DashboardState(
       consumption: consumption ?? this.consumption,
       averageConsumption: averageConsumption ?? this.averageConsumption,
+      averageCostPerKm: averageCostPerKm ?? this.averageCostPerKm,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
       isLoading: isLoading ?? this.isLoading,
@@ -38,5 +42,5 @@ class DashboardState extends Equatable {
 
   @override
   List<Object?> get props =>
-      [consumption, averageConsumption, isSubmitting, isLoading, isSuccess, errorMessage];
+      [consumption, averageConsumption, averageCostPerKm, isSubmitting, isLoading, isSuccess, errorMessage];
 }

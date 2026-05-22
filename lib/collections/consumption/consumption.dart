@@ -20,6 +20,8 @@ class Consumption {
   double? mileage;
   @Index()
   double? litersPer100km;
+  @Index()
+  double? costPerKm;
   Location? location;
 
   Consumption({
@@ -33,11 +35,18 @@ class Consumption {
     this.location,
   }) {
     setLitersPer100km();
+    setCostPerKm();
   }
 
   void setLitersPer100km() {
     litersPer100km = (liters != null && distance != null && distance! > 0)
         ? (liters! / distance!) * 100
+        : null;
+  }
+
+  void setCostPerKm() {
+    costPerKm = (totalPrice != null && distance != null && distance! > 0)
+        ? totalPrice! / distance!
         : null;
   }
 

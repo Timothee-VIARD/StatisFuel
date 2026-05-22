@@ -29,19 +29,5 @@ abstract class IConsumptionRepository {
 
   Future<double> getAverageConsumption({required DateTime startDate, DateTime? endDate});
 
-  Future<double> getTotalSpent();
-
-  Future<double> getTotalLiters();
-
-  Future<double> getAveragePricePerLiter();
-
-  Future<double> getAverageDistance();
-
-  Future<double> getMinConsumption();
-
-  Future<double> getMaxConsumption();
-
-  Future<double> getMinPricePerLiter();
-
-  Future<double> getMaxPricePerLiter();
+  Future<double> getAverageCostPerKm({required DateTime startDate, DateTime? endDate});
 }

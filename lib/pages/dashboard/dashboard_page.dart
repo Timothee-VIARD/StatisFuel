@@ -58,7 +58,7 @@ class DashboardView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
-                    child: StatsCard<double>(
+                    child: StatsCard<double?>(
                       title: t.dashboard.averageConsumption,
                       selector: (state) => state.averageConsumption,
                       formatter: (value) =>
@@ -85,6 +85,35 @@ class DashboardView extends StatelessWidget {
             buildAddConsumptionButton(context),
             buildLastConsumptionInfo(),
             buildAverageDistance(),
+            IntrinsicHeight(
+              child: Row(
+                spacing: AppConfig.spacing * 2,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: StatsCard<double?>(
+                      title: t.dashboard.totalDistanceDriven,
+                      selector: (state) => state.totalDistance,
+                      formatter: (value) =>
+                          value.toFormattedString(unit: t.unit.distance, format: NumberFormat('#,##0', 'fr_FR')),
+                      icon: Icons.directions_car,
+                      details: t.dashboard.forThePastYear,
+                    ),
+                  ),
+                  Expanded(
+                    child: StatsCard<double?>(
+                      title: t.dashboard.totalCost,
+                      selector: (state) => state.totalCost,
+                      formatter: (value) => value.toFormattedString(
+                        unit: t.unit.price,
+                      ),
+                      icon: Icons.euro,
+                      details: t.dashboard.forThePastYear,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

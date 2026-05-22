@@ -37,13 +37,21 @@ class DashboardCubit extends Cubit<DashboardState> {
         startDate: DateTime.now()
             .subtract(const Duration(days: 365)), // Année glissante
       );
-      final averageCostPerKm =
-          await _consumptionRepository.getAverageCostPerKm(
+      final averageCostPerKm = await _consumptionRepository.getAverageCostPerKm(
         startDate: DateTime.now()
             .subtract(const Duration(days: 365)), // Année glissante
       );
       final lastConsumption = await _consumptionRepository.getLastConsumption();
       final averageDistance = await _consumptionRepository.getAverageDistance(
+        startDate: DateTime.now()
+            .subtract(const Duration(days: 365)), // Année glissante
+      );
+      final totalDistance = await _consumptionRepository.getTotalDistance(
+        startDate: DateTime.now()
+            .subtract(const Duration(days: 365)), // Année glissante
+      );
+
+      final totalCost = await _consumptionRepository.getTotalCost(
         startDate: DateTime.now()
             .subtract(const Duration(days: 365)), // Année glissante
       );
@@ -54,6 +62,8 @@ class DashboardCubit extends Cubit<DashboardState> {
           averageCostPerKm: averageCostPerKm,
           lastConsumption: lastConsumption,
           averageDistance: averageDistance,
+          totalDistance: totalDistance,
+          totalCost: totalCost,
         ),
       );
     } catch (e) {

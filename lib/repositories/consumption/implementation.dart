@@ -218,4 +218,36 @@ class ConsumptionRepository extends RepositoryBase
 
     return average.isNaN ? 0 : average;
   }
+
+  @override
+  Future<double> getTotalDistance({
+    required DateTime startDate,
+    DateTime? endDate,
+  }) async {
+    await _ensureReady();
+    final total = await isar
+        .collection<Consumption>()
+        .where()
+        .dateBetween(startDate, endDate ?? DateTime.now())
+        .distanceProperty()
+        .sum();
+
+    return total.isNaN ? 0 : total;
+  }
+
+  @override
+  Future<double> getTotalCost({
+    required DateTime startDate,
+    DateTime? endDate,
+  }) async {
+    await _ensureReady();
+    final total = await isar
+        .collection<Consumption>()
+        .where()
+        .dateBetween(startDate, endDate ?? DateTime.now())
+        .totalPriceProperty()
+        .sum();
+
+    return total.isNaN ? 0 : total;
+  }
 }

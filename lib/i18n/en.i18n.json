@@ -59,6 +59,8 @@
     "lastConsumptionInfo": "Infos sur le dernier plein",
     "averageDistanceBetweenFillUps": "Distance moyenne entre les pleins",
     "estimatedDistanceBeforeNextFillUp": "Distance estimée avant le prochain plein",
+    "totalDistanceDriven": "Distance totale parcourue",
+    "totalCost": "Dépense totale",
     "date": "Date",
     "literPrice": "Prix du litre",
     "volume": "Volume",

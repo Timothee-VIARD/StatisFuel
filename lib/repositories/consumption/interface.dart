@@ -45,4 +45,14 @@ abstract class IConsumptionRepository {
     required DateTime startDate,
     DateTime? endDate,
   });
+
+  Future<double> getTotalDistance({
+    required DateTime startDate,
+    DateTime? endDate,
+  });
+
+  Future<double> getTotalCost({
+    required DateTime startDate,
+    DateTime? endDate,
+  });
 }

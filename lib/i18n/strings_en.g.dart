@@ -197,6 +197,12 @@ class TranslationsDashboardEn {
 	/// en: 'Distance estimée avant le prochain plein'
 	String get estimatedDistanceBeforeNextFillUp => 'Distance estimée avant le prochain plein';
 
+	/// en: 'Distance totale parcourue'
+	String get totalDistanceDriven => 'Distance totale parcourue';
+
+	/// en: 'Dépense totale'
+	String get totalCost => 'Dépense totale';
+
 	/// en: 'Date'
 	String get date => 'Date';
 
@@ -358,6 +364,8 @@ extension on Translations {
 			'dashboard.lastConsumptionInfo' => 'Infos sur le dernier plein',
 			'dashboard.averageDistanceBetweenFillUps' => 'Distance moyenne entre les pleins',
 			'dashboard.estimatedDistanceBeforeNextFillUp' => 'Distance estimée avant le prochain plein',
+			'dashboard.totalDistanceDriven' => 'Distance totale parcourue',
+			'dashboard.totalCost' => 'Dépense totale',
 			'dashboard.date' => 'Date',
 			'dashboard.literPrice' => 'Prix du litre',
 			'dashboard.volume' => 'Volume',

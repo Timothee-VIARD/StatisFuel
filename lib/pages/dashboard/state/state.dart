@@ -5,6 +5,7 @@ class DashboardState extends Equatable {
   final Consumption? lastConsumption;
   final double? averageConsumption;
   final double? averageCostPerKm;
+  final double? averageDistance;
   final bool isSubmitting;
   final bool isLoading;
   final bool isSuccess;
@@ -14,6 +15,7 @@ class DashboardState extends Equatable {
     this.lastConsumption,
     this.averageConsumption,
     this.averageCostPerKm,
+    this.averageDistance,
     this.isSubmitting = false,
     this.isSuccess = false,
     this.isLoading = false,
@@ -24,6 +26,7 @@ class DashboardState extends Equatable {
     Consumption? lastConsumption,
     double? averageConsumption,
     double? averageCostPerKm,
+    double? averageDistance,
     bool? isSubmitting,
     bool? isSuccess,
     bool? isLoading,
@@ -33,6 +36,7 @@ class DashboardState extends Equatable {
       lastConsumption: lastConsumption ?? this.lastConsumption,
       averageConsumption: averageConsumption ?? this.averageConsumption,
       averageCostPerKm: averageCostPerKm ?? this.averageCostPerKm,
+      averageDistance: averageDistance ?? this.averageDistance,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
       isLoading: isLoading ?? this.isLoading,
@@ -42,5 +46,5 @@ class DashboardState extends Equatable {
 
   @override
   List<Object?> get props =>
-      [lastConsumption, averageConsumption, averageCostPerKm, isSubmitting, isLoading, isSuccess, errorMessage];
+      [lastConsumption, averageConsumption, averageCostPerKm, averageDistance, isSubmitting, isLoading, isSuccess, errorMessage];
 }

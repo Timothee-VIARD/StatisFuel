@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:statisfuel/global/dashed_arrow.dart';
 import 'package:statisfuel/global/widget.dart';
 import 'package:statisfuel/i18n/strings.g.dart';
 import 'package:statisfuel/pages/dashboard/dialogs/new_consumption_dialog.dart';
@@ -83,11 +84,99 @@ class DashboardView extends StatelessWidget {
             ),
             buildAddConsumptionButton(context),
             buildLastConsumptionInfo(),
+            buildAverageDistance(),
           ],
         ),
       ),
     );
   }
+}
+
+Widget buildAverageDistance() {
+  return TVCard(
+    title: (context) => t.dashboard.averageDistanceBetweenFillUps,
+    content: ConstrainedBox(
+      constraints: const BoxConstraints(minWidth: double.infinity),
+      child: Selector(
+        selector: (state) => (
+          value: state.averageDistance,
+          isLoading: state.isLoading,
+          lastConsumption: state.lastConsumption
+        ),
+        builder: (context, data) {
+          if (data.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return Column(
+            spacing: AppConfig.spacing,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  Text(
+                    data.value.toFormattedString(unit: t.unit.distance),
+                    style: Theme.of(context).textTheme.displayLarge,
+                  ),
+                  Text(t.dashboard.forThePastYear),
+                ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.20),
+                    ),
+                    padding: const EdgeInsets.all(5),
+                    child: Icon(
+                      Icons.directions_car,
+                      size: 48,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  const Expanded(child: DashedArrow()),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.20),
+                    ),
+                    padding: const EdgeInsets.all(5),
+                    child: Icon(
+                      Icons.local_gas_station,
+                      size: 48,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ],
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: RichText(
+                  text: TextSpan(
+                    text: '${t.dashboard.estimatedDistanceBeforeNextFillUp} : ',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    children: [
+                      TextSpan(
+                        text: data.lastConsumption?.distance
+                            .toFormattedString(unit: t.unit.distance),
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    ),
+  );
 }
 
 Widget buildAddConsumptionButton(BuildContext context) {

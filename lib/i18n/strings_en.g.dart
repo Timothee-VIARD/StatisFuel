@@ -182,14 +182,20 @@ class TranslationsDashboardEn {
 	/// en: 'Coût moyen par km'
 	String get averageCostPerKm => 'Coût moyen par km';
 
-	/// en: 'Depuis 1 ans'
-	String get forThePastYear => 'Depuis 1 ans';
+	/// en: 'Depuis 1 an'
+	String get forThePastYear => 'Depuis 1 an';
 
 	/// en: 'Ajouter un plein'
 	String get addConsumption => 'Ajouter un plein';
 
 	/// en: 'Infos sur le dernier plein'
 	String get lastConsumptionInfo => 'Infos sur le dernier plein';
+
+	/// en: 'Distance moyenne entre les pleins'
+	String get averageDistanceBetweenFillUps => 'Distance moyenne entre les pleins';
+
+	/// en: 'Distance estimée avant le prochain plein'
+	String get estimatedDistanceBeforeNextFillUp => 'Distance estimée avant le prochain plein';
 
 	/// en: 'Date'
 	String get date => 'Date';
@@ -347,9 +353,11 @@ extension on Translations {
 			'dashboard.title' => 'Dashboard',
 			'dashboard.averageConsumption' => 'Consommation moyenne',
 			'dashboard.averageCostPerKm' => 'Coût moyen par km',
-			'dashboard.forThePastYear' => 'Depuis 1 ans',
+			'dashboard.forThePastYear' => 'Depuis 1 an',
 			'dashboard.addConsumption' => 'Ajouter un plein',
 			'dashboard.lastConsumptionInfo' => 'Infos sur le dernier plein',
+			'dashboard.averageDistanceBetweenFillUps' => 'Distance moyenne entre les pleins',
+			'dashboard.estimatedDistanceBeforeNextFillUp' => 'Distance estimée avant le prochain plein',
 			'dashboard.date' => 'Date',
 			'dashboard.literPrice' => 'Prix du litre',
 			'dashboard.volume' => 'Volume',

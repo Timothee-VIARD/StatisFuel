@@ -31,9 +31,18 @@ abstract class IConsumptionRepository {
 
   Future<void> importFromCsv();
 
-  Future<double> getAverageConsumption(
-      {required DateTime startDate, DateTime? endDate});
+  Future<double> getAverageConsumption({
+    required DateTime startDate,
+    DateTime? endDate,
+  });
 
-  Future<double> getAverageCostPerKm(
-      {required DateTime startDate, DateTime? endDate});
+  Future<double> getAverageCostPerKm({
+    required DateTime startDate,
+    DateTime? endDate,
+  });
+
+  Future<double> getAverageDistance({
+    required DateTime startDate,
+    DateTime? endDate,
+  });
 }

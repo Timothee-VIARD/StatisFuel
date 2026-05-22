@@ -191,7 +191,7 @@ class ConsumptionRepository extends RepositoryBase
 
   @override
   Future<double> getAverageCostPerKm(
-      {required DateTime startDate, DateTime? endDate}) async {
+      {required DateTime startDate, DateTime? endDate,}) async {
     await _ensureReady();
     final result = await isar
         .collection<Consumption>()
@@ -201,5 +201,21 @@ class ConsumptionRepository extends RepositoryBase
         .average();
 
     return result.isNaN ? 0 : result;
+  }
+
+  @override
+  Future<double> getAverageDistance({
+    required DateTime startDate,
+    DateTime? endDate,
+  }) async {
+    await _ensureReady();
+    final average = await isar
+        .collection<Consumption>()
+        .where()
+        .dateBetween(startDate, endDate ?? DateTime.now())
+        .distanceProperty()
+        .average();
+
+    return average.isNaN ? 0 : average;
   }
 }

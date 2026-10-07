@@ -9,8 +9,6 @@ enum AppThemeMode {
 }
 
 class AppColorScheme {
-  final Color blue;
-  final Color green;
   final Color primary;
   final Color onPrimary;
   final Color secondary;
@@ -28,8 +26,6 @@ class AppColorScheme {
   final Color border;
 
   const AppColorScheme({
-    required this.blue,
-    required this.green,
     required this.primary,
     required this.onPrimary,
     required this.secondary,
@@ -63,8 +59,6 @@ class AppColorScheme {
   /// Schéma de couleurs light
   factory AppColorScheme.light() {
     return const AppColorScheme(
-      blue: AppColorsLight.blue,
-      green: AppColorsLight.green,
       primary: AppColorsLight.primary,
       onPrimary: AppColorsLight.onPrimary,
       secondary: AppColorsLight.secondary,
@@ -86,8 +80,6 @@ class AppColorScheme {
   /// Schéma de couleurs dark
   factory AppColorScheme.dark() {
     return const AppColorScheme(
-      blue: AppColorsDark.blue,
-      green: AppColorsDark.green,
       primary: AppColorsDark.primary,
       onPrimary: AppColorsDark.onPrimary,
       secondary: AppColorsDark.secondary,

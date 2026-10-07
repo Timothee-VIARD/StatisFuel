@@ -58,6 +58,11 @@ class DashboardCubit extends Cubit<DashboardState> {
         startDate: DateTime.now()
             .subtract(const Duration(days: 365)), // Année glissante
       );
+      final infoMessageConsumptionTrend = lastConsumption != null && lastConsumption.litersPer100km! - averageConsumption != 0
+          ? lastConsumption.litersPer100km != null
+                  ? lastConsumption.litersPer100km! - averageConsumption
+                  : null
+          : null;
 
       emit(
         state.copyWith(
@@ -69,6 +74,7 @@ class DashboardCubit extends Cubit<DashboardState> {
           totalDistance: totalDistance,
           totalCost: totalCost,
           totalFillUps: totalFillUps,
+          infoMessageConsumptionTrend: infoMessageConsumptionTrend,
         ),
       );
     } catch (e) {

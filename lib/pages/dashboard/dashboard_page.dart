@@ -11,6 +11,7 @@ import 'package:statisfuel/pages/dashboard/state/state.dart';
 import 'package:statisfuel/pages/dashboard/stats_card.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
 import 'package:statisfuel/theme/app_config.dart';
+import 'package:statisfuel/theme/app_theme_config.dart';
 import 'package:statisfuel/utils/date.dart';
 import 'package:statisfuel/utils/num.dart';
 
@@ -52,13 +53,14 @@ class DashboardView extends StatelessWidget {
                     const TextStyle(fontSize: 24, fontFamily: 'MPLUSRounded1c'),
               ),
             ),
+            buildInfoCard(),
             IntrinsicHeight(
               child: Row(
                 spacing: AppConfig.spacing * 2,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
-                    child: StatsCard<double?>(
+                    child: StatsCardIcon<double?>(
                       title: t.dashboard.averageConsumption,
                       selector: (state) => state.averageConsumption,
                       formatter: (value) =>
@@ -68,7 +70,7 @@ class DashboardView extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: StatsCard<double?>(
+                    child: StatsCardIcon<double?>(
                       title: t.dashboard.averageCostPerKm,
                       selector: (state) => state.averageCostPerKm,
                       formatter: (value) => value.toFormattedString(
@@ -91,18 +93,19 @@ class DashboardView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
-                    child: StatsCard<double?>(
+                    child: StatsCardIcon<double?>(
                       title: t.dashboard.distanceDriven,
                       selector: (state) => state.totalDistance,
                       formatter: (value) => value.toFormattedString(
-                          unit: t.unit.distance,
-                          format: NumberFormat('#,##0', 'fr_FR')),
+                        unit: t.unit.distance,
+                        format: NumberFormat('#,##0', 'fr_FR'),
+                      ),
                       icon: Icons.directions_car,
                       details: t.dashboard.forThePastYear,
                     ),
                   ),
                   Expanded(
-                    child: StatsCard<double?>(
+                    child: StatsCardIcon<double?>(
                       title: t.dashboard.expense,
                       selector: (state) => state.totalCost,
                       formatter: (value) => value.toFormattedString(
@@ -115,7 +118,7 @@ class DashboardView extends StatelessWidget {
                 ],
               ),
             ),
-            StatsCard<int?>(
+            StatsCardIcon<int?>(
               title: t.dashboard.fillUps,
               selector: (state) => state.totalFillUps,
               formatter: (value) => value.toString(),
@@ -365,6 +368,62 @@ Widget buildLastConsumptionInfo() {
           );
         },
       ),
+    ),
+  );
+}
+
+Widget buildInfoCard() {
+  return StatsCard<double?>(
+    title: t.dashboard.info,
+    selector: (state) => state.infoMessageConsumptionTrend,
+    content: (value) => Builder(
+      builder: (context) {
+        final colors = Theme.of(context).brightness == Brightness.dark
+            ? AppColorScheme.dark()
+            : AppColorScheme.light();
+
+        Color tileColor = value != null && value > 0
+            ? colors.error.withValues(alpha: 0.20)
+            : colors.good.withValues(alpha: 0.20);
+
+        Color textColor =
+            value != null && value > 0 ? colors.error : colors.good;
+
+        String prefix = value != null && value > 0 ? '+' : '';
+
+        return Container(
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: tileColor,
+          ),
+          child: Row(
+            spacing: AppConfig.spacing,
+            children: [
+              Icon(
+                Icons.warning_rounded,
+                size: 48,
+                color: textColor,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '$prefix${value.toFormattedString(unit: t.unit.litersPer100km)}',
+                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                          color: textColor,
+                        ),
+                  ),
+                  Text(
+                    t.dashboard.comparedToAverage,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     ),
   );
 }

@@ -12,6 +12,7 @@ class DashboardState extends Equatable {
   final bool isSubmitting;
   final bool isLoading;
   final bool isSuccess;
+  final double? infoMessageConsumptionTrend;
   final String? errorMessage;
 
   const DashboardState({
@@ -25,6 +26,7 @@ class DashboardState extends Equatable {
     this.isSubmitting = false,
     this.isSuccess = false,
     this.isLoading = false,
+    this.infoMessageConsumptionTrend,
     this.errorMessage,
   });
 
@@ -39,6 +41,7 @@ class DashboardState extends Equatable {
     bool? isSubmitting,
     bool? isSuccess,
     bool? isLoading,
+    double? infoMessageConsumptionTrend,
     String? errorMessage,
   }) {
     return DashboardState(
@@ -52,6 +55,8 @@ class DashboardState extends Equatable {
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
       isLoading: isLoading ?? this.isLoading,
+      infoMessageConsumptionTrend:
+          infoMessageConsumptionTrend ?? this.infoMessageConsumptionTrend,
       errorMessage: errorMessage,
     );
   }
@@ -68,6 +73,7 @@ class DashboardState extends Equatable {
         isLoading,
         isSuccess,
         totalFillUps,
-        errorMessage
+        infoMessageConsumptionTrend,
+        errorMessage,
       ];
 }

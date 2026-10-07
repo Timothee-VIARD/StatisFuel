@@ -226,6 +226,12 @@ class TranslationsDashboardEn {
 
 	/// en: 'Action rapide'
 	String get quickAction => 'Action rapide';
+
+	/// en: 'Information'
+	String get info => 'Information';
+
+	/// en: 'par rapport à la moyenne depuis 1 an'
+	String get comparedToAverage => 'par rapport à la moyenne depuis 1 an';
 }
 
 // Path: history
@@ -377,6 +383,8 @@ extension on Translations {
 			'dashboard.distance' => 'Distance',
 			'dashboard.consumption' => 'Consommation',
 			'dashboard.quickAction' => 'Action rapide',
+			'dashboard.info' => 'Information',
+			'dashboard.comparedToAverage' => 'par rapport à la moyenne depuis 1 an',
 			'history.title' => 'Historique',
 			'statistics.title' => 'Statistiques',
 			_ => null,

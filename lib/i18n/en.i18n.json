@@ -68,7 +68,9 @@
     "cost": "Coût",
     "distance": "Distance",
     "consumption": "Consommation",
-    "quickAction": "Action rapide"
+    "quickAction": "Action rapide",
+    "info": "Information",
+    "comparedToAverage": "par rapport à la moyenne depuis 1 an"
   },
   "history": {
     "title": "Historique"

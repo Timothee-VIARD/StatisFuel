@@ -1,4 +1,4 @@
-package com.example.statisfuel
+package com.statisfuel.app
 
 import io.flutter.embedding.android.FlutterActivity
 

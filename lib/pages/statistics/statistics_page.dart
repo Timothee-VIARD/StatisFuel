@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:statisfuel/pages/statistics/charts/default/chart_point.dart';
 import 'package:statisfuel/pages/statistics/charts/daily_consumption.dart';
+import 'package:statisfuel/pages/statistics/charts/monthly_expenses.dart';
 import 'package:statisfuel/pages/statistics/state/cubit.dart';
 import 'package:statisfuel/pages/statistics/state/state.dart';
 import 'package:statisfuel/repositories/consumption/implementation.dart';
@@ -13,7 +15,9 @@ class StatisticsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => StatisticsCubit(consumptionRepository: GetIt.I<ConsumptionRepository>())..loadConsumptions(),
+      create: (BuildContext context) => StatisticsCubit(
+        consumptionRepository: GetIt.I<ConsumptionRepository>(),
+      )..loadConsumptions(),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: AppConfig.padding * 3),
         child: Column(
@@ -41,25 +45,16 @@ class StatisticsPage extends StatelessWidget {
                     child: Text(state.errorMessage!),
                   );
                 }
-                return Center(
-                  child: DailyConsumptionChart(
-                    data: state.consumptions
-                        .map(
-                          (consumption) {
-                          if (consumption.litersPer100km == null) {
-                            return null;
-                          }
-                          return {
-                            'date': consumption.date,
-                            'value': consumption.litersPer100km,
-                          };
-                          },
-                        )
-                        .where((element) => element != null)
-                        .cast<Map<String, dynamic>>()
-                        .toList(),
-                    title: 'Consommation journalière',
-                  ),
+                return Column(
+                  spacing: AppConfig.spacing * 2,
+                  children: [
+                    DailyConsumptionChart(
+                      points: state.consumptions,
+                    ),
+                    MonthlyExpensesChart(
+                      points: state.consumptions,
+                    ),
+                  ],
                 );
               },
             ),

@@ -5,4 +5,8 @@ extension DateExtensions on DateTime? {
   String toFormattedString() {
     return this != null ? DateFormat(t.global.date.format).format(this!) : '-';
   }
+
+  String getMonthString() {
+    return this != null ? DateFormat(t.global.date.monthFormat).format(this!) : '-';
+  }
 }

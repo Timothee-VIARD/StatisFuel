@@ -157,7 +157,7 @@ class ConsumptionRepository extends RepositoryBase
           liters: row[3],
           distance: row[4],
           mileage: row[5],
-          location: Location().fromString(row[6]),
+          location: row[6]!= null ? Location().fromString(row[6]) : null,
         );
 
         await isar.writeTxn(() async {

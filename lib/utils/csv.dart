@@ -46,7 +46,7 @@ class CsvUtils {
               (rows) => rows
                   .map(
                     (row) => row.map((cell) {
-                      if (cell is String && cell.isEmpty) {
+                      if (cell is String && (cell.isEmpty || cell == 'null')) {
                         return null;
                       }
                       return cell;

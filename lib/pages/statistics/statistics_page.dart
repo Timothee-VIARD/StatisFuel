@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:statisfuel/pages/statistics/charts/default/chart_point.dart';
 import 'package:statisfuel/pages/statistics/charts/daily_consumption.dart';
 import 'package:statisfuel/pages/statistics/charts/monthly_expenses.dart';
 import 'package:statisfuel/pages/statistics/state/cubit.dart';
@@ -49,7 +48,7 @@ class StatisticsPage extends StatelessWidget {
                   spacing: AppConfig.spacing * 2,
                   children: [
                     DailyConsumptionChart(
-                      points: state.consumptions,
+                      data: state.consumptions,
                     ),
                     MonthlyExpensesChart(
                       points: state.consumptions,

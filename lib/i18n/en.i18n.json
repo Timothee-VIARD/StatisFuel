@@ -14,7 +14,9 @@
     "date": {
       "noDate": "Date inconnue",
       "format": "dd/MM/yyyy",
-      "monthFormat": "MMMM"
+      "formatReadable": "dd MMMM yyyy",
+      "monthFormat": "MMMM",
+      "monthShortFormat": "MMM"
     },
     "confirm": "Confirmer",
     "delete": "Supprimer",

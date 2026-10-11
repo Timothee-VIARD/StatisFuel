@@ -302,8 +302,14 @@ class TranslationsGlobalDateEn {
 	/// en: 'dd/MM/yyyy'
 	String get format => 'dd/MM/yyyy';
 
+	/// en: 'dd MMMM yyyy'
+	String get formatReadable => 'dd MMMM yyyy';
+
 	/// en: 'MMMM'
 	String get monthFormat => 'MMMM';
+
+	/// en: 'MMM'
+	String get monthShortFormat => 'MMM';
 }
 
 // Path: consumption.place
@@ -340,7 +346,9 @@ extension on Translations {
 			'global.forms.notSpecified' => 'Non spécifié',
 			'global.date.noDate' => 'Date inconnue',
 			'global.date.format' => 'dd/MM/yyyy',
+			'global.date.formatReadable' => 'dd MMMM yyyy',
 			'global.date.monthFormat' => 'MMMM',
+			'global.date.monthShortFormat' => 'MMM',
 			'global.confirm' => 'Confirmer',
 			'global.delete' => 'Supprimer',
 			'global.deleteAll' => 'Tout supprimer',
